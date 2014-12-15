@@ -54,7 +54,14 @@
 					<form id="form_iconic_validation" action="#">
 						<div class="row column-seperation">
 							<div class="col-md-6">
-								<h4>Informasi Karyawan</h4>  
+								<h4>Informasi Karyawan</h4>
+								<div class="form-group">
+			                        <label class="form-label">NIK</label>
+									<div class="input-with-icon  right">                                       
+										<i class=""></i>
+										<input type="text" name="form1nik" id="form1nik" class="form-control">                                 
+									</div>
+			                    </div>
 			                     <div class="form-group">
 			                        <label class="form-label">Nama Lengkap</label>
 									<div class="input-with-icon  right">                                       
@@ -79,10 +86,14 @@
 									</div>
 			                    </div>
 			                    <div class="form-group">
-			                        <label class="form-label">Cabang</label>
+			                        <label class="form-label">Bisnis Unit</label>
 									<div class="input-with-icon  right">                                       
 										<i class=""></i>
-										<input type="text" name="form1cabang" id="form1cabang" class="form-control">                                 
+										<select id="form1bisnisunit" class="select2" style="width:100%">
+				                          <option value="1">Head office</option>
+				                          <option value="2">Bandung</option>
+				                          <option value="3">Surabaya</option>
+				                        </select>                                 
 									</div>
 			                    </div>
 			                </div>

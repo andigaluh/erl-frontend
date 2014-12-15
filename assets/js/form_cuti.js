@@ -7,6 +7,15 @@ $(document).ready(function() {
                 todayHighlight: true
        });
 
+
+    $("tr.itemcuti").each(function() {
+        var iditemcuti = $(this).attr('id');
+        $('#viewcuti-' + iditemcuti).click(function (e){
+            e.preventDefault();
+            $('#cutidetail-' + iditemcuti).toggle();
+        });
+    });
+
       
 
 	//Traditional form validation sample
