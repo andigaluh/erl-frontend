@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="assets/plugins/jquery-morris-chart/css/morris.css" type="text/css" media="screen" charset="utf-8">
 <link href="assets/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" type="text/css" />
 <link href="assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.css" rel="stylesheet" type="text/css" />
+<link href="assets/plugins/dropzone/css/dropzone.css" rel="stylesheet" type="text/css"/>
 
 
 
@@ -180,7 +181,7 @@
               <h4>Laporan Kegiatan Perjalanan Dinas <span class="semi-bold">Dalam Kota</span></h4>
             </div>
             <div class="grid-body no-border">
-              <form class="form-no-horizontal-spacing" id=""> 
+              <form class="form-no-horizontal-spacing" id="" action="form_spd"> 
                 <div class="row column-seperation">
                   <div class="col-md-5">
                     <h4>Pelaksanaan Perjalanan Dinas</h4>      
@@ -242,6 +243,18 @@
                     <h4>Laporan Kegiatan PJD</h4>
                     <div class="row form-row">
                       <div class="col-md-12">
+                        <label class="form-label text-left">Attachment : </label>
+                      </div>
+                      <div class="col-md-12">
+                          <!-- <form action="/file-upload" class="dropzone no-margin"> -->
+                            <div class="fallback">
+                              <input name="file" type="file" multiple />
+                            </div>
+                          <!-- </form> -->
+                      </div>
+                    </div>
+                    <div class="row form-row">
+                      <div class="col-md-12">
                         <label class="form-label text-left">Maksud dan Tujuan : </label>
                       </div>
                       <div class="col-md-12">
@@ -256,11 +269,12 @@
                         <textarea id="text-editor" placeholder="Hasil Kegiatan ..." class="form-control" rows="5"></textarea>
                       </div>
                     </div>
+                    
                   </div>
                 </div>
                 <div class="form-actions">
                   <div class="pull-right">
-                    <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
+                    <button class="btn btn-success btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
                     <a href="form_spd_dalam.html"><button class="btn btn-white btn-cons" type="button">Cancel</button></a>
                   </div>
                 </div>
@@ -274,7 +288,9 @@
       </div>
 		
 	</div>  
-	<!-- END PAGE --> 
+	<!-- <div class="fallback">
+                        <input name="file" type="file" multiple />
+                      </div> END PAGE --> 
 	</div>
 </div>
 <!-- BEGIN CHAT --> 
@@ -303,6 +319,7 @@
 <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="assets/plugins/boostrap-form-wizard/js/jquery.bootstrap.wizard.min.js" type="text/javascript"></script>
 <script src="assets/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="assets/plugins/dropzone/dropzone.min.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- PAGE JS -->
 <script src="assets/js/form_spd_dalam_input.js" type="text/javascript"></script>

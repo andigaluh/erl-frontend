@@ -233,6 +233,14 @@
                         <input name="form3LastName" id="form3LastName" type="text"  class="form-control" placeholder="Nama" value="IT Infrastruktur" disabled="disabled">
                       </div>
                     </div>
+                    <div class="row form-row">
+                      <div class="col-md-3">
+                        <label class="form-label text-right">Sisa cuti (hari)</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input name="form3LastName" id="form3LastName" type="text"  class="form-control" placeholder="Nama" value="10" disabled="disabled">
+                      </div>
+                    </div>
                     
                     
                   </div>
@@ -283,7 +291,11 @@
                         <label class="form-label text-right">Alasan</label>
                       </div>
                       <div class="col-md-9">
-                        <input name="form3PostalCode" id="form3PostalCode" type="text"  class="form-control" placeholder="Alasan">
+                        <select id="formalasan" class="select2" style="width:100%">
+                          <option value="1">Kepentingan keluarga</option>
+                          <option value="2">Melahirkan</option>
+                          <option value="3">Lain-lain</option>
+                        </select> 
                       </div>
                     </div>
                     <div class="row form-row">
@@ -313,7 +325,7 @@
                 </div>
                 <div class="form-actions">
                   <div class="pull-right">
-                    <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
+                    <button class="btn btn-success btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
                     <a href="form_cuti.html"><button class="btn btn-white btn-cons" type="button">Cancel</button></a>
                   </div>
                 </div>

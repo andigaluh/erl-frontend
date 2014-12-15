@@ -7036,3 +7036,8 @@ ul.my-friends li .profile-pic{
 	padding: 18px 20px 10px 20px;
 	/*margin-top: 10px;*/
 }
+
+.custom-txtarea-form{
+	width:100% !important;
+	height:50px !important;
+}

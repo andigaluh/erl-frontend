@@ -233,6 +233,22 @@
                           <input name="form3LastName" id="form3LastName" type="text"  class="form-control" placeholder="Nama" value="IT Infrastruktur" disabled="disabled">
                         </div>
                       </div>
+                      <div class="row form-row">
+                        <div class="col-md-3">
+                          <label class="form-label text-right">Sisa cuti (hari)</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input name="form3LastName" id="form3LastName" type="text"  class="form-control" placeholder="Nama" value="10" disabled="disabled">
+                        </div>
+                      </div>
+                      <div class="row form-row">
+                        <div class="col-md-3">
+                          <label class="form-label text-right">Tanggal pengajuan</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input name="alamat_cuti" id="alamat_cuti" type="text"  class="form-control" placeholder="Nama" value="25 November 2014" disabled="disabled">
+                        </div>
+                      </div>
                       
                       
                     </div>
@@ -273,7 +289,11 @@
                           <label class="form-label text-right">Alasan</label>
                         </div>
                         <div class="col-md-9">
-                          <input name="alasan_cuti" id="alasan_cuti" type="text"  class="form-control" placeholder="Nama" value="Menengok orang tua" disabled="disabled">
+                          <select id="formalasan" class="select2" style="width:100%" disabled="disabled">
+                            <option value="1">Kepentingan keluarga</option>
+                            <option value="2">Melahirkan</option>
+                            <option value="3">Lain-lain</option>
+                          </select> 
                         </div>
                       </div>
                       <div class="row form-row">
@@ -293,27 +313,23 @@
                           <input name="alamat_cuti" id="alamat_cuti" type="text"  class="form-control" placeholder="Nama" value="Sukabumi" disabled="disabled">
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-7 col-md-offset-5">
                       <div class="row form-row">
                         <div class="col-md-3">
-                          <label class="form-label text-right">Tanggal pengajuan</label>
+                          <label class="form-label text-right">Note (spv): </label>
                         </div>
                         <div class="col-md-9">
-                          <input name="alamat_cuti" id="alamat_cuti" type="text"  class="form-control" placeholder="Nama" value="25 November 2014" disabled="disabled">
+                          <textarea name="notes" class="custom-txtarea-form" placeholder="Note supervisor isi disini"></textarea>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  
+                  </div>                  
                   <div class="form-actions">
                     <div class="col-md-8 text-center">
                       Disetujui oleh,
                       <div class="row wf-cuti">
                         <div class="col-md-6">
-                          <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i>Approve</button>
+                          <button class="btn btn-success btn-cons" type="submit"><i class="icon-ok"></i>Approve</button>
+                          <button class="btn btn-danger btn-cons" type="submit"><i class="icon-remove"></i>Not Approve</button>
                           <p class="wf-approve-sp">(Supervisor)</p>
                         </div>
                         <div class="col-md-6">

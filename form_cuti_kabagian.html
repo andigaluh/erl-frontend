@@ -233,6 +233,14 @@
                           <input name="form3LastName" id="form3LastName" type="text"  class="form-control" placeholder="Nama" value="IT Infrastruktur" disabled="disabled">
                         </div>
                       </div>
+                      <div class="row form-row">
+                        <div class="col-md-3">
+                          <label class="form-label text-right">Tanggal pengajuan</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input name="alamat_cuti" id="alamat_cuti" type="text"  class="form-control" placeholder="Nama" value="25 November 2014" disabled="disabled">
+                        </div>
+                      </div>
                       
                       
                     </div>
@@ -273,7 +281,11 @@
                           <label class="form-label text-right">Alasan</label>
                         </div>
                         <div class="col-md-9">
-                          <input name="alasan_cuti" id="alasan_cuti" type="text"  class="form-control" placeholder="Nama" value="Menengok orang tua" disabled="disabled">
+                          <select id="formalasan" class="select2" style="width:100%" disabled="disabled">
+                            <option value="1">Kepentingan keluarga</option>
+                            <option value="2">Melahirkan</option>
+                            <option value="3">Lain-lain</option>
+                          </select> 
                         </div>
                       </div>
                       <div class="row form-row">
@@ -284,7 +296,6 @@
                           <input name="pengganti_cuti" id="pengganti_cuti" type="text"  class="form-control" placeholder="Nama" value="Rodrigo Palacio" disabled="disabled">
                         </div>
                       </div>
-                    
                       <div class="row form-row">
                         <div class="col-md-3">
                           <label class="form-label text-right">Alamat selama cuti</label>
@@ -293,20 +304,25 @@
                           <input name="alamat_cuti" id="alamat_cuti" type="text"  class="form-control" placeholder="Nama" value="Sukabumi" disabled="disabled">
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-7 col-md-offset-5">
                       <div class="row form-row">
                         <div class="col-md-3">
-                          <label class="form-label text-right">Tanggal pengajuan</label>
+                          <label class="form-label text-right">Note (spv): </label>
                         </div>
                         <div class="col-md-9">
-                          <input name="alamat_cuti" id="alamat_cuti" type="text"  class="form-control" placeholder="Nama" value="25 November 2014" disabled="disabled">
+                          <textarea name="notes" class="custom-txtarea-form" disabled="disabled">-</textarea>
+                        </div>
+                      </div>
+                      <div class="row form-row">
+                        <div class="col-md-3">
+                          <label class="form-label text-right">Note (ka. bag): </label>
+                        </div>
+                        <div class="col-md-9">
+                          <textarea name="notes" class="custom-txtarea-form" placeholder="Note ka. bagian isi disini"></textarea>
                         </div>
                       </div>
                     </div>
                   </div>
+                  
                   
                   <div class="form-actions">
                     <div class="col-md-8 text-center">
@@ -320,7 +336,8 @@
                           </p>
                         </div>
                         <div class="col-md-6">
-                          <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i>Approve</button>
+                          <button class="btn btn-success btn-cons" type="submit"><i class="icon-ok"></i>Approve</button>
+                          <button class="btn btn-danger btn-cons" type="submit"><i class="icon-remove"></i>Not Approve</button>
                           <p class="">(Ka. Cabang / Ka. Bagian)</p>
                         </div>
                       </div>
