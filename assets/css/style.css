@@ -3134,10 +3134,10 @@ form legend,
 }
 
 .user-info-wrapper .user-info .username{
-	font-size:19px;
+	font-size:14px;
 }
 .user-info-wrapper .user-info .greeting{
-	font-size:19px;
+	font-size:18px;
 	font-weight:600;
 	position: relative;
     top: 1.5px;
@@ -7040,4 +7040,8 @@ ul.my-friends li .profile-pic{
 .custom-txtarea-form{
 	width:100% !important;
 	height:50px !important;
+}
+
+.register-container{
+	margin-top: 5%;
 }
