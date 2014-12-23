@@ -7045,3 +7045,19 @@ ul.my-friends li .profile-pic{
 .register-container{
 	margin-top: 5%;
 }
+
+.page_limit{
+	margin: 13px 0 !important;
+}
+
+.page_div{
+
+}
+
+.page_label{
+	padding: 10px 0 !important;
+}
+
+.search_label{
+	padding-top: 7px !important;
+}

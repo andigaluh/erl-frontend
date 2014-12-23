@@ -20,7 +20,7 @@ class Auth extends MX_Controller {
     }
 
     //redirect if needed, otherwise display the user list
-    function index()
+    function index($sort_by = "id", $sort_order = "asc", $offset = 0)
     {
 
         if (!$this->ion_auth->logged_in())
@@ -39,12 +39,71 @@ class Auth extends MX_Controller {
             //set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
+            $this->data['sort_order'] = $sort_order;
+            $this->data['sort_by'] = $sort_by;
+
+            $arr_search = array();
+
+            if(strlen($this->input->post('first_name')) > 0){
+                $fname_post = array('users.first_name'=>$this->input->post('first_name'));
+            }else{
+                $fname_post = array();
+            }
+
+            /*if(strlen($this->input->post('last_name')) > 0){
+                $lname_post = array('last_name'=>$this->input->post('last_name'));
+            }else{
+                $lname_post = array();
+            }    */        
+           
+            if(strlen($this->input->post('limit')) > 0)
+            {
+                $this->data['limit'] = $limit = $this->input->post('limit');
+                //
+            }else{
+                $this->data['limit'] = $limit = '10';
+            }
+
             //list the users
-            $this->data['users'] = $this->ion_auth->users()->result();
+            $this->data['users_all'] = $this->ion_auth->users()->result();
+            $this->data['num_rows_all'] = $this->ion_auth->users()->num_rows();
+
+            $this->data['users'] = $this->ion_auth->like($fname_post)->limit($limit)->offset($this->uri->segment(5))->order_by($sort_by, $sort_order)->users()->result();
+
+            $this->data['users_num_rows'] = $this->ion_auth->like($fname_post)->limit($limit)->offset($this->uri->segment(5))->order_by($sort_by, $sort_order)->users()->num_rows();
+            //$this->data['users'] = $this->ion_auth->like($fname_post)->like($lname_post)->limit($limit)->offset($this->uri->segment(5))->order_by($sort_by, $sort_order)->users()->result();
+            //die($limit);
+            //die($this->db->last_query());
             foreach ($this->data['users'] as $k => $user)
             {
                 $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
             }
+
+             //config pagination
+             $config['base_url'] = base_url().'auth/index/'.$sort_by.'/'.$sort_order.'/';
+             $config['total_rows'] = $this->ion_auth->users()->num_rows();
+             $config['per_page'] = $limit;
+             $config['uri_segment'] = 5;
+
+            //inisialisasi config
+             $this->pagination->initialize($config);
+
+            //create pagination
+            $this->data['halaman'] = $this->pagination->create_links();
+
+            $this->data['fname_search'] = array(
+                'name'  => 'first_name',
+                'id'    => 'first_name',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('first_name'),
+            );
+
+            /*$this->data['lname_search'] = array(
+                'name'  => 'last_name',
+                'id'    => 'last_name',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('last_name'),
+            );*/
 
             $this->_render_page('auth/index', $this->data);
         }
@@ -917,15 +976,14 @@ class Auth extends MX_Controller {
                     //$this->template->add_js('jqueryblockui.js');
                     $this->template->add_js('jquery.sidr.min.js');
                     $this->template->add_js('breakpoints.js');
+                    $this->template->add_js('select2.min.js');
                     //$this->template->add_js('pace.min.js');
                     //$this->template->add_js('bootstrap-datepicker.js');
-                    //$this->template->add_js('edit_user.js');
+                    $this->template->add_js('list_user.js');
                     $this->template->add_js('core.js');
                     
-                   // $this->template->add_js('select2.min.js');
-                    
                     $this->template->add_css('jquery-ui-1.10.1.custom.min.css');
-                    //$this->template->add_css('plugins/select2/select2.css');
+                    $this->template->add_css('plugins/select2/select2.css');
                     //$this->template->add_css('pace-theme-flash.css');
                     //$this->template->add_css('datepicker.css');
                 }
