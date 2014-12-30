@@ -180,5 +180,8 @@ $config['message_end_delimiter']   = '</p>';    // Message end delimiter
 $config['error_start_delimiter']   = '<p>';     // Error mesage start delimiter
 $config['error_end_delimiter']     = '</p>';    // Error mesage end delimiter
 
+$config['list_limit'] = 10;
+$config['uri_segment_pager'] = 7;
+
 /* End of file ion_auth.php */
 /* Location: ./application/config/ion_auth.php */

@@ -20,7 +20,7 @@ class Auth extends MX_Controller {
     }
 
     //redirect if needed, otherwise display the user list
-    function index($sort_by = "id", $sort_order = "asc", $offset = 0)
+    function index($fname = "fn:",$email = "em:",$sort_by = "id", $sort_order = "asc", $offset = 0)
     {
 
         if (!$this->ion_auth->logged_in())
@@ -39,51 +39,57 @@ class Auth extends MX_Controller {
             //set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
+            //set sort order
             $this->data['sort_order'] = $sort_order;
+            
+            //set sort by
             $this->data['sort_by'] = $sort_by;
-
-            $arr_search = array();
-
-            if(strlen($this->input->post('first_name')) > 0){
-                $fname_post = array('users.first_name'=>$this->input->post('first_name'));
-            }else{
-                $fname_post = array();
-            }
-
-            /*if(strlen($this->input->post('last_name')) > 0){
-                $lname_post = array('last_name'=>$this->input->post('last_name'));
-            }else{
-                $lname_post = array();
-            }    */        
            
-            if(strlen($this->input->post('limit')) > 0)
+            //set filter by first name
+            $this->data['fname_param'] = $fname; 
+            $exp_fname = explode(":",$fname);
+            $fname_re = str_replace("_", " ", $exp_fname[1]);
+            $fname_post = (strlen($fname_re) > 0) ? array('users.first_name'=>$fname_re) : array() ;
+            
+            //set filter by email
+            $this->data['email_param'] = $email;
+            $exp_email = explode(":",$email);
+            if(strlen($exp_email[1]) > 0) 
             {
-                $this->data['limit'] = $limit = $this->input->post('limit');
-                //
+                $rep_email_char = array("%5Bat%5D","%5Bdot%5D");
+                $std_email_char = array("@",".");
+                
+                $email_post = array('users.email'=>str_replace($rep_email_char,$std_email_char,$exp_email[1]));
             }else{
-                $this->data['limit'] = $limit = '10';
+                $email_post = array();
             }
+            
+            //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
+            $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : $this->config->item('list_limit', 'ion_auth') ;
 
-            //list the users
-            $this->data['users_all'] = $this->ion_auth->users()->result();
-            $this->data['num_rows_all'] = $this->ion_auth->users()->num_rows();
+            $this->data['offset'] = $offset = $this->uri->segment($this->config->item('uri_segment_pager', 'ion_auth'));
 
-            $this->data['users'] = $this->ion_auth->like($fname_post)->limit($limit)->offset($this->uri->segment(5))->order_by($sort_by, $sort_order)->users()->result();
+            //list of filterize all users  
+            $this->data['users_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->result();
+            
+            //num rows of filterize all users
+            $this->data['num_rows_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->num_rows();
 
-            $this->data['users_num_rows'] = $this->ion_auth->like($fname_post)->limit($limit)->offset($this->uri->segment(5))->order_by($sort_by, $sort_order)->users()->num_rows();
-            //$this->data['users'] = $this->ion_auth->like($fname_post)->like($lname_post)->limit($limit)->offset($this->uri->segment(5))->order_by($sort_by, $sort_order)->users()->result();
-            //die($limit);
-            //die($this->db->last_query());
+            //list of filterize limit users for pagination  
+            $this->data['users'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->result();
+
+            $this->data['users_num_rows'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
+
             foreach ($this->data['users'] as $k => $user)
             {
                 $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
             }
 
              //config pagination
-             $config['base_url'] = base_url().'auth/index/'.$sort_by.'/'.$sort_order.'/';
-             $config['total_rows'] = $this->ion_auth->users()->num_rows();
+             $config['base_url'] = base_url().'auth/index/fn:'.$exp_fname[1].'/em:'.$exp_email[1].'/'.$sort_by.'/'.$sort_order.'/';
+             $config['total_rows'] = $this->data['num_rows_all'];
              $config['per_page'] = $limit;
-             $config['uri_segment'] = 5;
+             $config['uri_segment'] = $this->config->item('uri_segment_pager', 'ion_auth');
 
             //inisialisasi config
              $this->pagination->initialize($config);
@@ -98,14 +104,45 @@ class Auth extends MX_Controller {
                 'value' => $this->form_validation->set_value('first_name'),
             );
 
-            /*$this->data['lname_search'] = array(
-                'name'  => 'last_name',
-                'id'    => 'last_name',
+            $this->data['email_search'] = array(
+                'name'  => 'email',
+                'id'    => 'email',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('last_name'),
-            );*/
+                'value' => $this->form_validation->set_value('email'),
+            );
 
             $this->_render_page('auth/index', $this->data);
+        }
+    }
+
+    function keywords(){
+        if (!$this->ion_auth->logged_in())
+        {
+            //redirect them to the login page
+            redirect('auth/login', 'refresh');
+        }
+        elseif (!$this->ion_auth->is_admin()) //remove this elseif if you want to enable this for non-admins
+        {
+            //redirect them to the home page because they must be an administrator to view this
+            //return show_error('You must be an administrator to view this page.');
+            return show_error('You must be an administrator to view this page.');
+        }
+        else
+        {
+            $fname_post = (strlen($this->input->post('first_name')) > 0) ? strtolower(url_title($this->input->post('first_name'),'_')) : "" ;
+
+            if(strlen($this->input->post('email')) > 0){
+                $std_email_char = array("@",".");
+                $rep_email_char = array("[at]","[dot]");
+                //$email_at = str_replace("@", "[at]", $this->input->post('email'));
+                //$email_dot = str_replace(".", "[dot]", $email_at);
+                $email_post = strtolower(str_replace($std_email_char,$rep_email_char,$this->input->post('email')));
+            }else{
+                $email_post = "";
+            }
+            
+
+            redirect('auth/index/fn:'.$fname_post.'/em:'.$email_post, 'refresh');
         }
     }
 

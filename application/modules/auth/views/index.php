@@ -45,33 +45,31 @@
                                 <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('user_subheading');?></span></h4>
                             </div>
                         </div>
-                        <div class="row">
-                            <?php echo form_open(site_url('auth/index'))?>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-3 search_label"><?php echo form_label(lang('index_fname_th'),'first_name')?></div>
-                                    <div class="col-md-9"><?php echo bs_form_input($fname_search)?></div>
+                        <?php echo form_open(site_url('auth/keywords'))?>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <div class="col-md-3 search_label"><?php echo form_label(lang('index_fname_th'),'first_name')?></div>
+                                        <div class="col-md-9"><?php echo bs_form_input($fname_search)?></div>
+                                    </div>
                                 </div>
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <div class="col-md-3 search_label"><?php echo form_label(lang('index_email_th'),'email')?></div>
+                                        <div class="col-md-9"><?php echo bs_form_input($email_search)?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="row">
+                                        <div class="col-md-12"><?php echo form_submit('submit','Search','class="btn btn-primary"')?></div>
+                                    </div>
+                                </div>    
                             </div>
-                            <!-- 
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col-md-3"><?php echo form_label(lang('index_lname_th'))?></div>
-                                    <div class="col-md-9"><?php echo bs_form_input($lname_search)?></div>
-                                </div>
-                            </div> -->
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-12"><?php echo form_submit('submit','Search','class="btn btn-primary"')?></div>
-                                    
-                                </div>
-                            </div>
-                            <?php echo form_close()?>
-                        </div>
+                        <?php echo form_close()?>
                         <br/>
                         <div class="row">
                             <div class="col-md-6">
-                                <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $users_num_rows;?>&nbsp;<?php echo lang('users_subheading');?></span></h4>
+                                <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_all;?>&nbsp;<?php echo lang('users_subheading');?></span></h4>
                             </div>
                         </div>
 
@@ -84,11 +82,11 @@
                                             <label for="checkbox10"></label>
                                         </div>
                                     </th>
-                                    <th width="10%"><?php echo anchor('auth/index/first_name/'.(($sort_order == 'asc' && $sort_by == 'first_name') ? 'desc' : 'asc'), lang('index_fname_th'));?></th>
-                                    <th width="10%"><?php echo anchor('auth/index/last_name/'.(($sort_order == 'asc' && $sort_by == 'last_name') ? 'desc' : 'asc'), lang('index_lname_th'));?></th>
-                                    <th width="10%"><?php echo anchor('auth/index/email/'.(($sort_order == 'asc' && $sort_by == 'email') ? 'desc' : 'asc'), lang('index_email_th'));?></th>
+                                    <th width="10%"><?php echo anchor('auth/index/'.$fname_param.'/'.$email_param.'/first_name/'.(($sort_order == 'asc' && $sort_by == 'first_name') ? 'desc' : 'asc'), lang('index_fname_th'));?></th>
+                                    <th width="10%"><?php echo anchor('auth/index/'.$fname_param.'/'.$email_param.'/last_name/'.(($sort_order == 'asc' && $sort_by == 'last_name') ? 'desc' : 'asc'), lang('index_lname_th'));?></th>
+                                    <th width="10%"><?php echo anchor('auth/index/'.$fname_param.'/'.$email_param.'/email/'.(($sort_order == 'asc' && $sort_by == 'email') ? 'desc' : 'asc'), lang('index_email_th'));?></th>
                                     <th width="10%"><?php echo lang('index_groups_th');?></th>
-                                    <th width="10%"><?php echo anchor('auth/index/active/'.(($sort_order == 'asc' && $sort_by == 'active') ? 'desc' : 'asc'), lang('index_status_th'));?></th>
+                                    <th width="10%"><?php echo anchor('auth/index/'.$fname_param.'/'.$email_param.'/active/'.(($sort_order == 'asc' && $sort_by == 'active') ? 'desc' : 'asc'), lang('index_status_th'));?></th>
                                     <th width="10%"><?php echo lang('index_action_th');?></th>                                  
                                 </tr>
                             </thead>

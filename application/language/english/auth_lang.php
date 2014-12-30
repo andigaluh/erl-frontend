@@ -164,3 +164,6 @@ $lang['users_subheading']						= 'Users';
 $lang['edit_user_validation_bod_label']            = 'Date of Birth';
 $lang['edit_user_validation_business_unit_id_label']            = 'Business Unit';
 $lang['logout_link_label']            = 'Logout';
+$lang['search_of_subheading'] = 'Search';
+$lang['user_subheading'] = 'User';
+$lang['found_subheading'] = 'Found';
