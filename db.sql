@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2014 at 09:06 AM
+-- Generation Time: Jan 06, 2015 at 03:44 AM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `erlangga_hris`
@@ -60,6 +54,29 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `marital`
+--
+
+CREATE TABLE IF NOT EXISTS `marital` (
+  `id` tinyint(2) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `marital`
+--
+
+INSERT INTO `marital` (`id`, `title`, `is_deleted`) VALUES
+(1, 'Single', 0),
+(2, 'Married', 0),
+(3, 'Divorced', 0),
+(4, 'Widowhood', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -84,16 +101,22 @@ CREATE TABLE IF NOT EXISTS `users` (
   `nik` varchar(15) NOT NULL,
   `bod` datetime NOT NULL,
   `business_unit_id` int(3) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
+  `marital_id` tinyint(2) NOT NULL DEFAULT '0',
+  `photo` varchar(254) NOT NULL,
+  `mobile_phone` varchar(40) NOT NULL,
+  `previous_email` varchar(254) NOT NULL,
+  `bb_pin` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nik` (`nik`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `nik`, `bod`, `business_unit_id`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1419235354, 1, 'Admin', 'istrator', 'ADMIN', '0', '', '0000-00-00 00:00:00', 0),
-(8, '::1', 'andigaluh', '$2y$08$y7.a5emJ8BkLRssQz6t7XuMRreIUuGndkV25IjBvRv1ADoeZyxBaW', NULL, 'andi@komunigrafik.com', NULL, NULL, NULL, NULL, 1418971675, 1419235251, 1, 'andi galuh', 'sutrisno', '0', '0', '50402116', '2014-11-25 00:00:00', 1);
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `nik`, `bod`, `business_unit_id`, `marital_id`, `photo`, `mobile_phone`, `previous_email`, `bb_pin`) VALUES
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1420511240, 1, 'Admin', 'istrator', 'ADMIN', '0', '', '0000-00-00 00:00:00', 0, 0, '', '', '', ''),
+(8, '::1', 'andigaluh', '$2y$08$y7.a5emJ8BkLRssQz6t7XuMRreIUuGndkV25IjBvRv1ADoeZyxBaW', NULL, 'andi@komunigrafik.com', NULL, NULL, NULL, NULL, 1418971675, 1419235251, 1, 'andi galuh', 'sutrisno', '0', '0', '50402116', '1983-10-13 00:00:00', 1, 2, '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -109,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
   UNIQUE KEY `uc_users_groups` (`user_id`,`group_id`),
   KEY `fk_users_groups_users1_idx` (`user_id`),
   KEY `fk_users_groups_groups1_idx` (`group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
 --
 -- Dumping data for table `users_groups`
@@ -118,8 +141,8 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1),
 (2, 1, 2),
-(26, 8, 1),
-(27, 8, 2);
+(34, 8, 1),
+(35, 8, 2);
 
 --
 -- Constraints for dumped tables
@@ -131,7 +154,3 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 ALTER TABLE `users_groups`
   ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
