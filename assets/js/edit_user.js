@@ -10,6 +10,8 @@ $(document).ready(function() {
 	   });
 
 	  $("#business_unit_id").select2();
+	  
+	  $("#marital_id").select2();
 
 	
 	

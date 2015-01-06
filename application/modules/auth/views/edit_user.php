@@ -45,25 +45,47 @@
                         
                         <div class="row column-seperation">
                             <div <?php ( ! empty($message)) && print('class="alert alert-info"'); ?> id="infoMessage"><?php echo $message;?></div>
-                            <?php echo form_open(uri_string());?>
+                            <?php echo form_open_multipart(uri_string());?>
                                 <div class="col-md-6">
                                     <h4><?php echo lang('employee_information_subheading')?></h4>
                                     <div class="form-group">
-                                        <?php echo lang('register_nik_label', 'nik');?>
+                                        <!-- <div class="input-with-icon right"> -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <!-- input foto -->
+                                                    <?php echo lang('register_foto_label', 'photo');?>
+                                                    <?php echo form_upload($photo);?>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <?php echo lang('register_nik_label', 'nik');?>
+                                                    <?php echo bs_form_input($nik);?>                               
+                                                </div>
+                                            </div>
+                                        <!-- </div> -->
+                                       <!--<?php echo lang('register_nik_label', 'nik');?>
                                         <div class="input-with-icon right">                                       
                                             <i class=""></i>
                                             <?php echo bs_form_input($nik);?>                                 
+                                        </div>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <?php echo lang('register_bu_label', 'business_unit');?>
+                                        <div class="input-with-icon right">                                       
+                                            <i class=""></i>
+                                            <?php $options = array("1"=>"Head Office","2"=>"Bandung","3"=>"Surabaya");?>
+                                            <?php $js = 'id="business_unit_id" class="select2" style="width:100%"';?>
+                                            <?php echo form_dropdown('business_unit_id', $options, $this->form_validation->set_value('business_unit_id', $user->business_unit_id),$js);?>                               
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <?php echo lang('register_fullname_label', 'fullname');?>
-                                        <div class="input-with-icon right">                                       
-                                            <i class=""></i>
+                                        <div class="input-with-icon right">
                                             <div class="row">
                                                 <div class="col-md-6">
+                                                    <?php echo lang('register_firstname_label', 'firstname');?>
                                                     <?php echo bs_form_input($first_name);?>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <?php echo lang('register_lastname_label', 'lastname');?>
                                                     <?php echo bs_form_input($last_name);?>                             
                                                 </div>
                                             </div>
@@ -79,12 +101,19 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <?php echo lang('register_bu_label', 'business_unit');?>
-                                        <div class="input-with-icon right">                                       
+                                        <?php echo lang('register_marital_label', 'marital');?>
+                                        <div class="input-with-icon right">
+                                            <div class="input-with-icon right">                                       
                                             <i class=""></i>
-                                            <?php $options = array("1"=>"Head Office","2"=>"Bandung","3"=>"Surabaya");?>
-                                            <?php $js = 'id="business_unit_id" class="select2" style="width:100%"';?>
-                                            <?php echo form_dropdown('business_unit_id', $options, $this->form_validation->set_value('business_unit_id', $user->business_unit_id),$js);?>                               
+                                                <select name="marital_id" class="select2" id="marital_id" style="width:100%">
+                                                    <?php
+                                                        foreach ($marital->result_array() as $key => $value) {
+                                                            $selected = ($marital_id <> 0 && $marital_id == $value['id']) ? 'selected = selected' : '';
+                                                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

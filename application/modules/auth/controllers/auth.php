@@ -713,6 +713,7 @@ class Auth extends MX_Controller {
         $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
         $this->form_validation->set_rules('bod', $this->lang->line('edit_user_validation_bod_label'), 'required|xss_clean');
         $this->form_validation->set_rules('business_unit_id', $this->lang->line('edit_user_validation_business_unit_id_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('marital_id', $this->lang->line('edit_user_validation_marital_label'), 'required|xss_clean');
         $this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
 
         /*$this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean');
@@ -737,6 +738,7 @@ class Auth extends MX_Controller {
                 'last_name'  => $this->input->post('last_name'),
                 'business_unit_id'      => $this->input->post('business_unit_id'),
                 'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
+                'marital_id'      => $this->input->post('marital_id'),
             );
 
             // Only allow updating groups if user is admin
@@ -794,7 +796,13 @@ class Auth extends MX_Controller {
         $this->data['groups'] = $groups;
         $this->data['currentGroups'] = $currentGroups;
 
-              
+        $this->data['photo'] = array(
+            'name'  => 'photo',
+            'id'    => 'photo',
+            'class'    => 'input-file-control',
+            'value' => $this->form_validation->set_value('photo', $user->photo),
+        );
+
         $this->data['nik'] = array(
             'name'  => 'nik',
             'id'    => 'nik',
@@ -836,23 +844,30 @@ class Auth extends MX_Controller {
         );
 
         $this->data['email'] = array(
-                'name'  => 'email',
-                'id'    => 'email',
-                'type'  => 'text',
-                'disabled'  => 'disabled',
-                'value' => $this->form_validation->set_value('email', $user->email),
-            );
+            'name'  => 'email',
+            'id'    => 'email',
+            'type'  => 'text',
+            'disabled'  => 'disabled',
+            'value' => $this->form_validation->set_value('email', $user->email),
+        );
 
         $this->data['password'] = array(
             'name' => 'password',
             'id'   => 'password',
             'type' => 'password'
         );
+
         $this->data['password_confirm'] = array(
             'name' => 'password_confirm',
             'id'   => 'password_confirm',
             'type' => 'password'
         );
+
+        $this->data['marital_id'] = $this->form_validation->set_value('email', $user->marital_id);
+
+        $f_marital = array("is_deleted" => 0);
+        $q_marital = GetAll('marital',$f_marital);
+        $this->data['marital'] = ($q_marital->num_rows() > 0 ) ? $q_marital : array();
 
         $this->_render_page('auth/edit_user', $this->data);
     }
