@@ -1,4 +1,1 @@
-erl-frontend
-============
-
-erl-frontend
+Web HR using Codeigniter Skeleton

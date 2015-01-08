@@ -394,7 +394,7 @@ $(document).ready(function() {
 		return false;
     });
 	
-	 $("img").unveil();
+	 //$("img").unveil();
 });
 
 function calculateHeight(){

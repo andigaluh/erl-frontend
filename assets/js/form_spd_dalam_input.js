@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $("div#myId").dropzone({ url: "/file/post" });
+    
     $('.timepicker-24').timepicker({
                 minuteStep: 1,
                 showSeconds: true,

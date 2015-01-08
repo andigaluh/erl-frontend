@@ -3134,10 +3134,10 @@ form legend,
 }
 
 .user-info-wrapper .user-info .username{
-	font-size:19px;
+	font-size:14px;
 }
 .user-info-wrapper .user-info .greeting{
-	font-size:19px;
+	font-size:18px;
 	font-weight:600;
 	position: relative;
     top: 1.5px;
@@ -7035,4 +7035,37 @@ ul.my-friends li .profile-pic{
 	/*background-color: #F2F4F6;*/
 	padding: 18px 20px 10px 20px;
 	/*margin-top: 10px;*/
+}
+
+.custom-txtarea-form{
+	width:100% !important;
+	height:50px !important;
+}
+
+.register-container{
+	margin-top: 5%;
+}
+
+.page_limit{
+	margin: 13px 0 !important;
+}
+
+.page_div{
+
+}
+
+.page_label{
+	padding: 10px 0 !important;
+}
+
+.search_label{
+	padding-top: 7px !important;
+}
+
+.input-file-control{
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+	line-height: 0px !important;
+	border: 0px solid #cecece !important;
+	padding-left: 0px !important;
 }
