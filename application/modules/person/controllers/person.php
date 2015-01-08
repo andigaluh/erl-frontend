@@ -96,6 +96,8 @@ class Person extends MX_Controller {
                
                 $this->ion_auth->update($user->id, $data);
                 $this->session->set_flashdata('message', "User Saved");
+                $id = $this->uri->segment(3, 0);
+                redirect(base_url()."person/detail/".$id);
 
             }
 
