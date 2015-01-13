@@ -715,10 +715,7 @@ class Auth extends MX_Controller {
         $this->form_validation->set_rules('business_unit_id', $this->lang->line('edit_user_validation_business_unit_id_label'), 'required|xss_clean');
         $this->form_validation->set_rules('marital_id', $this->lang->line('edit_user_validation_marital_label'), 'required|xss_clean');
         $this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
-<<<<<<< HEAD
-=======
         $this->form_validation->set_rules('photo', $this->lang->line('edit_user_validation_photo_label'), 'xss_clean');
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 
         /*$this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean');
         $this->form_validation->set_rules('first_name', 'Nama depan', 'required|xss_clean');
@@ -736,26 +733,15 @@ class Auth extends MX_Controller {
             {
                 show_error($this->lang->line('error_csrf'));
             }
-<<<<<<< HEAD
-
-            $data = array(
-                'first_name' => $this->input->post('first_name'),
-                'last_name'  => $this->input->post('last_name'),
-                'business_unit_id'      => $this->input->post('business_unit_id'),
-                'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
-                'marital_id'      => $this->input->post('marital_id'),
-            );
-=======
             // Config for image upload
              $this->load->library('image_lib');
              $config['upload_path'] = './uploads/';
-             $config['overwrite']=TRUE;
              $config['allowed_types'] = 'gif|jpg|png|jpeg';
-             $config['max_size'] = '3000';
+             $config['max_size'] = '2048';
              //$config['encrypt_name'] = TRUE;
              $this->load->library('upload', $config);
 
-            if (!$this->upload->do_upload('photo')){
+            if (!$this->upload->do_upload('photo')) {
                 $this->data['error'] = array('error' => $this->upload->display_errors('<div class="alert alert-danger">', '</div>'));
                 //error
              }else{
@@ -787,35 +773,11 @@ class Auth extends MX_Controller {
             $this->image_lib->initialize($config);
             $this->image_lib->resize();
 
-            //create thumb
-
-            $config = array(
-                            'source_image'      => $upload_data['full_path'],
-                            'new_image'         => './uploads/thumbs',
-                            'create_thumb'        =>TRUE,
-                            'maintain_ratio'    => TRUE,
-                            'width'             => 125,
-                            'height'            => 125
-                        );
-
-            $this->image_lib->initialize($config);
-            $this->image_lib->resize();
-            
-            
+            $image_name = $upload_data['file_name'];
         }
                                                       
-            if(!$this->upload->do_upload('photo'))
-            {
-                            $data = array(
-                            'first_name' => $this->input->post('first_name'),
-                            'last_name'  => $this->input->post('last_name'),
-                            'business_unit_id'      => $this->input->post('business_unit_id'),
-                            'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
-                            'marital_id'      => $this->input->post('marital_id'),
-                            );
+                            
 
-            }else{
-            $image_name = $upload_data['file_name'];
             $data = array(
                             'first_name' => $this->input->post('first_name'),
                             'last_name'  => $this->input->post('last_name'),
@@ -824,12 +786,7 @@ class Auth extends MX_Controller {
                             'marital_id'      => $this->input->post('marital_id'),
                             'photo'     =>$image_name
                          );
-<<<<<<< HEAD
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 
-=======
-            }
->>>>>>> ae6e26440747f62c63cc5514dde382a12227c868
             // Only allow updating groups if user is admin
             if ($this->ion_auth->is_admin())
             {
@@ -872,10 +829,7 @@ class Auth extends MX_Controller {
                     redirect('/', 'refresh');
                 }
             }
-<<<<<<< HEAD
-=======
 
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
         }
 
         //display the edit user form

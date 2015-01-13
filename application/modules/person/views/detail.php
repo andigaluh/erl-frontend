@@ -121,19 +121,6 @@
 		            <div class="tab-content">
 
 		              <!-- tabpersonnel -->
-<<<<<<< HEAD
-		              <div class="tab-pane active" id="tabpersonnel">
-		              	<form action="" method="enctype">
-			                <div class="row column-seperation row-seperation" style="padding-bottom: 30px;">
-			                	<div class="col-md-8">
-				                  <h4>Employee Identity</h4>
-				                    <div class="row form-row">
-				                      <div class="col-md-3">
-				                        <label class="form-label">Employee ID</label>
-				                      </div>
-				                      <div class="col-md-9">
-				                        <input class="form-control" type="text" value="123456" disabled="disabled">
-=======
 
 		              <div class="tab-pane active" id="tabpersonnel">
 
@@ -149,17 +136,10 @@
 				                      <div class="col-md-9">
 				            
                                         <?php echo bs_form_input($nik);?>           
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 				                      </div>
 				                    </div>
 				                    <div class="row form-row">
 				                     <div class="col-md-3">
-<<<<<<< HEAD
-				                        <label class="form-label">Employee Name</label>
-				                      </div>
-				                      <div class="col-md-9">
-				                        <input class="form-control" type="text" value="Mauro Icardi">
-=======
 				                       <?php echo lang('register_firstname_label', 'firstname');?>
 				                      </div>
 				                      <div class="col-md-9">
@@ -172,42 +152,21 @@
 				                      </div>
 				                      <div class="col-md-9">
 				                        <?php echo bs_form_input($last_name);?>
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 				                      </div>
 				                    </div>
 				                    <div class="row form-row">
 				                      <div class="col-md-3">
-<<<<<<< HEAD
-				                        <label class="form-label">Date of Birth</label>
-				                      </div>
-				                      <div class="col-md-9">
-				                        <div class="input-append success date no-padding">
-							                <input type="text" class="form-control" value="01/01/1975">
-=======
 				                        <?php echo lang('register_dob_label', 'dob');?>
 				                      </div>
 				                      <div class="col-md-9">
 				                        <div class="input-append success date no-padding">
 							                <?php echo bs_form_input($bod);?>
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 							                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
 							            </div>
 				                      </div>
 				                    </div>
 				                    <div class="row form-row">
 				                      <div class="col-md-3">
-<<<<<<< HEAD
-				                        <label class="form-label">Marital Status</label>
-				                      </div>
-				                      <div class="col-md-9">
-				                      	<select id="marital" class="form-custom1">
-						                    <option value="0">None</option>
-						                    <option value="1">Single</option>
-						                    <option value="2">Married</option>
-						                    <option value="3">Divorced</option>
-						                    <option value="4">Widowhood</option>
-						                </select>
-=======
 				                        <?php echo lang('register_marital_label', 'marital');?>
 				                      </div>
 				                      <div class="col-md-9">
@@ -219,7 +178,6 @@
                                                         }
                                                     ?>
                                                 </select>
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 				                      </div>
 				                    </div>
 				                </div>
@@ -230,17 +188,8 @@
 			                  	<div class="grid simple" style="margin-bottom : 0px !important;">
 				                   <h4>Picture</h4>
 					            </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-			                 	<img width="167" height="167" data-src-retina="assets/img/180x180.jpg" data-src="assets/img/180x180.jpg" src="assets/img/180x180.jpg">
-=======
 			                 	<img width="167" height="167" data-src-retina="<?php echo base_url("uploads/13.jpg")?>" data-src="<?php echo base_url("uploads/13.jpg");?>" src="<?php echo base_url("uploads/13.jpg");?>">
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 			                  </div>
-=======
-                               	<img width="167" height="167" data-src-retina="<?php echo base_url()?>uploads/<?php echo ($photo)?>" data-src="<?php echo base_url()?>uploads/<?php echo ($photo)?>" src="<?php echo base_url()?>uploads/<?php echo ($photo)?>">
-			                 	</div>
->>>>>>> ae6e26440747f62c63cc5514dde382a12227c868
 			                </div>
 			                <div class="row row-seperation" style="margin-top: 20px;padding-bottom: 30px;">
 			                	<div class="col-md-12">
@@ -266,12 +215,6 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-<<<<<<< HEAD
-					                      <label class="form-label">Organization</label>
-					                    </div>
-					                    <div class="col-md-9">
-				                        	<input class="form-control" type="text" value="Cabang Kota Bandung">
-=======
 					                      <?php echo lang('register_bu_label', 'business_unit');?>
 					                    </div>
 					                    <div class="col-md-9">
@@ -282,7 +225,6 @@
                                             <?php echo form_dropdown('business_unit_id', $options, $this->form_validation->set_value('business_unit_id', $user->business_unit_id),$js);?>                               
                                         </div>
 						                </select>
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 				                      	</div>
 						        	</div>
 						        	<div class="row form-row">
@@ -374,11 +316,7 @@
 					                      <label class="form-label">Mobile Phone</label>
 					                    </div>
 					                    <div class="col-md-9">
-<<<<<<< HEAD
-				                        	<input class="form-control" type="text" value="081234567890">
-=======
 				                        	<?php echo bs_form_input($phone);?>
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 				                      	</div>
 						        	</div>
 						        	<div class="row form-row">
@@ -413,11 +351,7 @@
 								  <button class="btn btn-white btn-cons" type="button">Cancel</button>
 								</div>
 						  	</div>
-<<<<<<< HEAD
-		            	</form>
-=======
 		            	 <?php echo form_close();?>
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 		              </div>
 
 		              <!-- tabcourse -->

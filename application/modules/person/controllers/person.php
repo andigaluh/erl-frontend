@@ -47,9 +47,6 @@ class Person extends MX_Controller {
         }
     }
 
-<<<<<<< HEAD
-    function detail($id=0)
-=======
     function keywords()
     {
         $keyword = $this->input->post('first_name');
@@ -59,7 +56,6 @@ class Person extends MX_Controller {
     }
 
     function detail($id)
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
     {
         if (!$this->ion_auth->logged_in())
         {
@@ -74,19 +70,6 @@ class Person extends MX_Controller {
         }
         else
         {
-<<<<<<< HEAD
-            //set the flash data error message if there is one
-            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-            $filter = array();
-            $query_options = GetAll('users',$filter);
-            $this->data['user_all'] = ($query_options->num_rows() > 0 ) ? $query_options : array();
- 
-            $this->_render_page('person/detail', $this->data);
-        }
-    }
-
-=======
 
         $this->data['csrf'] = $this->_get_csrf_nonce();
         $user = $this->ion_auth->user($id)->row();
@@ -167,7 +150,7 @@ class Person extends MX_Controller {
         );
 
         $this->data['marital_id'] = $this->form_validation->set_value('email', $user->marital_id);
-        $this->data['photo'] = $this->form_validation->set_value('photo', $user->photo);
+
         $f_marital = array("is_deleted" => 0);
         $q_marital = GetAll('marital',$f_marital);
         $this->data['marital'] = ($q_marital->num_rows() > 0 ) ? $q_marital : array();
@@ -199,7 +182,6 @@ class Person extends MX_Controller {
                 return FALSE;
             }
         }
->>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
     
 
     function _render_page($view, $data=null, $render=false)
