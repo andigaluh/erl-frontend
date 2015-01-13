@@ -121,6 +121,7 @@
 		            <div class="tab-content">
 
 		              <!-- tabpersonnel -->
+<<<<<<< HEAD
 		              <div class="tab-pane active" id="tabpersonnel">
 		              	<form action="" method="enctype">
 			                <div class="row column-seperation row-seperation" style="padding-bottom: 30px;">
@@ -132,29 +133,70 @@
 				                      </div>
 				                      <div class="col-md-9">
 				                        <input class="form-control" type="text" value="123456" disabled="disabled">
+=======
+
+		              <div class="tab-pane active" id="tabpersonnel">
+
+		              	<?php echo form_open_multipart(uri_string());?>
+			                <div class="row column-seperation row-seperation" style="padding-bottom: 30px;">
+			                	<div class="col-md-8">
+				                  <h4>Employee Identity</h4>
+				                  <div <?php ( ! empty($message)) && print('class="alert alert-info"'); ?> id="infoMessage"><?php echo $message;?></div>
+				                    <div class="row form-row">
+				                      <div class="col-md-3">
+				                        <?php echo lang('register_nik_label', 'nik');?>
+				                      </div>
+				                      <div class="col-md-9">
+				            
+                                        <?php echo bs_form_input($nik);?>           
+>>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 				                      </div>
 				                    </div>
 				                    <div class="row form-row">
 				                     <div class="col-md-3">
+<<<<<<< HEAD
 				                        <label class="form-label">Employee Name</label>
 				                      </div>
 				                      <div class="col-md-9">
 				                        <input class="form-control" type="text" value="Mauro Icardi">
+=======
+				                       <?php echo lang('register_firstname_label', 'firstname');?>
+				                      </div>
+				                      <div class="col-md-9">
+				                        <?php echo bs_form_input($first_name);?>
+				                      </div>
+				                    </div>
+				                    <div class="row form-row">
+				                     <div class="col-md-3">
+				                       <?php echo lang('register_lastname_label', 'lasttname');?>
+				                      </div>
+				                      <div class="col-md-9">
+				                        <?php echo bs_form_input($last_name);?>
+>>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 				                      </div>
 				                    </div>
 				                    <div class="row form-row">
 				                      <div class="col-md-3">
+<<<<<<< HEAD
 				                        <label class="form-label">Date of Birth</label>
 				                      </div>
 				                      <div class="col-md-9">
 				                        <div class="input-append success date no-padding">
 							                <input type="text" class="form-control" value="01/01/1975">
+=======
+				                        <?php echo lang('register_dob_label', 'dob');?>
+				                      </div>
+				                      <div class="col-md-9">
+				                        <div class="input-append success date no-padding">
+							                <?php echo bs_form_input($bod);?>
+>>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 							                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
 							            </div>
 				                      </div>
 				                    </div>
 				                    <div class="row form-row">
 				                      <div class="col-md-3">
+<<<<<<< HEAD
 				                        <label class="form-label">Marital Status</label>
 				                      </div>
 				                      <div class="col-md-9">
@@ -165,6 +207,19 @@
 						                    <option value="3">Divorced</option>
 						                    <option value="4">Widowhood</option>
 						                </select>
+=======
+				                        <?php echo lang('register_marital_label', 'marital');?>
+				                      </div>
+				                      <div class="col-md-9">
+				                      	<select name="marital_id" class="select2" id="marital_id" style="width:100%">
+                                                    <?php
+                                                        foreach ($marital->result_array() as $key => $value) {
+                                                            $selected = ($marital_id <> 0 && $marital_id == $value['id']) ? 'selected = selected' : '';
+                                                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }
+                                                    ?>
+                                                </select>
+>>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 				                      </div>
 				                    </div>
 				                </div>
@@ -175,7 +230,11 @@
 			                  	<div class="grid simple" style="margin-bottom : 0px !important;">
 				                   <h4>Picture</h4>
 					            </div>
+<<<<<<< HEAD
 			                 	<img width="167" height="167" data-src-retina="assets/img/180x180.jpg" data-src="assets/img/180x180.jpg" src="assets/img/180x180.jpg">
+=======
+			                 	<img width="167" height="167" data-src-retina="<?php echo base_url("uploads/13.jpg")?>" data-src="<?php echo base_url("uploads/13.jpg");?>" src="<?php echo base_url("uploads/13.jpg");?>">
+>>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 			                  </div>
 			                </div>
 			                <div class="row row-seperation" style="margin-top: 20px;padding-bottom: 30px;">
@@ -202,10 +261,23 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
+<<<<<<< HEAD
 					                      <label class="form-label">Organization</label>
 					                    </div>
 					                    <div class="col-md-9">
 				                        	<input class="form-control" type="text" value="Cabang Kota Bandung">
+=======
+					                      <?php echo lang('register_bu_label', 'business_unit');?>
+					                    </div>
+					                    <div class="col-md-9">
+				                        <div class="input-with-icon right">                                       
+                                            <i class=""></i>
+                                            <?php $options = array("1"=>"Head Office","2"=>"Bandung","3"=>"Surabaya");?>
+                                            <?php $js = 'id="business_unit_id" class="select2" style="width:100%"';?>
+                                            <?php echo form_dropdown('business_unit_id', $options, $this->form_validation->set_value('business_unit_id', $user->business_unit_id),$js);?>                               
+                                        </div>
+						                </select>
+>>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 				                      	</div>
 						        	</div>
 						        	<div class="row form-row">
@@ -297,7 +369,11 @@
 					                      <label class="form-label">Mobile Phone</label>
 					                    </div>
 					                    <div class="col-md-9">
+<<<<<<< HEAD
 				                        	<input class="form-control" type="text" value="081234567890">
+=======
+				                        	<?php echo bs_form_input($phone);?>
+>>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 				                      	</div>
 						        	</div>
 						        	<div class="row form-row">
@@ -332,7 +408,11 @@
 								  <button class="btn btn-white btn-cons" type="button">Cancel</button>
 								</div>
 						  	</div>
+<<<<<<< HEAD
 		            	</form>
+=======
+		            	 <?php echo form_close();?>
+>>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 		              </div>
 
 		              <!-- tabcourse -->
