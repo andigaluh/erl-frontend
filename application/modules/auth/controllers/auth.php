@@ -736,12 +736,13 @@ class Auth extends MX_Controller {
             // Config for image upload
              $this->load->library('image_lib');
              $config['upload_path'] = './uploads/';
+             $config['overwrite']=TRUE;
              $config['allowed_types'] = 'gif|jpg|png|jpeg';
-             $config['max_size'] = '2048';
+             $config['max_size'] = '3000';
              //$config['encrypt_name'] = TRUE;
              $this->load->library('upload', $config);
 
-            if (!$this->upload->do_upload('photo')) {
+            if (!$this->upload->do_upload('photo')){
                 $this->data['error'] = array('error' => $this->upload->display_errors('<div class="alert alert-danger">', '</div>'));
                 //error
              }else{
@@ -773,11 +774,35 @@ class Auth extends MX_Controller {
             $this->image_lib->initialize($config);
             $this->image_lib->resize();
 
-            $image_name = $upload_data['file_name'];
+            //create thumb
+
+            $config = array(
+                            'source_image'      => $upload_data['full_path'],
+                            'new_image'         => './uploads/thumbs',
+                            'create_thumb'        =>TRUE,
+                            'maintain_ratio'    => TRUE,
+                            'width'             => 125,
+                            'height'            => 125
+                        );
+
+            $this->image_lib->initialize($config);
+            $this->image_lib->resize();
+            
+            
         }
                                                       
-                            
+            if(!$this->upload->do_upload('photo'))
+            {
+                            $data = array(
+                            'first_name' => $this->input->post('first_name'),
+                            'last_name'  => $this->input->post('last_name'),
+                            'business_unit_id'      => $this->input->post('business_unit_id'),
+                            'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
+                            'marital_id'      => $this->input->post('marital_id'),
+                            );
 
+            }else{
+            $image_name = $upload_data['file_name'];
             $data = array(
                             'first_name' => $this->input->post('first_name'),
                             'last_name'  => $this->input->post('last_name'),
@@ -786,7 +811,7 @@ class Auth extends MX_Controller {
                             'marital_id'      => $this->input->post('marital_id'),
                             'photo'     =>$image_name
                          );
-
+            }
             // Only allow updating groups if user is admin
             if ($this->ion_auth->is_admin())
             {
