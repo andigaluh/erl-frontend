@@ -231,11 +231,16 @@
 				                   <h4>Picture</h4>
 					            </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 			                 	<img width="167" height="167" data-src-retina="assets/img/180x180.jpg" data-src="assets/img/180x180.jpg" src="assets/img/180x180.jpg">
 =======
 			                 	<img width="167" height="167" data-src-retina="<?php echo base_url("uploads/13.jpg")?>" data-src="<?php echo base_url("uploads/13.jpg");?>" src="<?php echo base_url("uploads/13.jpg");?>">
 >>>>>>> fbf203f4ab6229107e1e0d9babfef228f4826f6c
 			                  </div>
+=======
+                               	<img width="167" height="167" data-src-retina="<?php echo base_url()?>uploads/<?php echo ($photo)?>" data-src="<?php echo base_url()?>uploads/<?php echo ($photo)?>" src="<?php echo base_url()?>uploads/<?php echo ($photo)?>">
+			                 	</div>
+>>>>>>> ae6e26440747f62c63cc5514dde382a12227c868
 			                </div>
 			                <div class="row row-seperation" style="margin-top: 20px;padding-bottom: 30px;">
 			                	<div class="col-md-12">

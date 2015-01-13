@@ -167,7 +167,7 @@ class Person extends MX_Controller {
         );
 
         $this->data['marital_id'] = $this->form_validation->set_value('email', $user->marital_id);
-
+        $this->data['photo'] = $this->form_validation->set_value('photo', $user->photo);
         $f_marital = array("is_deleted" => 0);
         $q_marital = GetAll('marital',$f_marital);
         $this->data['marital'] = ($q_marital->num_rows() > 0 ) ? $q_marital : array();
