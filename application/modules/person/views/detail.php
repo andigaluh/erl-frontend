@@ -188,8 +188,8 @@
 			                  	<div class="grid simple" style="margin-bottom : 0px !important;">
 				                   <h4>Picture</h4>
 					            </div>
-			                 	<img width="167" height="167" data-src-retina="<?php echo base_url("uploads/13.jpg")?>" data-src="<?php echo base_url("uploads/13.jpg");?>" src="<?php echo base_url("uploads/13.jpg");?>">
-			                  </div>
+                                <img alt="" src="<?php echo base_url()?>uploads/<?php echo $u_folder.'/225x225/'.$s_photo?>">
+			                 	</div>
 			                </div>
 			                <div class="row row-seperation" style="margin-top: 20px;padding-bottom: 30px;">
 			                	<div class="col-md-12">

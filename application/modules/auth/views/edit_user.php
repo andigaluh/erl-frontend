@@ -56,6 +56,11 @@
                                                     <?php echo lang('register_foto_label', 'photo');?>
                                                     <?php echo form_upload($photo);?>
                                                 </div>
+                                                <?php if($s_photo && file_exists('./uploads/'.$u_folder.'/'.$s_photo)) {?>
+                                                <img alt="" src="<?php echo base_url()?>uploads/<?php echo $u_folder.'/80x80/'.$s_photo?>">
+                                                <?php }else{ ?>
+                                                <img alt="" src="<?php echo base_url()?>assets/img/no-image.png" class="img-responsive">
+                                                <?php } ?>
                                                 <div class="col-md-6">
                                                     <?php echo lang('register_nik_label', 'nik');?>
                                                     <?php echo bs_form_input($nik);?>                               

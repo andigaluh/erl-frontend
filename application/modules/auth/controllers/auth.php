@@ -734,14 +734,21 @@ class Auth extends MX_Controller {
                 show_error($this->lang->line('error_csrf'));
             }
             // Config for image upload
+
+            $user_folder = $user->id.$user->first_name;
+            if(!is_dir('./uploads/'.$user_folder)){
+            mkdir('./uploads/'.$user_folder, 0777);
+            }
+
              $this->load->library('image_lib');
-             $config['upload_path'] = './uploads/';
+             $config['upload_path'] = './uploads/'.$user_folder;
+             $config['overwrite']=TRUE;
              $config['allowed_types'] = 'gif|jpg|png|jpeg';
-             $config['max_size'] = '2048';
+             $config['max_size'] = '3000';
              //$config['encrypt_name'] = TRUE;
              $this->load->library('upload', $config);
 
-            if (!$this->upload->do_upload('photo')) {
+            if (!$this->upload->do_upload('photo')){
                 $this->data['error'] = array('error' => $this->upload->display_errors('<div class="alert alert-danger">', '</div>'));
                 //error
              }else{
@@ -749,10 +756,29 @@ class Auth extends MX_Controller {
             $upload_data = $this->upload->data();
 
             //resize:
-
+            $resize1='80x80';
+            if(!is_dir('./uploads/'.$user_folder.'/'.$resize1)){
+            mkdir('./uploads/'.$user_folder.'/'.$resize1, 0777);
+            }
             $config = array(
                             'source_image'      => $upload_data['full_path'], //path to the uploaded image
-                            'new_image'         => './uploads/100X100', //path to
+                            'new_image'         => './uploads/'.$user_folder.'/'.$resize1, //path to
+                            'maintain_ratio'    => FALSE,
+                            'width'             => 80,
+                            'height'            => 80
+                        );
+ 
+    
+            $this->image_lib->initialize($config);
+            $this->image_lib->resize();
+ 
+            $resize2='100x100';
+            if(!is_dir('./uploads/'.$user_folder.'/'.$resize2)){
+            mkdir('./uploads/'.$user_folder.'/'.$resize2, 0777);
+            }
+            $config = array(
+                            'source_image'      => $upload_data['full_path'], //path to the uploaded image
+                            'new_image'         => './uploads/'.$user_folder.'/'.$resize2, //path to
                             'maintain_ratio'    => FALSE,
                             'width'             => 100,
                             'height'            => 100
@@ -761,23 +787,36 @@ class Auth extends MX_Controller {
     
             $this->image_lib->initialize($config);
             $this->image_lib->resize();
- 
-            $config = array(
-                            'source_image'      => $upload_data['full_path'],
-                            'new_image'         => './uploads/80X80',
-                            'maintain_ratio'    => FALSE,
-                            'width'             => 80,
-                            'height'            => 80
-                        );
 
+            $resize3='225x225';
+            if(!is_dir('./uploads/'.$user_folder.'/'.$resize3)){
+            mkdir('./uploads/'.$user_folder.'/'.$resize3, 0777);
+            }
+            $config = array(
+                            'source_image'      => $upload_data['full_path'], //path to the uploaded image
+                            'new_image'         => './uploads/'.$user_folder.'/'.$resize3,
+                            'width'             => 225,
+                            'height'            => 225
+                        );
+ 
+    
             $this->image_lib->initialize($config);
             $this->image_lib->resize();
-
-            $image_name = $upload_data['file_name'];
+            
         }
                                                       
-                            
+            if(!$this->upload->do_upload('photo'))
+            {
+                            $data = array(
+                            'first_name' => $this->input->post('first_name'),
+                            'last_name'  => $this->input->post('last_name'),
+                            'business_unit_id'      => $this->input->post('business_unit_id'),
+                            'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
+                            'marital_id'      => $this->input->post('marital_id'),
+                            );
 
+            }else{
+            $image_name = $upload_data['file_name'];
             $data = array(
                             'first_name' => $this->input->post('first_name'),
                             'last_name'  => $this->input->post('last_name'),
@@ -786,7 +825,7 @@ class Auth extends MX_Controller {
                             'marital_id'      => $this->input->post('marital_id'),
                             'photo'     =>$image_name
                          );
-
+            }
             // Only allow updating groups if user is admin
             if ($this->ion_auth->is_admin())
             {
@@ -910,7 +949,11 @@ class Auth extends MX_Controller {
             'type' => 'password'
         );
 
+
         $this->data['marital_id'] = $this->form_validation->set_value('email', $user->marital_id);
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', $user->photo);
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
 
         $f_marital = array("is_deleted" => 0);
         $q_marital = GetAll('marital',$f_marital);
