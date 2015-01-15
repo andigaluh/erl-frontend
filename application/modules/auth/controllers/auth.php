@@ -616,6 +616,7 @@ class Auth extends MX_Controller {
                 'nik'                   => $this->input->post('nik'),
                 'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
             );
+            
         }
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
         {

@@ -920,6 +920,13 @@ class Ion_auth_model extends CI_Model
         $this->db->insert($this->tables['users'], $user_data);
 
         $id = $this->db->insert_id();
+        $data2 = array(
+                'id' =>$id,
+                'user_id' =>$id,
+                'created_by' =>$id,
+                'created_on' => date('Y-m-d',strtotime('now'))
+            );
+        $this->db->insert('users_employement',$data2);
 
         if (!empty($groups))
         {
