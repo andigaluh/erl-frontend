@@ -198,20 +198,27 @@
 				                		<div class="col-md-3">
 					                      <label class="form-label">Seniority Date</label>
 					                    </div>
-					                    <div class="col-md-9">
-						                    <div class="input-append success date no-padding">
-								                <input type="text" class="form-control" value="01/01/2000">
-								                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
-								            </div>
-								        </div>
+					                   <div class="col-md-9">
+				                        <div class="input-append success date no-padding">
+							                <?php echo bs_form_input($seniority_date);?>
+							                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+							            </div>
+				                      </div>
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
 					                      <label class="form-label">Position</label>
 					                    </div>
-					                    <div class="col-md-9">
-				                        	<input class="form-control" type="text" value="IT Officer">
-				                      	</div>
+					                   <div class="col-md-9">
+				                      	<select name="position_id" class="select2" id="position_id" style="width:100%">
+                                                    <?php
+                                                        foreach ($position->result_array() as $key => $value) {
+                                                            $selected = ($position_id <> 0 && $position_id == $value['id']) ? 'selected = selected' : '';
+                                                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }
+                                                    ?>
+                                        </select>
+				                        </div>
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
@@ -232,41 +239,37 @@
 					                      <label class="form-label">Employee Status</label>
 					                    </div>
 					                    <div class="col-md-9">
-				                        	<select id="emplstatus" class="form-custom1">
-						                    <option value="0">None</option>
-						                    <option value="1">Probation</option>
-						                    <option value="2">Permanent </option>
-						                    <option value="3">Contract</option>
-						                    <option value="4">Part Time</option>
-						                    <option value="5">Expat Contranct</option>
-						                    <option value="6">Sick</option>
-						                    <option value="7">UPLeave</option>
-						                    <option value="8">Ahli</option>
-						                    <option value="9">Daily Contract</option>
-						                    <option value="10">Daily Permanent</option>
-						                    <option value="11">Job Training</option>
-						                </select>
-				                      	</div>
+				                      	<select name="empl_status_id" class="select2" id="empl_status_id" style="width:100%">
+                                                    <?php
+                                                        foreach ($empl_status->result_array() as $key => $value) {
+                                                            $selected = ($empl_status_id <> 0 && $empl_status_id == $value['id']) ? 'selected = selected' : '';
+                                                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }
+                                                    ?>
+                                        </select>
+				                        </div>
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
 					                      <label class="form-label">Status</label>
 					                    </div>
 					                    <div class="col-md-9">
-				                        	<select id="status" class="form-custom1">
-						                    <option value="0">Work Center</option>
-						                    <option value="1">Employed</option>
-						                    <option value="2">Terminated</option>
-						                    <option value="3">Honorarium</option>
-						                </select>
-				                      	</div>
+				                      	<select name="employee_status_id" class="select2" id="employee_status_id" style="width:100%">
+                                                    <?php
+                                                        foreach ($employee_status->result_array() as $key => $value) {
+                                                            $selected = ($employee_status_id <> 0 && $employee_status_id == $value['id']) ? 'selected = selected' : '';
+                                                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }
+                                                    ?>
+                                        </select>
+				                        </div>
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
 					                      <label class="form-label">Cost Center</label>
 					                    </div>
 					                    <div class="col-md-9">
-				                        	<input class="form-control" type="text" value="50411000">
+				                        	<?php echo bs_form_input($cost_center);?>
 				                      	</div>
 						        	</div>
 						        	<div class="row form-row">
@@ -274,37 +277,60 @@
 					                      <label class="form-label">Position Group</label>
 					                    </div>
 					                    <div class="col-md-9">
-				                        	<input class="form-control" type="text" value="Staff">
-				                      	</div>
+				                      	<select name="position_group_id" class="select2" id="position_group_id" style="width:100%">
+                                                    <?php
+                                                        foreach ($position_group->result_array() as $key => $value) {
+                                                            $selected = ($position_group_id <> 0 && $position_group_id == $value['id']) ? 'selected = selected' : '';
+                                                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }
+                                                    ?>
+                                        </select>
+				                        </div>
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
 					                      <label class="form-label">Grade</label>
 					                    </div>
 					                    <div class="col-md-9">
-				                        	<input class="form-control" type="text" value="G004">
-				                      	</div>
+				                      	<select name="grade_id" class="select2" id="grade_id" style="width:100%">
+                                                    <?php
+                                                        foreach ($grade->result_array() as $key => $value) {
+                                                            $selected = ($grade_id <> 0 && $grade_id == $value['id']) ? 'selected = selected' : '';
+                                                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }
+                                                    ?>
+                                        </select>
+				                        </div>
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
 					                      <label class="form-label">Resign Reason</label>
 					                    </div>
 					                    <div class="col-md-9">
-				                        	<input class="form-control" type="text" value="G004">
-				                      	</div>
+				                      	<select name="resign_reason_id" class="select2" id="resign_reason_id" style="width:100%">
+                                                    <?php
+                                                        foreach ($resign_reason->result_array() as $key => $value) {
+                                                            $selected = ($resign_reason_id <> 0 && $resign_reason_id == $value['id']) ? 'selected = selected' : '';
+                                                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }
+                                                    ?>
+                                        </select>
+				                        </div>
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
 					                      <label class="form-label">Active / Inactive</label>
 					                    </div>
 					                    <div class="col-md-9">
-				                        	<div class="radio form-custom1 radio-success">
-						                        <input id="active" type="radio" name="activeinactive" value="Active" checked="checked">
-						                        <label for="married">Active</label>
-						                        <input id="inactive" type="radio" name="activeinactive" value="Inactive">
-						                        <label for="inactive">Inactive</label>
-					                    </div>
-				                      	</div>
+				                      	<select name="active_inactive_id" class="select2" id="active_inactive_id" style="width:100%">
+                                                    <?php
+                                                        foreach ($active_inactive->result_array() as $key => $value) {
+                                                            $selected = ($active_inactive_id <> 0 && $active_inactive_id == $value['id']) ? 'selected = selected' : '';
+                                                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }
+                                                    ?>
+                                        </select>
+				                        </div>
 						        	</div>
 			                	</div>
 			                </div>
@@ -332,7 +358,7 @@
 					                      <label class="form-label">Previous Email</label>
 					                    </div>
 					                    <div class="col-md-9">
-				                        	<input class="form-control" type="text" value="mauro.icardi@mail.com">
+				                        	<?php echo bs_form_input($prev_email);?>
 				                      	</div>
 						        	</div>
 						        	<div class="row form-row">
@@ -340,7 +366,7 @@
 					                      <label class="form-label">Blackberry PIN</label>
 					                    </div>
 					                    <div class="col-md-9">
-				                        	<input class="form-control" type="text" value="7ABC1234">
+				                        	<?php echo bs_form_input($bb_pin);?>
 				                      	</div>
 						        	</div>
 			                	</div>

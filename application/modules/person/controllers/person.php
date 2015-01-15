@@ -12,7 +12,7 @@ class Person extends MX_Controller {
         $this->load->helper('url');
 
         $this->load->database();
-
+        $this->load->model('person_model');
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
         $this->lang->load('auth');
@@ -73,29 +73,60 @@ class Person extends MX_Controller {
 
         $this->data['csrf'] = $this->_get_csrf_nonce();
         $user = $this->ion_auth->user($id)->row();
-
+        $user_emp = $this->person_model->userbyid($id)->row();
+        $sess_id = $this->session->userdata('user_id');
+        
         $data = array(
-                'first_name' => $this->input->post('first_name'),
-                'last_name'  => $this->input->post('last_name'),
-                'business_unit_id'      => $this->input->post('business_unit_id'),
+                'first_name'            => $this->input->post('first_name'),
+                'last_name'             => $this->input->post('last_name'),
                 'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
-                'marital_id'      => $this->input->post('marital_id'),
-                'phone' => $this->input->post('phone'),
+                'marital_id'            => $this->input->post('marital_id'),
+                'business_unit_id'      => $this->input->post('business_unit_id'),
+                'phone'                 => $this->input->post('phone'),
+                'prev_email'            => $this->input->post('prev_email'),
+                'bb_pin'                => $this->input->post('bb_pin'),
             );
+
+        $data2 = array(
+                'seniority_date'        => date('Y-m-d',strtotime($this->input->post('seniority_date'))),
+                'position_id'           => $this->input->post('position_id'),
+                'empl_status_id'        => $this->input->post('empl_status_id'),
+                'employee_status_id'    => $this->input->post('employee_status_id'),
+                'cost_center'           => $this->input->post('cost_center'),
+                'position_group_id'     => $this->input->post('position_group_id'),
+                'grade_id'              => $this->input->post('grade_id'),
+                'resign_reason_id'      => $this->input->post('resign_reason_id'),
+                'active_inactive_id'    => $this->input->post('active_inactive_id'),
+                'edited_by'             => $sess_id,
+                'edited_on'             => date('Y-m-d',strtotime('now'))
+            );
+
+        
 
         $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
         $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
         $this->form_validation->set_rules('bod', $this->lang->line('edit_user_validation_bod_label'), 'required|xss_clean');
         $this->form_validation->set_rules('business_unit_id', $this->lang->line('edit_user_validation_business_unit_id_label'), 'required|xss_clean');
         $this->form_validation->set_rules('marital_id', $this->lang->line('edit_user_validation_marital_label'), 'required|xss_clean');
-        $this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
+        $this->form_validation->set_rules('phone', 'phone', 'required|xss_clean|numeric');
+        $this->form_validation->set_rules('prev_email', 'prev_email', 'xss_clean|valid_email');
+        $this->form_validation->set_rules('seniority_date', 'seniority_date', 'required|xss_clean');
+        $this->form_validation->set_rules('position_id', 'position_id', 'required|xss_clean');
+        $this->form_validation->set_rules('empl_status_id', 'empl_status_id', 'required|xss_clean');
+        $this->form_validation->set_rules('employee_status_id', 'employee_status_id', 'required|xss_clean');
+        $this->form_validation->set_rules('cost_center', 'cost_center', 'required|xss_clean');
+        $this->form_validation->set_rules('position_group_id', 'position_group_id', 'required|xss_clean');
+        $this->form_validation->set_rules('grade_id', 'grade_id', 'required|xss_clean');
+        $this->form_validation->set_rules('resign_reason_id', 'resign_reason_id', 'required|xss_clean');
+        $this->form_validation->set_rules('active_inactive_id', 'active_inactive_id', 'required|xss_clean');
 
         if ($this->form_validation->run() === TRUE)
             {               
-                //check to see if we are creating the user
-               
+                //check to see if we are creating the user            
                 $this->ion_auth->update($user->id, $data);
+                $this->person_model->update($user->id, $data2);
                 $this->session->set_flashdata('message', "User Saved");
+                
                 $id = $this->uri->segment(3, 0);
                 redirect(base_url()."person/detail/".$id);
 
@@ -106,8 +137,6 @@ class Person extends MX_Controller {
 
         //pass the user to the view
         $this->data['user'] = $user;
-
-        
 
         $this->data['nik'] = array(
             'name'  => 'nik',
@@ -142,6 +171,22 @@ class Person extends MX_Controller {
             'type'  => 'text',
             'value' => $this->form_validation->set_value('company', $user->company),
         );
+
+        $this->data['seniority_date'] = array(
+            'name'  => 'seniority_date',
+            'id'    => 'seniority_date',
+            'type'  => 'text',
+            'value' => $this->form_validation->set_value('seniority_date', $user_emp->seniority_date),
+        );
+
+
+        $this->data['cost_center'] = array(
+            'name'  => 'cost_center',
+            'id'    => 'cost_center',
+            'type'  => 'text',
+            'value' => $this->form_validation->set_value('cost_center', $user_emp->cost_center),
+        );
+
         $this->data['phone'] = array(
             'name'  => 'phone',
             'id'    => 'phone',
@@ -149,14 +194,58 @@ class Person extends MX_Controller {
             'value' => $this->form_validation->set_value('phone', $user->phone),
         );
 
-        $this->data['marital_id'] = $this->form_validation->set_value('email', $user->marital_id);
-        $this->data['s_photo'] = $this->form_validation->set_value('photo', $user->photo);
-        $user_folder = $user->id.$user->first_name;
-        $this->data['u_folder'] = $user_folder;
+        $this->data['prev_email'] = array(
+            'name'  => 'prev_email',
+            'id'    => 'prev_email',
+            'type'  => 'text',
+            'value' => $this->form_validation->set_value('prev_email', $user->previous_email),
+        );
+
+        $this->data['bb_pin'] = array(
+            'name'  => 'bb_pin',
+            'id'    => 'bb_pin',
+            'type'  => 'text',
+            'value' => $this->form_validation->set_value('bb_pin', $user->bb_pin),
+        );
+        
+        $this->data['marital_id'] = $this->form_validation->set_value('marital_id', $user->marital_id);
         $f_marital = array("is_deleted" => 0);
         $q_marital = GetAll('marital',$f_marital);
         $this->data['marital'] = ($q_marital->num_rows() > 0 ) ? $q_marital : array();
-        
+
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', $user->photo);
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+
+        $this->data['position_id'] = $this->form_validation->set_value('position_id', $user_emp->position_id);
+        $position = GetAll('position');
+        $this->data['position'] = ($position->num_rows() > 0 ) ? $position : array();
+
+        $this->data['empl_status_id'] = $this->form_validation->set_value('empl_status_id', $user_emp->empl_status_id);
+        $position = GetAll('empl_status');
+        $this->data['empl_status'] = ($position->num_rows() > 0 ) ? $position : array();
+
+        $this->data['employee_status_id'] = $this->form_validation->set_value('employee_status_id', $user_emp->employee_status_id);
+        $position = GetAll('employee_status');
+        $this->data['employee_status'] = ($position->num_rows() > 0 ) ? $position : array();
+
+        $this->data['position_group_id'] = $this->form_validation->set_value('position_group_id', $user_emp->position_group_id);
+        $position = GetAll('position_group');
+        $this->data['position_group'] = ($position->num_rows() > 0 ) ? $position : array();
+
+        $this->data['grade_id'] = $this->form_validation->set_value('grade_id', $user_emp->grade_id);
+        $position = GetAll('grade');
+        $this->data['grade'] = ($position->num_rows() > 0 ) ? $position : array();
+
+        $this->data['resign_reason_id'] = $this->form_validation->set_value('resign_reason_id', $user_emp->resign_reason_id);
+        $position = GetAll('resign_reason');
+        $this->data['resign_reason'] = ($position->num_rows() > 0 ) ? $position : array();
+
+        $this->data['active_inactive_id'] = $this->form_validation->set_value('active_inactive_id', $user_emp->active_inactive_id);
+        $position = GetAll('active_inactive');
+        $this->data['active_inactive'] = ($position->num_rows() > 0 ) ? $position : array();
+
         $this->_render_page('person/detail', $this->data);
         }
     }

@@ -1,12 +1,20 @@
 $(document).ready(function() {	
 
-	$("#relation").select2();
+	$("#marital_id").select2();
 
-	$("#emplstatus").select2();
+	$("#position_id").select2();
 
-	$("#status").select2();
+	$("#empl_status_id").select2();
 
-	$("#marital").select2();
+	$("#employee_status_id").select2();
+
+	$("#position_group_id").select2();
+
+	$("#grade_id").select2();
+
+	$("#resign_reason_id").select2();
+
+	$("#active_inactive_id").select2();
 
 	/***** Tabs *****/
 	//Normal Tabs - Positions are controlled by CSS classes
