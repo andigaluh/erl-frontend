@@ -759,12 +759,12 @@ class Auth extends MX_Controller {
             //resize:
             $resize1='80x80';
             if(!is_dir('./uploads/'.$user_folder.'/'.$resize1)){
-            mkdir('./uploads/'.$user_folder.'/'.$resize1, 0777);
+                mkdir('./uploads/'.$user_folder.'/'.$resize1, 0777);
             }
             $config = array(
                             'source_image'      => $upload_data['full_path'], //path to the uploaded image
                             'new_image'         => './uploads/'.$user_folder.'/'.$resize1, //path to
-                            'maintain_ratio'    => FALSE,
+                            'maintain_ratio'    => TRUE,
                             'width'             => 80,
                             'height'            => 80
                         );
@@ -780,7 +780,7 @@ class Auth extends MX_Controller {
             $config = array(
                             'source_image'      => $upload_data['full_path'], //path to the uploaded image
                             'new_image'         => './uploads/'.$user_folder.'/'.$resize2, //path to
-                            'maintain_ratio'    => FALSE,
+                            'maintain_ratio'    => TRUE,
                             'width'             => 100,
                             'height'            => 100
                         );
@@ -796,6 +796,7 @@ class Auth extends MX_Controller {
             $config = array(
                             'source_image'      => $upload_data['full_path'], //path to the uploaded image
                             'new_image'         => './uploads/'.$user_folder.'/'.$resize3,
+                            'maintain_ratio'    => TRUE,
                             'width'             => 225,
                             'height'            => 225
                         );
@@ -814,6 +815,9 @@ class Auth extends MX_Controller {
                             'business_unit_id'      => $this->input->post('business_unit_id'),
                             'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
                             'marital_id'      => $this->input->post('marital_id'),
+                            'phone'      => $this->input->post('phone'),
+                            'previous_email'      => $this->input->post('previous_email'),
+                            'bb_pin'      => $this->input->post('bb_pin')
                             );
 
             }else{
@@ -824,6 +828,9 @@ class Auth extends MX_Controller {
                             'business_unit_id'      => $this->input->post('business_unit_id'),
                             'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
                             'marital_id'      => $this->input->post('marital_id'),
+                            'phone'      => $this->input->post('phone'),
+                            'previous_email'      => $this->input->post('previous_email'),
+                            'bb_pin'      => $this->input->post('bb_pin'),
                             'photo'     =>$image_name
                          );
             }
@@ -936,6 +943,27 @@ class Auth extends MX_Controller {
             'type'  => 'text',
             'disabled'  => 'disabled',
             'value' => $this->form_validation->set_value('email', $user->email),
+        );
+
+        $this->data['mobile_phone'] = array(
+            'name'  => 'mobile_phone',
+            'id'    => 'mobile_phone',
+            'type'  => 'text',
+            'value' => $this->form_validation->set_value('mobile_phone', $user->mobile_phone),
+        );
+
+        $this->data['previous_email'] = array(
+            'name'  => 'previous_email',
+            'id'    => 'previous_email',
+            'type'  => 'text',
+            'value' => $this->form_validation->set_value('previous_email', $user->previous_email),
+        );
+
+        $this->data['bb_pin'] = array(
+            'name'  => 'bb_pin',
+            'id'    => 'bb_pin',
+            'type'  => 'text',
+            'value' => $this->form_validation->set_value('bb_pin', $user->bb_pin),
         );
 
         $this->data['password'] = array(

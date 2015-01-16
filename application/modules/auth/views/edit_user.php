@@ -127,6 +127,28 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <h4><?php echo lang('user_contact_subheading')?></h4>
+                                    <div class="form-group">
+                                        <?php echo lang('edit_user_mobile_phone_label', 'phone');?>
+                                        <div class="input-with-icon  right">                                       
+                                            <i class=""></i>
+                                            <?php echo bs_form_input($phone);?>                                
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <?php echo lang('edit_user_previous_email_label', 'previous_email');?>
+                                        <div class="input-with-icon  right">                                       
+                                            <i class=""></i>
+                                            <?php echo bs_form_input($previous_email);?>                                
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <?php echo lang('edit_user_bb_pin_label', 'bb_pin');?>
+                                        <div class="input-with-icon  right">                                       
+                                            <i class=""></i>
+                                            <?php echo bs_form_input($bb_pin);?>                                
+                                        </div>
+                                    </div>
                                     <h4><?php echo lang('user_information_subheading')?></h4> 
                                     <div class="form-group">
                                         <?php echo lang('create_user_email_label', 'email');?>

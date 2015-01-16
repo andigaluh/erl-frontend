@@ -114,6 +114,8 @@
                                     </td>
                                     <td valign="middle">
                                         <span class="muted"><?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?></span>
+                                        &nbsp;|&nbsp; 
+                                        <span class="muted"><?php echo anchor("auth/detail/".$user->id, 'Personal') ;?></span>
                                     </td>
                                 </tr>
                             <?php endforeach;?>
