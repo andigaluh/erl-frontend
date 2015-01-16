@@ -8,15 +8,21 @@ class Person_model extends CI_Model
         $this->load->database();
     }
 
-    function userbyid($id)
+    function getUserEmp($id)
     {
-        $this->db->where('id',$id);
+        $this->db->where('user_id',$id);
         return $this->db->get('users_employement');
     }
 
-     function update($id,$data2)
+     function updateUserEmp($id,$data2)
     {
-        $this->db->where('id',$id);
+        $this->db->where('user_id',$id);
         $this->db->update('users_employement',$data2);
+    }
+
+    function getUserCourse($id)
+    {
+        $this->db->where('user_id',$id);
+        return $this->db->get('users_course');
     }
 }

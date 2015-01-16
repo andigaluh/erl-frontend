@@ -73,7 +73,8 @@ class Person extends MX_Controller {
 
         $this->data['csrf'] = $this->_get_csrf_nonce();
         $user = $this->ion_auth->user($id)->row();
-        $user_emp = $this->person_model->userbyid($id)->row();
+        $user_emp = $this->person_model->getUserEmp($id)->row();
+        $user_course = $this->person_model->getUserCourse($id)->row();
         $sess_id = $this->session->userdata('user_id');
         
         $data = array(
@@ -108,13 +109,13 @@ class Person extends MX_Controller {
         $this->form_validation->set_rules('bod', $this->lang->line('edit_user_validation_bod_label'), 'required|xss_clean');
         $this->form_validation->set_rules('business_unit_id', $this->lang->line('edit_user_validation_business_unit_id_label'), 'required|xss_clean');
         $this->form_validation->set_rules('marital_id', $this->lang->line('edit_user_validation_marital_label'), 'required|xss_clean');
-        $this->form_validation->set_rules('phone', 'phone', 'required|xss_clean|numeric');
+        $this->form_validation->set_rules('phone', 'phone', 'xss_clean|numeric');
         $this->form_validation->set_rules('prev_email', 'prev_email', 'xss_clean|valid_email');
         $this->form_validation->set_rules('seniority_date', 'seniority_date', 'required|xss_clean');
         $this->form_validation->set_rules('position_id', 'position_id', 'required|xss_clean');
         $this->form_validation->set_rules('empl_status_id', 'empl_status_id', 'required|xss_clean');
         $this->form_validation->set_rules('employee_status_id', 'employee_status_id', 'required|xss_clean');
-        $this->form_validation->set_rules('cost_center', 'cost_center', 'required|xss_clean');
+        $this->form_validation->set_rules('cost_center', 'cost center', 'xss_clean');
         $this->form_validation->set_rules('position_group_id', 'position_group_id', 'required|xss_clean');
         $this->form_validation->set_rules('grade_id', 'grade_id', 'required|xss_clean');
         $this->form_validation->set_rules('resign_reason_id', 'resign_reason_id', 'required|xss_clean');
@@ -124,7 +125,7 @@ class Person extends MX_Controller {
             {               
                 //check to see if we are creating the user            
                 $this->ion_auth->update($user->id, $data);
-                $this->person_model->update($user->id, $data2);
+                $this->person_model->updateUserEmp($user->id, $data2);
                 $this->session->set_flashdata('message', "User Saved");
                 
                 $id = $this->uri->segment(3, 0);
@@ -245,6 +246,11 @@ class Person extends MX_Controller {
         $this->data['active_inactive_id'] = $this->form_validation->set_value('active_inactive_id', $user_emp->active_inactive_id);
         $position = GetAll('active_inactive');
         $this->data['active_inactive'] = ($position->num_rows() > 0 ) ? $position : array();
+
+
+        //Company Sponsor Course Tab
+
+        $this->data['user_course'] = GetAll('users_course');
 
         $this->_render_page('person/detail', $this->data);
         }

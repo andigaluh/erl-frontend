@@ -398,28 +398,38 @@
 			                                            </tr>
 			                                        </thead>
 			                                        <tbody>
-			                                            <tr class="itemtraining" id="1">
-			                                                <td valign="middle"><a href="#" id="viewtraining-1">TRN_035</a></td>
-			                                                <td valign="middle"><span class="muted">Business Intelligence Berbasis Web</span></td>
+			                                        	<?php
+															foreach ($user_course->result_array() as $key => $value) {
+														?>
+			                                            <tr class="itemtraining" id="<?php echo $value['id']?>">
+			                                                <td valign="middle"><a href="#" id="viewtraining-<?php echo $value['id']?>">TRN_<?php echo $value['id']?></a></td>
+			                                                <td valign="middle"><span class="muted"><?php echo $value['title']?></span></td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">23 November 2011</span>
+			                                                    <span class="muted"><?php echo $value['registration_date']?></span>
 			                                                </td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">Completed</span>
+			                                                    <span class="muted">
+			                                                    <?php                                                    					
+			                                                    		$sql = "SELECT `title` FROM course_status WHERE id=".$value['id'];
+																		$result = mysql_query($sql);
+																		$status=mysql_fetch_array($result);
+																		echo $status[0];
+                                                        		?>
+                                       							 </span>
 			                                                </td>
 			                                            </tr>
-			                                            <tr id="trainingdetail-1" style="display:none">
+			                                            <tr id="trainingdetail-<?php echo $value['id']?>" style="display:none">
 			                                            	<td class="detail" colspan="5">
 			                                            		<div class="row">
 			                                            			<form action="#" method="enctype">
 												                  	<div class="col-md-12">
-												                  		<h4>ID : #1</h4>
+												                  		<h4>ID : #<?php echo $value['id']?></h4>
 												                  		<div class="row form-row">
 													                      <div class="col-md-2">
 													                        <label class="form-label text-right">course Id</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="courseid" id="courseid" type="text"  class="form-control" placeholder="courseid" value="TRN_035" disabled="disabled">
+													                        <input name="courseid" id="courseid" type="text"  class="form-control" placeholder="courseid" value="TRN_<?php echo $value['id']?>" disabled="disabled">
 													                      </div>
 													                    </div>
 												                  		<div class="row form-row">
@@ -427,7 +437,7 @@
 													                        <label class="form-label text-right">Description</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="description" id="description" type="text"  class="form-control" placeholder="Description" value="Business Intelligence Berbasis Web" disabled="disabled">
+													                        <input name="description" id="description" type="text"  class="form-control" placeholder="Description" value="<?php echo $value['title']?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    
@@ -437,7 +447,7 @@
 													                        <label class="form-label text-right">Registration Date</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="registration_date" id="registration_date" type="text"  class="form-control" placeholder="Registration Date" value="23 November 2011" disabled="disabled">
+													                        <input name="registration_date" id="registration_date" type="text"  class="form-control" placeholder="Registration Date" value="<?php echo $value['registration_date']?>" disabled="disabled">
 													                      </div>
 													                    </div>
 
@@ -446,7 +456,7 @@
 													                        <label class="form-label text-right">Status</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="completed" disabled="disabled">
+													                        <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="<?php echo $status[0];?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    
@@ -462,70 +472,7 @@
 
 			                                            	</td>
 			                                            </tr>
-			                                            <tr class="itemtraining" id="2">
-			                                                <td valign="middle"><a href="#" id="viewtraining-2">TRN_037</a></td>
-			                                                <td valign="middle"><span class="muted">Microsoft Dynamic Ax</span></td>
-			                                                <td valign="middle">
-			                                                    <span class="muted">04 Juli 2011</span>
-			                                                </td>
-			                                                <td valign="middle">
-			                                                    <span class="muted">Completed</span>
-			                                                </td>
-			                                            </tr>
-			                                            <tr id="trainingdetail-2" style="display:none">
-			                                            	<td class="detail" colspan="5">
-			                                            		<div class="row">
-			                                            			<form action="#" method="enctype">
-												                  	<div class="col-md-12">
-												                  		<h4>ID : #2</h4>
-												                  		<div class="row form-row">
-													                      <div class="col-md-2">
-													                        <label class="form-label text-right">course Id</label>
-													                      </div>
-													                      <div class="col-md-10">
-													                        <input name="courseid" id="courseid" type="text"  class="form-control" placeholder="courseid" value="TRN_037" disabled="disabled">
-													                      </div>
-													                    </div>
-												                  		<div class="row form-row">
-													                      <div class="col-md-2">
-													                        <label class="form-label text-right">Description</label>
-													                      </div>
-													                      <div class="col-md-10">
-													                        <input name="description" id="description" type="text"  class="form-control" placeholder="Description" value="Microsoft Dynamic Ax" disabled="disabled">
-													                      </div>
-													                    </div>
-													                    
-													                    
-													                    <div class="row form-row">
-													                      <div class="col-md-2">
-													                        <label class="form-label text-right">Registration Date</label>
-													                      </div>
-													                      <div class="col-md-10">
-													                        <input name="registration_date" id="registration_date" type="text"  class="form-control" placeholder="Registration Date" value="04 Juli 2011" disabled="disabled">
-													                      </div>
-													                    </div>
-
-													                    <div class="row form-row">
-													                      <div class="col-md-2">
-													                        <label class="form-label text-right">Status</label>
-													                      </div>
-													                      <div class="col-md-10">
-													                        <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="completed" disabled="disabled">
-													                      </div>
-													                    </div>
-													                    
-												                  	</div>
-												                  	<!-- <div class="form-actions">
-																		<div class="pull-right">
-																		  <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
-																		  <button class="btn btn-white btn-cons" type="button">Cancel</button>
-																		</div>
-																	  </div> -->
-												                  </form>
-												                  </div>
-
-			                                            	</td>
-			                                            </tr>
+			                                            <?php } ?>
 			                                        </tbody>
 			                                    </table>
 			                            </div>
