@@ -25,6 +25,54 @@ USE `erlangga_hris`;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `course_status`
+--
+
+CREATE TABLE IF NOT EXISTS `course_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `course_status`
+--
+
+INSERT INTO `course_status` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
+(1, 'Registration', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
+(2, 'Confirmation', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
+(3, 'Completed', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
+(4, 'Passed', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
+(5, 'Waiting List', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
+(6, 'Cancelled', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
+(7, 'Drop Out', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_course`
+--
+
+CREATE TABLE IF NOT EXISTS `users_course` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(16) NOT NULL,
+  `title` varchar(254) NOT NULL,
+  `registration_date` datetime NOT NULL,
+  `course_status_id` int(3) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
 -- Table structure for table `active_inactive`
 --
 
