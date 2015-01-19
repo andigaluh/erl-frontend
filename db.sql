@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 19, 2015 at 03:58 AM
+-- Generation Time: Jan 19, 2015 at 05:35 AM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.16
 
@@ -47,6 +47,23 @@ INSERT INTO `active_inactive` (`id`, `title`, `created_on`, `created_by`, `edite
 (1, 'Active', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
 (2, 'Inactive', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
 (3, 'Active by Term', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `award_warning_type`
+--
+
+CREATE TABLE IF NOT EXISTS `award_warning_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -101,6 +118,23 @@ INSERT INTO `course_status` (`id`, `title`, `created_on`, `created_by`, `edited_
 (5, 'Waiting List', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
 (6, 'Cancelled', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
 (7, 'Drop Out', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `departement`
+--
+
+CREATE TABLE IF NOT EXISTS `departement` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -314,6 +348,23 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ikatan_dinas_type`
+--
+
+CREATE TABLE IF NOT EXISTS `ikatan_dinas_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `login_attempts`
 --
 
@@ -490,8 +541,32 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `nik`, `bod`, `business_unit_id`, `marital_id`, `photo`, `mobile_phone`, `previous_email`, `bb_pin`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1421393793, 1, 'Admin', 'istrator', 'ADMIN', '0', '', '0000-00-00 00:00:00', 0, 0, '', '', '', ''),
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1421636470, 1, 'Admin', 'istrator', 'ADMIN', '0', '', '0000-00-00 00:00:00', 0, 0, '', '', '', ''),
 (8, '::1', 'andigaluh', '$2y$08$y7.a5emJ8BkLRssQz6t7XuMRreIUuGndkV25IjBvRv1ADoeZyxBaW', NULL, 'andi@komunigrafik.com', NULL, NULL, NULL, NULL, 1418971675, 1419235251, 1, 'andi galuh', 'sutrisno', '0', '08561951175', '50402116', '1983-10-13 00:00:00', 1, 2, 'ktp.jpg', '0', 'erortea@yahoo.com', 'dfsdfsde');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_awardwarning`
+--
+
+CREATE TABLE IF NOT EXISTS `users_awardwarning` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `award_warning_type_id` int(2) NOT NULL,
+  `title` varchar(254) NOT NULL,
+  `description` text NOT NULL,
+  `app_date` datetime NOT NULL,
+  `sk_number` varchar(254) NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -638,6 +713,107 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (2, 1, 2),
 (52, 8, 1),
 (53, 8, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_ikatan_dinas`
+--
+
+CREATE TABLE IF NOT EXISTS `users_ikatan_dinas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `ikatan_dinas_type` int(2) NOT NULL,
+  `title` varchar(254) NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `amount` decimal(10,0) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_jabatan`
+--
+
+CREATE TABLE IF NOT EXISTS `users_jabatan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `organization_id` int(2) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `employee_group_id` int(2) NOT NULL,
+  `grade_id` int(2) NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `branch_id` int(2) NOT NULL,
+  `personnel_action_id` int(3) NOT NULL,
+  `sk_date` datetime NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_sk`
+--
+
+CREATE TABLE IF NOT EXISTS `users_sk` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `sk_date` datetime NOT NULL,
+  `sk_no` varchar(254) NOT NULL,
+  `position_id` int(2) NOT NULL,
+  `departement_id` int(2) NOT NULL,
+  `effective_date` datetime NOT NULL,
+  `location` varchar(254) NOT NULL,
+  `sign_name` varchar(254) NOT NULL,
+  `sign_position` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_sti`
+--
+
+CREATE TABLE IF NOT EXISTS `users_sti` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `identity_no` varchar(254) NOT NULL,
+  `ijazah_name` varchar(254) NOT NULL,
+  `ijazah_number` varchar(254) NOT NULL,
+  `ijazah_history` varchar(254) NOT NULL,
+  `institution` varchar(254) NOT NULL,
+  `published_place` varchar(254) NOT NULL,
+  `activation_date` datetime NOT NULL,
+  `departement_id` int(2) NOT NULL,
+  `position_id` int(2) NOT NULL,
+  `receivedby_id` int(11) NOT NULL,
+  `acknowledgeby_id` int(11) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Constraints for dumped tables
