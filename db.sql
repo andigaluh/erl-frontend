@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2015 at 06:40 AM
+-- Generation Time: Jan 19, 2015 at 03:58 AM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.16
 
@@ -21,6 +21,56 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `erlangga_hris` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `erlangga_hris`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `active_inactive`
+--
+
+CREATE TABLE IF NOT EXISTS `active_inactive` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `active_inactive`
+--
+
+INSERT INTO `active_inactive` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
+(1, 'Active', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
+(2, 'Inactive', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
+(3, 'Active by Term', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `certification_type`
+--
+
+CREATE TABLE IF NOT EXISTS `certification_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `certification_type`
+--
+
+INSERT INTO `certification_type` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
+(1, 'HPL', '2015-01-19 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -55,15 +105,12 @@ INSERT INTO `course_status` (`id`, `title`, `created_on`, `created_by`, `edited_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_course`
+-- Table structure for table `education_center`
 --
 
-CREATE TABLE IF NOT EXISTS `users_course` (
+CREATE TABLE IF NOT EXISTS `education_center` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(16) NOT NULL,
   `title` varchar(254) NOT NULL,
-  `registration_date` datetime NOT NULL,
-  `course_status_id` int(3) NOT NULL,
   `created_on` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `edited_on` datetime NOT NULL,
@@ -72,11 +119,13 @@ CREATE TABLE IF NOT EXISTS `users_course` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
 --
--- Table structure for table `active_inactive`
+-- Table structure for table `education_degree`
 --
 
-CREATE TABLE IF NOT EXISTS `active_inactive` (
+CREATE TABLE IF NOT EXISTS `education_degree` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(254) NOT NULL,
   `created_on` datetime NOT NULL,
@@ -85,16 +134,24 @@ CREATE TABLE IF NOT EXISTS `active_inactive` (
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `active_inactive`
+-- Table structure for table `education_group`
 --
 
-INSERT INTO `active_inactive` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'Active', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(2, 'Inactive', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(3, 'Active by Term', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+CREATE TABLE IF NOT EXISTS `education_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -156,6 +213,57 @@ INSERT INTO `empl_status` (`id`, `title`, `created_on`, `created_by`, `edited_on
 (9, 'Daily Contract', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
 (10, 'Daily Permanent', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
 (11, 'Job Training', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exp_field`
+--
+
+CREATE TABLE IF NOT EXISTS `exp_field` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exp_level`
+--
+
+CREATE TABLE IF NOT EXISTS `exp_level` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exp_year`
+--
+
+CREATE TABLE IF NOT EXISTS `exp_year` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -382,8 +490,73 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `nik`, `bod`, `business_unit_id`, `marital_id`, `photo`, `mobile_phone`, `previous_email`, `bb_pin`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1421209836, 1, 'Admin', 'istrator', 'ADMIN', '0', '', '0000-00-00 00:00:00', 0, 0, '', '', '', ''),
-(8, '::1', 'andigaluh', '$2y$08$y7.a5emJ8BkLRssQz6t7XuMRreIUuGndkV25IjBvRv1ADoeZyxBaW', NULL, 'andi@komunigrafik.com', NULL, NULL, NULL, NULL, 1418971675, 1419235251, 1, 'andi galuh', 'sutrisno', '0', '0', '50402116', '1983-10-13 00:00:00', 1, 2, 'ktp.jpg', '', '', '');
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1421393793, 1, 'Admin', 'istrator', 'ADMIN', '0', '', '0000-00-00 00:00:00', 0, 0, '', '', '', ''),
+(8, '::1', 'andigaluh', '$2y$08$y7.a5emJ8BkLRssQz6t7XuMRreIUuGndkV25IjBvRv1ADoeZyxBaW', NULL, 'andi@komunigrafik.com', NULL, NULL, NULL, NULL, 1418971675, 1419235251, 1, 'andi galuh', 'sutrisno', '0', '08561951175', '50402116', '1983-10-13 00:00:00', 1, 2, 'ktp.jpg', '0', 'erortea@yahoo.com', 'dfsdfsde');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_certificate`
+--
+
+CREATE TABLE IF NOT EXISTS `users_certificate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(16) NOT NULL,
+  `certification_type_id` int(3) NOT NULL,
+  `description` text NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_course`
+--
+
+CREATE TABLE IF NOT EXISTS `users_course` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(16) NOT NULL,
+  `title` varchar(254) NOT NULL,
+  `registration_date` datetime NOT NULL,
+  `course_status_id` int(3) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_education`
+--
+
+CREATE TABLE IF NOT EXISTS `users_education` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(254) NOT NULL,
+  `description` text NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `education_degree_id` int(2) NOT NULL,
+  `education_group_id` int(2) NOT NULL,
+  `education_center_id` int(2) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -415,6 +588,34 @@ CREATE TABLE IF NOT EXISTS `users_employement` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `users_experience`
+--
+
+CREATE TABLE IF NOT EXISTS `users_experience` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `company` varchar(254) NOT NULL,
+  `position` varchar(254) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` datetime NOT NULL,
+  `address` text NOT NULL,
+  `line_business` varchar(254) NOT NULL,
+  `resign_reason_id` int(2) NOT NULL,
+  `last_salary` decimal(10,0) NOT NULL,
+  `exp_level_id` int(2) NOT NULL,
+  `exp_year_id` int(2) NOT NULL,
+  `exp_field_id` int(2) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users_groups`
 --
 
@@ -426,7 +627,7 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
   UNIQUE KEY `uc_users_groups` (`user_id`,`group_id`),
   KEY `fk_users_groups_users1_idx` (`user_id`),
   KEY `fk_users_groups_groups1_idx` (`group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
 
 --
 -- Dumping data for table `users_groups`
@@ -435,8 +636,8 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1),
 (2, 1, 2),
-(46, 8, 1),
-(47, 8, 2);
+(52, 8, 1),
+(53, 8, 2);
 
 --
 -- Constraints for dumped tables
