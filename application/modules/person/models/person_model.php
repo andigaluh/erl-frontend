@@ -41,9 +41,8 @@ class Person_model extends CI_Model
     }
 
     function getUserEducation($id){
-        $this->db->select('users_education.education_group_id, education_group.id, education_group.title as edu_group, users_education.id, users_education.user_id, users_education.title as education, users_education.description, users_education.start_date, users_education.end_date, users_education.education_center_id, education_center.id, education_center.title as institution, users_education.education_degree_id, education_degree.id, education_degree.title as degree');
-        //$this->db->select('users_education.id,  users_education.user_id, users_education.education_center_id, users_education.education_degree_id, users_education.education_group_id, users_education.title as education, users_education.description, users_education.start_date, users_education.end_date, education_group.id, education_degree.id, education_center.id, education_center.title as institution, education_degree.title as degree, education_group.title as group');
-        //$this->db->select('*');
+        $this->db->select('education_group.title as edu_group, users_education.id, users_education.user_id, users_education.title as education, users_education.description, users_education.start_date, users_education.end_date, users_education.education_center_id, education_center.id, education_center.title as institution, users_education.education_degree_id, education_degree.id, education_degree.title as degree');
+        
         $this->db->from('users_education');
         $this->db->join('education_degree', 'users_education.education_degree_id = education_degree.id');
         $this->db->join('education_group', 'users_education.education_group_id = education_group.id');
@@ -67,6 +66,72 @@ class Person_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    function getUserSk($id){
+        $this->db->select('users_sk.id,users_sk.user_id, users_sk.sk_date, users_sk.sk_no, users_sk.effective_date, users_sk.location, users_sk.sign_position, users_sk.sign_name, departement.id, position.id, departement.title as departement, position.title as position');
+        $this->db->from('users_sk');
+        $this->db->join('departement', 'users_sk.departement_id = departement.id');
+        $this->db->join('position', 'users_sk.position_id = position.id');
+
+        $this->db->where('users_sk.user_id', $id);
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function getUserSti($id){
+        $this->db->select('users_sti.id, users_sti.activation_date, users_sti.identity_no, users_sti.ijazah_history, users_sti.ijazah_name, users_sti.ijazah_number, users_sti.institution, users_sti.published_place, users_sti.receivedby_id, users.username, departement.title as departement, position.title as position, acknowledge.username as acknowledge');
+        $this->db->from('users_sti');
+        $this->db->join('users', 'users_sti.user_id = users.id');
+        $this->db->join('departement', 'users_sti.departement_id = departement.id');
+        $this->db->join('position', 'users_sti.position_id = position.id');
+        $this->db->join('users as acknowledge', 'users_sti.acknowledgeby_id = acknowledge.id');
+
+        $this->db->where('user_id', $id);
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function getUserJabatan($id){
+        $this->db->select('users_jabatan.id, users.username, organization.title as organization, position.title as position, grade.title as grade, users_jabatan.sk_date');
+        
+        $this->db->from('users_jabatan');
+        $this->db->join('users', 'users_jabatan.user_id = users.id');
+        $this->db->join('organization', 'users_jabatan.organization_id = organization.id');
+        $this->db->join('grade', 'users_jabatan.grade_id = grade.id');
+        $this->db->join('position', 'users_jabatan.position_id = position.id');
+
+        $this->db->where('user_id', $id);
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function getUserAward($id){
+        $this->db->select('users_awardwarning.id, users_awardwarning.app_date, users_awardwarning.award_warning_type_id, users_awardwarning.description, users_awardwarning.end_date, users_awardwarning.sk_number, users_awardwarning.start_date, users_awardwarning.title, award_warning_type.title as type');
+        $this->db->from('users_awardwarning');
+        $this->db->join('award_warning_type', 'users_awardwarning.award_warning_type_id = award_warning_type.id');
+
+        $this->db->where('user_id', $id);
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+   
+    function getUserIkatanDinas($id){
+        $this->db->select('users_ikatan_dinas.id, ikatan_dinas_type.title as type, users.username, users_ikatan_dinas.title, users_ikatan_dinas.start_date, users_ikatan_dinas.end_date, users_ikatan_dinas.amount');
+        $this->db->from('users_ikatan_dinas');
+        $this->db->join('users', 'users_ikatan_dinas.user_id = users.id');
+        $this->db->join('ikatan_dinas_type', 'users_ikatan_dinas.ikatan_dinas_type = ikatan_dinas_type.id');
+        
+        $this->db->where('user_id', $id);
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
 
 
 }

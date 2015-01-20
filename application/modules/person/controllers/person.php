@@ -78,6 +78,11 @@ class Person extends MX_Controller {
         $user_certificate= $this->person_model->getUserCertificate($id);
         $user_education=$this->person_model->getUserEducation($id);
         $user_exp=$this->person_model->getUserexperience($id);
+        $user_sk=$this->person_model->getUserSk($id);
+        $user_sti=$this->person_model->getUserSti($id);
+        $user_jabatan = $this->person_model->getUserJabatan($id);
+        $user_award = $this->person_model->getUserAward($id);
+        $user_ikatan = $this->person_model->getUserIkatanDinas($id);
         $sess_id = $this->session->userdata('user_id');
         
         $data = array(
@@ -262,6 +267,17 @@ class Person extends MX_Controller {
 
         //Experience Tab
         $this->data['user_exp'] = $user_exp;
+
+        //SuraKeputusan Tab
+        $this->data['user_sk'] = $user_sk;
+
+        $this->data['user_sti'] = $user_sti;
+
+        $this->data['user_jabatan'] = $user_jabatan;
+
+        $this->data['user_award'] = $user_award;
+
+        $this->data['user_ikatan'] = $user_ikatan;
 
         $this->_render_page('person/detail', $this->data);
         }
