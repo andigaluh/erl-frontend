@@ -398,38 +398,36 @@
 			                                            </tr>
 			                                        </thead>
 			                                        <tbody>
-			                                        	<?php
-															foreach ($user_course->result_array() as $key => $value) {
+			                                        	<?php 
+															foreach ($user_course as $usercourse) {     
+																if($usercourse->user_id != 0){   
 														?>
-			                                            <tr class="itemtraining" id="<?php echo $value['id']?>">
-			                                                <td valign="middle"><a href="#" id="viewtraining-<?php echo $value['id']?>">TRN_<?php echo $value['id']?></a></td>
-			                                                <td valign="middle"><span class="muted"><?php echo $value['title']?></span></td>
+			                                            <tr class="itemtraining" id="<?php echo $usercourse->id?>">
+			                                                <td valign="middle"><a href="#" id="viewtraining-<?php echo $usercourse->id?>">TRN_<?php echo $usercourse->id?></a></td>
+			                                                <td valign="middle"><span class="muted"><?php echo $usercourse->description?></span></td>
 			                                                <td valign="middle">
-			                                                    <span class="muted"><?php echo $value['registration_date']?></span>
+			                                                    <span class="muted"><?php echo $usercourse->registration_date?></span>
 			                                                </td>
 			                                                <td valign="middle">
 			                                                    <span class="muted">
-			                                                    <?php                                                    					
-			                                                    		$sql = "SELECT `title` FROM course_status WHERE id=".$value['id'];
-																		$result = mysql_query($sql);
-																		$status=mysql_fetch_array($result);
-																		echo $status[0];
+			                                                    <?php
+																		echo $usercourse->status;
                                                         		?>
                                        							 </span>
 			                                                </td>
 			                                            </tr>
-			                                            <tr id="trainingdetail-<?php echo $value['id']?>" style="display:none">
+			                                            <tr id="trainingdetail-<?php echo $usercourse->id?>" style="display:none">
 			                                            	<td class="detail" colspan="5">
 			                                            		<div class="row">
 			                                            			<form action="#" method="enctype">
 												                  	<div class="col-md-12">
-												                  		<h4>ID : #<?php echo $value['id']?></h4>
+												                  		<h4>ID : #<?php echo $usercourse->id?></h4>
 												                  		<div class="row form-row">
 													                      <div class="col-md-2">
 													                        <label class="form-label text-right">course Id</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="courseid" id="courseid" type="text"  class="form-control" placeholder="courseid" value="TRN_<?php echo $value['id']?>" disabled="disabled">
+													                        <input name="courseid" id="courseid" type="text"  class="form-control" placeholder="courseid" value="TRN_<?php echo $usercourse->id?>" disabled="disabled">
 													                      </div>
 													                    </div>
 												                  		<div class="row form-row">
@@ -437,7 +435,7 @@
 													                        <label class="form-label text-right">Description</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="description" id="description" type="text"  class="form-control" placeholder="Description" value="<?php echo $value['title']?>" disabled="disabled">
+													                        <input name="description" id="description" type="text"  class="form-control" placeholder="Description" value="<?php echo $usercourse->description?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    
@@ -447,7 +445,7 @@
 													                        <label class="form-label text-right">Registration Date</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="registration_date" id="registration_date" type="text"  class="form-control" placeholder="Registration Date" value="<?php echo $value['registration_date']?>" disabled="disabled">
+													                        <input name="registration_date" id="registration_date" type="text"  class="form-control" placeholder="Registration Date" value="<?php echo $usercourse->registration_date?>" disabled="disabled">
 													                      </div>
 													                    </div>
 
@@ -456,7 +454,7 @@
 													                        <label class="form-label text-right">Status</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="<?php echo $status[0];?>" disabled="disabled">
+													                        <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="<?php echo $usercourse->status?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    
@@ -472,7 +470,24 @@
 
 			                                            	</td>
 			                                            </tr>
-			                                            <?php } ?>
+			                                            <?php }else{
+
+			                                            	?>
+
+			                                            	<tr class="itemtraining" id="">
+			                                                <td valign="middle"><a href="#" id="viewtraining-<?php echo $usercourse->id?>">TRN</a></td>
+			                                                <td valign="middle"><span class="muted">dsad</span></td>
+			                                                <td valign="middle">
+			                                                    <span class="muted">sad</span>
+			                                                </td>
+			                                                <td valign="middle">
+			                                                    <span class="muted">
+			                                                   dsad
+                                       							 </span>
+			                                                </td>
+			                                            </tr>
+			                                            <?php }?>
+			                                        <?php } ?>
 			                                        </tbody>
 			                                    </table>
 			                            </div>
@@ -500,28 +515,33 @@
 			                                            </tr>
 			                                        </thead>
 			                                        <tbody>
-			                                            <tr class="itemcertificate" id="1">
-			                                                <td valign="middle"><a href="#" id="viewcertificate-1">HPL</a></td>
-			                                                <td valign="middle"><span class="muted">High Performance Leadership</span></td>
+			                                        <?php
+			                                        	foreach($user_certificate as $usercertificate) {        
+													?>
+			                                            <tr class="itemcertificate" id="<?php echo $usercertificate->id?>">
+			                                                <td valign="middle"><a href="#" id="viewcertificate-<?php echo $usercertificate->id?>">
+			                                                	<?php echo $usercertificate->certification_type?>
+			                                                </a></td>
+			                                                <td valign="middle"><span class="muted"><?php echo $usercertificate->description?></span></td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">23 November 2011</span>
+			                                                    <span class="muted"><?php echo $usercertificate->start_date?></span>
 			                                                </td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">24 November 2011</span>
+			                                                    <span class="muted"><?php echo $usercertificate->end_date?></span>
 			                                                </td>
 			                                            </tr>
-			                                            <tr id="certificatedetail-1" style="display:none">
+			                                            <tr id="certificatedetail-<?php echo $usercertificate->id?>" style="display:none">
 			                                            	<td class="detail" colspan="5">
 			                                            		<div class="row">
 			                                            			<form action="#" method="enctype">
 												                  	<div class="col-md-12">
-												                  		<h4>ID : #1</h4>
+												                  		<h4>ID : #<?php $usercertificate->id?></h4>
 												                  		<div class="row form-row">
 													                      <div class="col-md-2">
 													                        <label class="form-label text-right">Certificate Type</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="certificate_type" id="certificate_type" type="text"  class="form-control" placeholder="certificate_type" value="HPL" disabled="disabled">
+													                        <input name="certificate_type" id="certificate_type" type="text"  class="form-control" placeholder="certificate_type" value="<?php echo $usercertificate->certification_type?>" disabled="disabled">
 													                      </div>
 													                    </div>
 												                  		<div class="row form-row">
@@ -529,7 +549,7 @@
 													                        <label class="form-label text-right">Description</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="description" id="description" type="text"  class="form-control" placeholder="Description" value="High Performance Leadership" disabled="disabled">
+													                        <input name="description" id="description" type="text"  class="form-control" placeholder="Description" value="<?php echo $usercertificate->description?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    
@@ -539,7 +559,7 @@
 													                        <label class="form-label text-right">Start Date</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="start_date" id="start_date" type="text"  class="form-control" placeholder="Start Date" value="23 November 2011" disabled="disabled">
+													                        <input name="start_date" id="start_date" type="text"  class="form-control" placeholder="Start Date" value="<?php echo $usercertificate->start_date?>" disabled="disabled">
 													                      </div>
 													                    </div>
 
@@ -548,7 +568,7 @@
 													                        <label class="form-label text-right">End Date</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="end_date" id="end_date" type="text"  class="form-control" placeholder="End Date" value="24 November 2011" disabled="disabled">
+													                        <input name="end_date" id="end_date" type="text"  class="form-control" placeholder="End Date" value="<?php echo $usercertificate->end_date?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    
@@ -563,6 +583,7 @@
 												                  </div>
 			                                            	</td>
 			                                            </tr>
+			                                            <?php }?>
 			                                        </tbody>
 			                                    </table>
 			                            </div>
@@ -593,23 +614,26 @@
 			                                            </tr>
 			                                        </thead>
 			                                        <tbody>
-			                                            <tr class="itemeducation" id="1">
-			                                                <td valign="middle"><a href="#" id="vieweducation-1">S-INFORMASI</a></td>
-			                                                <td valign="middle"><span class="muted">Sistem Informasi</span></td>
+			                                        <?php
+			                                        	foreach($user_education as $usereducation) {        
+													?>
+			                                            <tr class="itemeducation" id="<?php echo $usereducation->id?>">
+			                                                <td valign="middle"><a href="#" id="vieweducation-1"><?php echo $usereducation->education?></a></td>
+			                                                <td valign="middle"><span class="muted"><?php echo $usereducation->description?></span></td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">1 Juli 1992</span>
+			                                                    <span class="muted"><?php echo $usereducation->start_date?></span>
 			                                                </td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">6 Mei 1997</span>
+			                                                    <span class="muted"><?php echo $usereducation->end_date?></span>
 			                                                </td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">S1</span>
+			                                                    <span class="muted"><?php echo $usereducation->degree?></span>
 			                                                </td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">Komputer</span>
+			                                                    <span class="muted"><?php echo $usereducation->edu_group?></span>
 			                                                </td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">Univ. Indonesia</span>
+			                                                    <span class="muted"><?php echo $usereducation->institution?></span>
 			                                                </td>
 			                                            </tr>
 			                                            <tr id="educationdetail-1" style="display:none">
@@ -680,6 +704,7 @@
 												                  </div>
 			                                            	</td>
 			                                            </tr>
+			                                            <?php }?>
 			                                        </tbody>
 			                                    </table>
 			                            </div>
@@ -706,13 +731,14 @@
 			                                            </tr>
 			                                        </thead>
 			                                        <tbody>
-			                                            <tr class="itemexperience" id="1">
-			                                                <td valign="middle"><a href="#" id="viewexperience-1">PT. Delta Dimensi Datalisis</a></td>
+			                                        <?php foreach($user_exp as $userexp){?>
+			                                            <tr class="itemexperience" id="<?php echo $userexp->id?>">
+			                                                <td valign="middle"><a href="#" id="viewexperience-<?php echo $userexp->id?>"><?php echo $userexp->company?></a></td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">4 Mei 1998</span>
+			                                                    <span class="muted"><?php echo $userexp->start_date?></span>
 			                                                </td>
 			                                                <td valign="middle">
-			                                                    <span class="muted">7 Maret 2005</span>
+			                                                    <span class="muted"><?php echo $userexp->end_date?></span>
 			                                                </td>
 			                                            </tr>
 			                                            <tr id="experiencedetail-1" style="display:none">
@@ -720,13 +746,13 @@
 			                                            		<div class="row">
 			                                            			<form action="#" method="enctype">
 												                  	<div class="col-md-12">
-												                  		<h4>ID : #1</h4>
+												                  		<h4>ID : #<?php echo $userexp->id?></h4>
 												                  		<div class="row form-row">
 													                      <div class="col-md-2">
 													                        <label class="form-label text-right">Company</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="company" id="company" type="text"  class="form-control" placeholder="company" value="PT. Delta Dimensi Datalisis" disabled="disabled">
+													                        <input name="company" id="company" type="text"  class="form-control" placeholder="company" value="<?php echo $userexp->company?>" disabled="disabled">
 													                      </div>
 													                    </div>
 												                  		<div class="row form-row">
@@ -734,7 +760,7 @@
 													                        <label class="form-label text-right">Position</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="position" id="position" type="text"  class="form-control" placeholder="Position" value="Analyst Programmer" disabled="disabled">
+													                        <input name="position" id="position" type="text"  class="form-control" placeholder="Position" value="<?php echo $userexp->position?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    <div class="row form-row">
@@ -742,7 +768,7 @@
 													                        <label class="form-label text-right">Start Date</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="start_date" id="start_date" type="text"  class="form-control" placeholder="Start Date" value="4 Mei 1998" disabled="disabled">
+													                        <input name="start_date" id="start_date" type="text"  class="form-control" placeholder="Start Date" value="<?php echo $userexp->start_date?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    <div class="row form-row">
@@ -750,7 +776,7 @@
 													                        <label class="form-label text-right">End Date</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="end_date" id="end_date" type="text"  class="form-control" placeholder="End Date" value="7 Maret 2005" disabled="disabled">
+													                        <input name="end_date" id="end_date" type="text"  class="form-control" placeholder="End Date" value="<?php echo $userexp->end_date?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    <div class="row form-row">
@@ -758,7 +784,7 @@
 													                        <label class="form-label text-right">Street</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="street" id="street" type="text"  class="form-control" placeholder="street" value="-" disabled="disabled">
+													                        <input name="street" id="street" type="text"  class="form-control" placeholder="street" value="<?php echo $userexp->address?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    <div class="row form-row">
@@ -766,7 +792,7 @@
 													                        <label class="form-label text-right">Line of Business</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="lineofbusiness" id="lineofbusiness" type="text"  class="form-control" placeholder="Line of Business" value="-" disabled="disabled">
+													                        <input name="lineofbusiness" id="lineofbusiness" type="text"  class="form-control" placeholder="Line of Business" value="<?php echo $userexp->line_business?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    <div class="row form-row">
@@ -774,7 +800,7 @@
 													                        <label class="form-label text-right">Resignation Reason</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="resignation_reason" id="resignation_reason" type="text"  class="form-control" placeholder="Resignation Reason" value="-" disabled="disabled">
+													                        <input name="resignation_reason" id="resignation_reason" type="text"  class="form-control" placeholder="Resignation Reason" value="<?php echo $userexp->resign_reason?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    <div class="row form-row">
@@ -782,7 +808,7 @@
 													                        <label class="form-label text-right">Last Salary</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="last_salary" id="last_salary" type="text"  class="form-control" placeholder="Last Salary" value="-" disabled="disabled">
+													                        <input name="last_salary" id="last_salary" type="text"  class="form-control" placeholder="Last Salary" value="<?php echo $userexp->last_salary?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    
@@ -791,6 +817,7 @@
 												                  </div>
 			                                            	</td>
 			                                            </tr>
+			                                            <?php } ?>
 			                                        </tbody>
 			                                    </table>
 			                            </div>

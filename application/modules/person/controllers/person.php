@@ -74,7 +74,10 @@ class Person extends MX_Controller {
         $this->data['csrf'] = $this->_get_csrf_nonce();
         $user = $this->ion_auth->user($id)->row();
         $user_emp = $this->person_model->getUserEmp($id)->row();
-        $user_course = $this->person_model->getUserCourse($id)->row();
+        $user_course = $this->person_model->getUserCourse($id);
+        $user_certificate= $this->person_model->getUserCertificate($id);
+        $user_education=$this->person_model->getUserEducation($id);
+        $user_exp=$this->person_model->getUserexperience($id);
         $sess_id = $this->session->userdata('user_id');
         
         $data = array(
@@ -249,8 +252,16 @@ class Person extends MX_Controller {
 
 
         //Company Sponsor Course Tab
+        $this->data['user_course'] = $user_course;
 
-        $this->data['user_course'] = GetAll('users_course');
+        //Certificate Tab
+        $this->data['user_certificate'] = $user_certificate;
+
+        //Education Tab
+        $this->data['user_education'] = $user_education;
+
+        //Experience Tab
+        $this->data['user_exp'] = $user_exp;
 
         $this->_render_page('person/detail', $this->data);
         }
