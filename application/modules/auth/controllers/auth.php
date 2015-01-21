@@ -10,13 +10,14 @@ class Auth extends MX_Controller {
         $this->load->library('authentication', NULL, 'ion_auth');
         $this->load->library('form_validation');
         $this->load->helper('url');
-
+        
         $this->load->database();
-
+        $this->load->model('person/person_model','person_model');
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
         $this->lang->load('auth');
         $this->load->helper('language');
+
     }
 
     //redirect if needed, otherwise display the user list
@@ -616,7 +617,6 @@ class Auth extends MX_Controller {
                 'nik'                   => $this->input->post('nik'),
                 'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
             );
-            
         }
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
         {
@@ -660,12 +660,19 @@ class Auth extends MX_Controller {
                 'placeholder' => lang('create_user_validation_lname_label'),
                 'value' => $this->form_validation->set_value('last_name'),
             );
+
+
+            $f_business_unit = array("is_deleted" => 0);
+            $q_business_unit = GetAll('organization',$f_business_unit);
+            $this->data['business_unit'] = ($q_business_unit->num_rows() > 0 ) ? $q_business_unit : array();
+
             $this->data['email'] = array(
                 'name'  => 'email',
                 'id'    => 'email',
                 'type'  => 'text',
                 'value' => $this->form_validation->set_value('email'),
             );
+
             $this->data['company'] = array(
                 'name'  => 'company',
                 'id'    => 'company',
@@ -978,6 +985,11 @@ class Auth extends MX_Controller {
             'type' => 'password'
         );
 
+        $this->data['business_unit_id'] = $this->form_validation->set_value('business_unit_id', $user->business_unit_id);
+        $f_business_unit = array("is_deleted" => 0);
+        $q_business_unit = GetAll('organization',$f_business_unit);
+        $this->data['business_unit'] = ($q_business_unit->num_rows() > 0 ) ? $q_business_unit : array();
+
 
         $this->data['marital_id'] = $this->form_validation->set_value('email', $user->marital_id);
         $this->data['s_photo'] = $this->form_validation->set_value('photo', $user->photo);
@@ -989,6 +1001,53 @@ class Auth extends MX_Controller {
         $this->data['marital'] = ($q_marital->num_rows() > 0 ) ? $q_marital : array();
 
         $this->_render_page('auth/edit_user', $this->data);
+    }
+
+    function detail($id)
+    {
+        $this->data['title'] = "Detail User";
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        //$user = $this->ion_auth->user($id)->row();
+        $user = $this->person_model->getUsers($id)->row();
+        //die($user->row()->organization_title);
+        $groups=$this->ion_auth->groups()->result_array();
+        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+
+        //display the edit user form
+        $this->data['csrf'] = $this->_get_csrf_nonce();
+
+        //set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        //pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['groups'] = $groups;
+        $this->data['currentGroups'] = $currentGroups;
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : '';
+
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', (!empty($user->photo)) ? $user->photo : '');
+        
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+        $this->_render_page('auth/detail', $this->data);
     }
 
     // create a new group
@@ -1172,6 +1231,7 @@ class Auth extends MX_Controller {
                     $this->template->set_layout('single');
 
                     $this->template->add_js('bootstrap-datepicker.js');
+                    $this->template->add_js('jquery.validate.min.js');
                     $this->template->add_js('select2.min.js');
                     $this->template->add_js('register.js');
                     
@@ -1184,6 +1244,26 @@ class Auth extends MX_Controller {
                     $this->template->set_layout('default');
 
                     /*$this->template->add_js('jquery-1.8.3.min.js');*/
+                    $this->template->add_js('jquery-ui-1.10.1.custom.min.js');
+                    $this->template->add_js('jqueryblockui.js');
+                    $this->template->add_js('jquery.sidr.min.js');
+                    $this->template->add_js('breakpoints.js');
+                    $this->template->add_js('pace.min.js');
+                    $this->template->add_js('bootstrap-datepicker.js');
+                    $this->template->add_js('edit_user.js');
+                    $this->template->add_js('core.js');
+                    
+                    $this->template->add_js('select2.min.js');
+                    
+                    $this->template->add_css('jquery-ui-1.10.1.custom.min.css');
+                    $this->template->add_css('plugins/select2/select2.css');
+                    $this->template->add_css('pace-theme-flash.css');
+                    $this->template->add_css('datepicker.css');
+                }
+                elseif(in_array($view, array('auth/detail')))
+                {
+                    $this->template->set_layout('default');
+
                     $this->template->add_js('jquery-ui-1.10.1.custom.min.js');
                     $this->template->add_js('jqueryblockui.js');
                     $this->template->add_js('jquery.sidr.min.js');

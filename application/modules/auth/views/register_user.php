@@ -45,9 +45,13 @@
                                 <?php echo lang('register_bu_label', 'business_unit');?>
                                 <div class="input-with-icon right">                                       
                                     <i class=""></i>
-                                    <?php $options = array("1"=>"Head Office","2"=>"Bandung","3"=>"Surabaya");?>
-                                    <?php $js = 'id="business_unit_id" class="select2" style="width:100%"';?>
-                                    <?php echo form_dropdown('business_unit_id', $options, '1',$js);?>                               
+                                    <select name="business_unit_id" class="select2" id="business_unit_id" style="width:100%">
+                                        <?php
+                                            foreach ($business_unit->result_array() as $key => $value) {
+                                                echo '<option value="'.$value['id'].'" >'.$value['title'].'</option>';
+                                            }
+                                        ?>
+                                    </select>                            
                                 </div>
                             </div>
                         </div>

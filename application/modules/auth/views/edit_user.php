@@ -81,9 +81,14 @@
                                         <?php echo lang('register_bu_label', 'business_unit');?>
                                         <div class="input-with-icon right">                                       
                                             <i class=""></i>
-                                            <?php $options = array("1"=>"Head Office","2"=>"Bandung","3"=>"Surabaya");?>
-                                            <?php $js = 'id="business_unit_id" class="select2" style="width:100%"';?>
-                                            <?php echo form_dropdown('business_unit_id', $options, $this->form_validation->set_value('business_unit_id', $user->business_unit_id),$js);?>                               
+                                            <select name="business_unit_id" class="select2" id="business_unit_id" style="width:100%">
+                                                <?php
+                                                    foreach ($business_unit->result_array() as $key => $value) {
+                                                        $selected = ($business_unit_id <> 0 && $business_unit_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                    }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">

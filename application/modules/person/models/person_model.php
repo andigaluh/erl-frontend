@@ -131,6 +131,17 @@ class Person_model extends CI_Model
         return $query->result();
     }
 
+    function getUsers($id){
+        $this->db->select('users.*, organization.title as organization_title, marital.title as marital_title');
+        $this->db->from('users');
+        $this->db->join('organization', 'users.business_unit_id = organization.id');
+        $this->db->join('marital', 'users.marital_id = marital.id');
+        $this->db->where('users.id', $id);
+
+        $query = $this->db->get();
+        return $query;
+    }
+
 
 
 
