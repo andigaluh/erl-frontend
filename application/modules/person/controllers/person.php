@@ -72,7 +72,7 @@ class Person extends MX_Controller {
         {
 
         $this->data['csrf'] = $this->_get_csrf_nonce();
-        $user = $this->ion_auth->user($id)->row();
+        $user = $this->person_model->getUsers($id)->row();
         $user_emp = $this->person_model->getUserEmp($id)->row();
         $user_course = $this->person_model->getUserCourse($id);
         $user_certificate= $this->person_model->getUserCertificate($id);
@@ -83,181 +83,35 @@ class Person extends MX_Controller {
         $user_jabatan = $this->person_model->getUserJabatan($id);
         $user_award = $this->person_model->getUserAward($id);
         $user_ikatan = $this->person_model->getUserIkatanDinas($id);
-        $sess_id = $this->session->userdata('user_id');
-        
-        $data = array(
-                'first_name'            => $this->input->post('first_name'),
-                'last_name'             => $this->input->post('last_name'),
-                'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
-                'marital_id'            => $this->input->post('marital_id'),
-                'business_unit_id'      => $this->input->post('business_unit_id'),
-                'phone'                 => $this->input->post('phone'),
-                'prev_email'            => $this->input->post('prev_email'),
-                'bb_pin'                => $this->input->post('bb_pin'),
-            );
 
-        $data2 = array(
-                'seniority_date'        => date('Y-m-d',strtotime($this->input->post('seniority_date'))),
-                'position_id'           => $this->input->post('position_id'),
-                'empl_status_id'        => $this->input->post('empl_status_id'),
-                'employee_status_id'    => $this->input->post('employee_status_id'),
-                'cost_center'           => $this->input->post('cost_center'),
-                'position_group_id'     => $this->input->post('position_group_id'),
-                'grade_id'              => $this->input->post('grade_id'),
-                'resign_reason_id'      => $this->input->post('resign_reason_id'),
-                'active_inactive_id'    => $this->input->post('active_inactive_id'),
-                'edited_by'             => $sess_id,
-                'edited_on'             => date('Y-m-d',strtotime('now'))
-            );
-
-        
-
-        $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
-        $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
-        $this->form_validation->set_rules('bod', $this->lang->line('edit_user_validation_bod_label'), 'required|xss_clean');
-        $this->form_validation->set_rules('business_unit_id', $this->lang->line('edit_user_validation_business_unit_id_label'), 'required|xss_clean');
-        $this->form_validation->set_rules('marital_id', $this->lang->line('edit_user_validation_marital_label'), 'required|xss_clean');
-        $this->form_validation->set_rules('phone', 'phone', 'xss_clean|numeric');
-        $this->form_validation->set_rules('prev_email', 'prev_email', 'xss_clean|valid_email');
-        $this->form_validation->set_rules('seniority_date', 'seniority_date', 'required|xss_clean');
-        $this->form_validation->set_rules('position_id', 'position_id', 'required|xss_clean');
-        $this->form_validation->set_rules('empl_status_id', 'empl_status_id', 'required|xss_clean');
-        $this->form_validation->set_rules('employee_status_id', 'employee_status_id', 'required|xss_clean');
-        $this->form_validation->set_rules('cost_center', 'cost center', 'xss_clean');
-        $this->form_validation->set_rules('position_group_id', 'position_group_id', 'required|xss_clean');
-        $this->form_validation->set_rules('grade_id', 'grade_id', 'required|xss_clean');
-        $this->form_validation->set_rules('resign_reason_id', 'resign_reason_id', 'required|xss_clean');
-        $this->form_validation->set_rules('active_inactive_id', 'active_inactive_id', 'required|xss_clean');
-
-        if ($this->form_validation->run() === TRUE)
-            {               
-                //check to see if we are creating the user            
-                $this->ion_auth->update($user->id, $data);
-                $this->person_model->updateUserEmp($user->id, $data2);
-                $this->session->set_flashdata('message', "User Saved");
-                
-                $id = $this->uri->segment(3, 0);
-                redirect(base_url()."person/detail/".$id);
-
-            }
-
-        //set the flash data error message if there is one
-        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-        //pass the user to the view
-        $this->data['user'] = $user;
-
-        $this->data['nik'] = array(
-            'name'  => 'nik',
-            'id'    => 'nik',
-            'type'  => 'text',
-            'disabled'  => 'disabled',
-            'value' => $this->form_validation->set_value('nik', $user->nik),
-        );
-
-        $this->data['bod'] = array(
-            'name'  => 'bod',
-            'id'    => 'bod',
-            'type'  => 'text',
-            'value' => $this->form_validation->set_value('bod', $user->bod),
-        );
-
-        $this->data['first_name'] = array(
-            'name'  => 'first_name',
-            'id'    => 'first_name',
-            'type'  => 'text',
-            'value' => $this->form_validation->set_value('first_name', $user->first_name),
-        );
-        $this->data['last_name'] = array(
-            'name'  => 'last_name',
-            'id'    => 'last_name',
-            'type'  => 'text',
-            'value' => $this->form_validation->set_value('last_name', $user->last_name),
-        );
-        $this->data['company'] = array(
-            'name'  => 'company',
-            'id'    => 'company',
-            'type'  => 'text',
-            'value' => $this->form_validation->set_value('company', $user->company),
-        );
-
-        $this->data['seniority_date'] = array(
-            'name'  => 'seniority_date',
-            'id'    => 'seniority_date',
-            'type'  => 'text',
-            'value' => $this->form_validation->set_value('seniority_date', $user_emp->seniority_date),
-        );
-
-
-        $this->data['cost_center'] = array(
-            'name'  => 'cost_center',
-            'id'    => 'cost_center',
-            'type'  => 'text',
-            'value' => $this->form_validation->set_value('cost_center', $user_emp->cost_center),
-        );
-
-        $this->data['phone'] = array(
-            'name'  => 'phone',
-            'id'    => 'phone',
-            'type'  => 'text',
-            'value' => $this->form_validation->set_value('phone', $user->phone),
-        );
-
-        $this->data['prev_email'] = array(
-            'name'  => 'prev_email',
-            'id'    => 'prev_email',
-            'type'  => 'text',
-            'value' => $this->form_validation->set_value('prev_email', $user->previous_email),
-        );
-
-        $this->data['bb_pin'] = array(
-            'name'  => 'bb_pin',
-            'id'    => 'bb_pin',
-            'type'  => 'text',
-            'value' => $this->form_validation->set_value('bb_pin', $user->bb_pin),
-        );
-        
-        $this->data['marital_id'] = $this->form_validation->set_value('marital_id', $user->marital_id);
-        $f_marital = array("is_deleted" => 0);
-        $q_marital = GetAll('marital',$f_marital);
-        $this->data['marital'] = ($q_marital->num_rows() > 0 ) ? $q_marital : array();
-
-        $this->data['s_photo'] = $this->form_validation->set_value('photo', $user->photo);
+        //employee identity
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : ''; 
+        $this->data['photo'] = (!empty($user->photo)) ? $user->photo : ''; 
         $user_folder = $user->id.$user->first_name;
         $this->data['u_folder'] = $user_folder;
 
-
-        $this->data['position_id'] = $this->form_validation->set_value('position_id', $user_emp->position_id);
-        $position = GetAll('position');
-        $this->data['position'] = ($position->num_rows() > 0 ) ? $position : array();
-
-        $this->data['empl_status_id'] = $this->form_validation->set_value('empl_status_id', $user_emp->empl_status_id);
-        $position = GetAll('empl_status');
-        $this->data['empl_status'] = ($position->num_rows() > 0 ) ? $position : array();
-
-        $this->data['employee_status_id'] = $this->form_validation->set_value('employee_status_id', $user_emp->employee_status_id);
-        $position = GetAll('employee_status');
-        $this->data['employee_status'] = ($position->num_rows() > 0 ) ? $position : array();
-
-        $this->data['position_group_id'] = $this->form_validation->set_value('position_group_id', $user_emp->position_group_id);
-        $position = GetAll('position_group');
-        $this->data['position_group'] = ($position->num_rows() > 0 ) ? $position : array();
-
-        $this->data['grade_id'] = $this->form_validation->set_value('grade_id', $user_emp->grade_id);
-        $position = GetAll('grade');
-        $this->data['grade'] = ($position->num_rows() > 0 ) ? $position : array();
-
-        $this->data['resign_reason_id'] = $this->form_validation->set_value('resign_reason_id', $user_emp->resign_reason_id);
-        $position = GetAll('resign_reason');
-        $this->data['resign_reason'] = ($position->num_rows() > 0 ) ? $position : array();
-
-        $this->data['active_inactive_id'] = $this->form_validation->set_value('active_inactive_id', $user_emp->active_inactive_id);
-        $position = GetAll('active_inactive');
-        $this->data['active_inactive'] = ($position->num_rows() > 0 ) ? $position : array();
-
+        //employement
+        $this->data['seniority_date'] = (!empty($user_emp->seniority_date)) ? $user_emp->seniority_date : '-';
+        $this->data['position'] = (!empty($user_emp->position)) ? $user_emp->position : '-';
+        $this->data['empl_status'] = (!empty($user_emp->empl_status)) ? $user_emp->empl_status : '-';
+        $this->data['employee_status'] = (!empty($user_emp->employee_status)) ? $user_emp->employee_status : '-';
+        $this->data['cost_center'] = (!empty($user_emp->cost_center)) ? $user_emp->cost_center : '-';
+        $this->data['position_group'] = (!empty($user_emp->position_group)) ? $user_emp->position_group : '-';
+        $this->data['grade'] = (!empty($user_emp->grade)) ? $user_emp->grade : '-';
+        $this->data['resign_reason'] = (!empty($user_emp->resign_reason)) ? $user_emp->resign_reason : '-';
+        $this->data['active_inactive'] = (!empty($user_emp->active_inactive)) ? $user_emp->active_inactive : '-';
 
         //Company Sponsor Course Tab
-        $this->data['user_course'] = $user_course;
+         $this->data['user_course'] = $user_course;
 
         //Certificate Tab
         $this->data['user_certificate'] = $user_certificate;
