@@ -45,7 +45,9 @@
                                 <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('user_subheading');?></span></h4>
                             </div>
                         </div>
+
                         <?php echo form_open(site_url('auth/keywords'))?>
+
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="row">
@@ -72,6 +74,8 @@
                                 <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_all;?>&nbsp;<?php echo lang('users_subheading');?></span></h4>
                             </div>
                         </div>
+
+                        <a class="btn btn-primary" href="#" rel="async" ajaxify="<?php echo site_url('auth/auth_ajax/test_ajaxify'); ?>">Tambah</a>
 
                         <table class="table no-more-tables">
                             <thead>

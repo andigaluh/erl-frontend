@@ -1014,6 +1014,15 @@ class Auth extends MX_Controller {
 
         //$user = $this->ion_auth->user($id)->row();
         $user = $this->person_model->getUsers($id)->row();
+        $user_course = $this->person_model->getUserCourse($id);
+        $user_certificate = $this->person_model->getUserCertificate($id);
+        $user_education=$this->person_model->getUserEducation($id);
+        $user_exp=$this->person_model->getUserexperience($id);
+        $user_sk=$this->person_model->getUserSk($id);
+        $user_sti=$this->person_model->getUserSti($id);
+        $user_jabatan = $this->person_model->getUserJabatan($id);
+        $user_award = $this->person_model->getUserAward($id);
+        $user_ikatan = $this->person_model->getUserIkatanDinas($id);
         //die($user->row()->organization_title);
         $groups=$this->ion_auth->groups()->result_array();
         $currentGroups = $this->ion_auth->get_users_groups($id)->result();
@@ -1046,6 +1055,44 @@ class Auth extends MX_Controller {
         
         $user_folder = $user->id.$user->first_name;
         $this->data['u_folder'] = $user_folder;
+
+        //Users Course Tab
+
+        $this->data['user_course'] = $user_course;
+        $this->data['num_rows_course'] = $user_course->num_rows();
+
+        //Users Certificate Tab
+
+        $this->data['user_certificate'] = $user_certificate;
+        $this->data['num_rows_certificate'] = $user_certificate->num_rows();
+
+        //Education Tab
+        $this->data['user_education'] = $user_education;
+        $this->data['num_rows_education'] = $user_education->num_rows();
+
+        //Experience Tab
+        $this->data['user_exp'] = $user_exp;
+        $this->data['num_rows_exp'] = $user_exp->num_rows();
+
+        //SuraKeputusan Tab
+        $this->data['user_sk'] = $user_sk;
+        $this->data['num_rows_sk'] = $user_sk->num_rows();
+
+        //Surat Terima Ijazah Tab
+        $this->data['user_sti'] = $user_sti;
+        $this->data['num_rows_sti'] = $user_sti->num_rows();
+
+        //Riwayat Jabatan Tab
+        $this->data['user_jabatan'] = $user_jabatan;
+        $this->data['num_rows_jabatan'] = $user_jabatan->num_rows();
+
+        //Award Warning Tab
+        $this->data['user_award'] = $user_award;
+        $this->data['num_rows_award'] = $user_award->num_rows();
+
+        //Ikatan Dinas Tab
+        $this->data['user_ikatan'] = $user_ikatan;
+        $this->data['num_rows_ikatan'] = $user_ikatan->num_rows();
 
         $this->_render_page('auth/detail', $this->data);
     }
@@ -1201,7 +1248,9 @@ class Auth extends MX_Controller {
                 {
                     $this->template->set_layout('default');
 
-                    /*$this->template->add_js('jquery-1.8.3.min.js');*/
+                    $this->template->add_js('jquery.min.js');
+                    $this->template->add_js('bootstrap.min.js');
+
                     $this->template->add_js('jquery-ui-1.10.1.custom.min.js');
                     //$this->template->add_js('jqueryblockui.js');
                     $this->template->add_js('jquery.sidr.min.js');
@@ -1211,6 +1260,10 @@ class Auth extends MX_Controller {
                     //$this->template->add_js('bootstrap-datepicker.js');
                     $this->template->add_js('list_user.js');
                     $this->template->add_js('core.js');
+                    //$this->template->add_js('modules/skeleton.js');
+                    //$this->template->add_css('modules/skeleton.css');
+                    $this->template->add_js('main.js');
+                    $this->template->add_js('respond.min.js');
                     
                     $this->template->add_css('jquery-ui-1.10.1.custom.min.css');
                     $this->template->add_css('plugins/select2/select2.css');
@@ -1264,6 +1317,9 @@ class Auth extends MX_Controller {
                 {
                     $this->template->set_layout('default');
 
+                    $this->template->add_js('jquery.min.js');
+                    $this->template->add_js('bootstrap.min.js');
+                    $this->template->add_js('main.js');
                     $this->template->add_js('jquery-ui-1.10.1.custom.min.js');
                     $this->template->add_js('jqueryblockui.js');
                     $this->template->add_js('jquery.sidr.min.js');

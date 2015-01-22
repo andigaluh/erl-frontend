@@ -152,9 +152,9 @@ $lang['company_name']							= 'PT. Penerbit Erlangga';
 $lang['register_here']							= 'Register here';
 $lang['register_opening_description']			= 'for PT. Penerbit Erlangga web-HRIS account.';
 $lang['user_registration']						= 'User Registration';
-$lang['employee_information_subheading']						= 'Employee Information';
+$lang['employee_information_subheading']		= 'Employee Information';
+$lang['course_information_subheading']			= 'Company Sponsor Course Information';
 $lang['user_contact_subheading']						= 'Contact Information';
-$lang['user_photo_subheading']						= 'Photo';
 $lang['register_foto_label']						= 'Foto';
 $lang['register_nik_label']						= 'NIK';
 $lang['register_fullname_label']				= 'Fullname';
@@ -176,17 +176,38 @@ $lang['edit_user_bb_pin_label']            = 'BB Pin';
 $lang['logout_link_label']            = 'Logout';
 $lang['search_of_subheading'] = 'Search';
 $lang['user_subheading'] = 'User';
+$lang['course_subheading'] = 'Courses';
+$lang['certificate_subheading'] = 'Certificates';
+$lang['education_subheading'] = 'Educations';
+$lang['experience_subheading'] = 'Experiences';
 $lang['found_subheading'] = 'Found';
 $lang['search_name_email'] = 'Name or Email';
-$lang['detail_user_heading'] = 'Detail User';
-$lang['change_user_detail_link'] = 'Change user';
 
-$lang['person_course_label'] = 'Company Course Sponsor';
+//person label
+
+$lang['person_course_label'] = 'Company Course';
 $lang['person_certificate_label'] = 'Certificate';
-$lang['person_education_label'] = 'Education';
-$lang['person_experience_label'] = 'Experience';
-$lang['person_sk_label'] = 'Surat Keputusan';
-$lang['person_sti_label'] = 'Serah Terima Ijazah';
-$lang['person_riwayat_jabatan_label'] = 'Riwayat Jabatan';
-$lang['person_ikatan_dinas_label'] = 'Ikatan Dinas';
 
+//Users Course
+
+$lang['course_id'] = 'Course ID';
+$lang['course_description'] = 'Description';
+$lang['course_registration_date'] = 'Registration Date';
+$lang['course_status'] = 'Status';
+
+//Users Certificate
+
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+
+//Users Education
+
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';

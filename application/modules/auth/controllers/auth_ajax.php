@@ -10,6 +10,7 @@ class Auth_ajax extends Ajax_Controller {
      * It also helps to keep the Ion auth's controller structure unchanged
      * so you can freely modify it yourself.
      */
+
     function ion_auth_dialog($page)
     {
         if (in_array($page, array(
@@ -22,6 +23,20 @@ class Auth_ajax extends Ajax_Controller {
                 'body' => Modules::run('auth/' . $page)
             ));
         }
+        $this->response->send();
+    }
+    
+    function test_ajaxify()
+    {   
+        $title = "Title";
+        $body = 'content';
+
+        if ($this->response->confirm($title, $body))
+        {
+            $this->response->script('$(this).data("caller").after("<div>Saved!</div>");');
+        }
+  
+               
         $this->response->send();
     }
 }
