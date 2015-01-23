@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 2.11.7
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 19, 2015 at 05:35 AM
+-- Host: localhost
+-- Generation Time: Jan 23, 2015 at 01:52 PM
 -- Server version: 5.5.32
--- PHP Version: 5.4.16
+-- PHP Version: 5.2.6
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -19,8 +18,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `erlangga_hris`
 --
-CREATE DATABASE IF NOT EXISTS `erlangga_hris` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `erlangga_hris`;
 
 -- --------------------------------------------------------
 
@@ -36,6 +33,8 @@ CREATE TABLE IF NOT EXISTS `active_inactive` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -43,10 +42,10 @@ CREATE TABLE IF NOT EXISTS `active_inactive` (
 -- Dumping data for table `active_inactive`
 --
 
-INSERT INTO `active_inactive` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'Active', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(2, 'Inactive', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(3, 'Active by Term', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `active_inactive` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'Active', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'Inactive', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(3, 'Active by Term', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -62,8 +61,15 @@ CREATE TABLE IF NOT EXISTS `award_warning_type` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `award_warning_type`
+--
+
 
 -- --------------------------------------------------------
 
@@ -79,6 +85,8 @@ CREATE TABLE IF NOT EXISTS `certification_type` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -86,8 +94,8 @@ CREATE TABLE IF NOT EXISTS `certification_type` (
 -- Dumping data for table `certification_type`
 --
 
-INSERT INTO `certification_type` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'HPL', '2015-01-19 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `certification_type` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'HPL', '2015-01-19 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -103,6 +111,8 @@ CREATE TABLE IF NOT EXISTS `course_status` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
@@ -110,14 +120,14 @@ CREATE TABLE IF NOT EXISTS `course_status` (
 -- Dumping data for table `course_status`
 --
 
-INSERT INTO `course_status` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'Registration', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(2, 'Confirmation', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(3, 'Completed', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(4, 'Passed', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(5, 'Waiting List', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(6, 'Cancelled', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(7, 'Drop Out', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `course_status` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'Registration', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'Confirmation', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(3, 'Completed', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(4, 'Passed', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(5, 'Waiting List', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(6, 'Cancelled', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(7, 'Drop Out', '2015-01-16 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -133,8 +143,15 @@ CREATE TABLE IF NOT EXISTS `departement` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `departement`
+--
+
 
 -- --------------------------------------------------------
 
@@ -150,8 +167,15 @@ CREATE TABLE IF NOT EXISTS `education_center` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `education_center`
+--
+
 
 -- --------------------------------------------------------
 
@@ -167,8 +191,15 @@ CREATE TABLE IF NOT EXISTS `education_degree` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `education_degree`
+--
+
 
 -- --------------------------------------------------------
 
@@ -184,8 +215,15 @@ CREATE TABLE IF NOT EXISTS `education_group` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `education_group`
+--
+
 
 -- --------------------------------------------------------
 
@@ -201,6 +239,8 @@ CREATE TABLE IF NOT EXISTS `employee_status` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -208,11 +248,11 @@ CREATE TABLE IF NOT EXISTS `employee_status` (
 -- Dumping data for table `employee_status`
 --
 
-INSERT INTO `employee_status` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'Work Center', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(2, 'Employed', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(3, 'Terminated', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(4, 'Honorarium', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `employee_status` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'Work Center', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'Employed', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(3, 'Terminated', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(4, 'Honorarium', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -228,6 +268,8 @@ CREATE TABLE IF NOT EXISTS `empl_status` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
@@ -235,18 +277,18 @@ CREATE TABLE IF NOT EXISTS `empl_status` (
 -- Dumping data for table `empl_status`
 --
 
-INSERT INTO `empl_status` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'Probation', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(2, 'Permanent', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(3, 'Contract', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(4, 'Part Time', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(5, 'Expat Contranct', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(6, 'Sick', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(7, 'UPLeave', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(8, 'Ahli', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(9, 'Daily Contract', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(10, 'Daily Permanent', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(11, 'Job Training', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `empl_status` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'Probation', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'Permanent', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(3, 'Contract', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(4, 'Part Time', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(5, 'Expat Contranct', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(6, 'Sick', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(7, 'UPLeave', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(8, 'Ahli', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(9, 'Daily Contract', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(10, 'Daily Permanent', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(11, 'Job Training', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -262,8 +304,15 @@ CREATE TABLE IF NOT EXISTS `exp_field` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `exp_field`
+--
+
 
 -- --------------------------------------------------------
 
@@ -279,8 +328,15 @@ CREATE TABLE IF NOT EXISTS `exp_level` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `exp_level`
+--
+
 
 -- --------------------------------------------------------
 
@@ -296,8 +352,15 @@ CREATE TABLE IF NOT EXISTS `exp_year` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `exp_year`
+--
+
 
 -- --------------------------------------------------------
 
@@ -313,6 +376,8 @@ CREATE TABLE IF NOT EXISTS `grade` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
@@ -320,9 +385,9 @@ CREATE TABLE IF NOT EXISTS `grade` (
 -- Dumping data for table `grade`
 --
 
-INSERT INTO `grade` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'G01', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(2, 'G02', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `grade` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'G01', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'G02', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -359,8 +424,15 @@ CREATE TABLE IF NOT EXISTS `ikatan_dinas_type` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `ikatan_dinas_type`
+--
+
 
 -- --------------------------------------------------------
 
@@ -376,6 +448,11 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+--
+-- Dumping data for table `login_attempts`
+--
+
+
 -- --------------------------------------------------------
 
 --
@@ -386,6 +463,8 @@ CREATE TABLE IF NOT EXISTS `marital` (
   `id` tinyint(2) NOT NULL AUTO_INCREMENT,
   `title` varchar(254) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -393,11 +472,11 @@ CREATE TABLE IF NOT EXISTS `marital` (
 -- Dumping data for table `marital`
 --
 
-INSERT INTO `marital` (`id`, `title`, `is_deleted`) VALUES
-(1, 'Single', 0),
-(2, 'Married', 0),
-(3, 'Divorced', 0),
-(4, 'Widowhood', 0);
+INSERT INTO `marital` (`id`, `title`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'Single', 0, '0000-00-00 00:00:00', 0),
+(2, 'Married', 0, '0000-00-00 00:00:00', 0),
+(3, 'Divorced', 0, '0000-00-00 00:00:00', 0),
+(4, 'Widowhood', 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -407,12 +486,16 @@ INSERT INTO `marital` (`id`, `title`, `is_deleted`) VALUES
 
 CREATE TABLE IF NOT EXISTS `organization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_organization_id` int(3) NOT NULL DEFAULT '0',
+  `organization_class_id` int(3) NOT NULL,
   `title` varchar(254) NOT NULL,
   `created_on` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
@@ -420,9 +503,39 @@ CREATE TABLE IF NOT EXISTS `organization` (
 -- Dumping data for table `organization`
 --
 
-INSERT INTO `organization` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'HRD', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(2, 'Kredit Analis', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `organization` (`id`, `parent_organization_id`, `organization_class_id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 0, 0, 'HRD', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 0, 0, 'Kredit Analis', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `organization_class`
+--
+
+CREATE TABLE IF NOT EXISTS `organization_class` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `organization_class`
+--
+
+INSERT INTO `organization_class` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'Company', '2015-01-23 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'Departement', '2015-01-23 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(3, 'Division', '2015-01-23 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(4, 'Section', '2015-01-23 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(5, 'Unit', '2015-01-23 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -433,11 +546,18 @@ INSERT INTO `organization` (`id`, `title`, `created_on`, `created_by`, `edited_o
 CREATE TABLE IF NOT EXISTS `position` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(254) NOT NULL,
+  `abbr` varchar(254) NOT NULL,
+  `position_class_id` int(3) NOT NULL,
+  `parent_position_id` int(3) NOT NULL DEFAULT '0',
+  `organization_id` int(3) NOT NULL,
+  `description` text NOT NULL,
   `created_on` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
@@ -445,9 +565,9 @@ CREATE TABLE IF NOT EXISTS `position` (
 -- Dumping data for table `position`
 --
 
-INSERT INTO `position` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'ka. cabang pusat', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(2, 'ka. cabang bandung', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `position` (`id`, `title`, `abbr`, `position_class_id`, `parent_position_id`, `organization_id`, `description`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'ka. cabang pusat', '', 0, 0, 0, '', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'ka. cabang bandung', '', 0, 0, 0, '', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -458,11 +578,20 @@ INSERT INTO `position` (`id`, `title`, `created_on`, `created_by`, `edited_on`, 
 CREATE TABLE IF NOT EXISTS `position_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(254) NOT NULL,
+  `abbr` varchar(254) NOT NULL,
+  `level_order` int(3) NOT NULL,
+  `level` set('Director','Management','Non Management') NOT NULL,
+  `parent_position_group` int(3) NOT NULL DEFAULT '0',
+  `description` text NOT NULL,
+  `gradeval_bottom` int(11) NOT NULL,
+  `gradeval_top` int(11) NOT NULL,
   `created_on` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
@@ -470,9 +599,9 @@ CREATE TABLE IF NOT EXISTS `position_group` (
 -- Dumping data for table `position_group`
 --
 
-INSERT INTO `position_group` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'staff', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(2, 'kacab', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `position_group` (`id`, `title`, `abbr`, `level_order`, `level`, `parent_position_group`, `description`, `gradeval_bottom`, `gradeval_top`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'staff', '', 0, '', 0, '', 0, 0, '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'kacab', '', 0, '', 0, '', 0, 0, '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -488,6 +617,8 @@ CREATE TABLE IF NOT EXISTS `resign_reason` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -495,10 +626,10 @@ CREATE TABLE IF NOT EXISTS `resign_reason` (
 -- Dumping data for table `resign_reason`
 --
 
-INSERT INTO `resign_reason` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`) VALUES
-(1, 'Pensiun', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(2, 'PHK', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0),
-(3, 'Mundur', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `resign_reason` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'Pensiun', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'PHK', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(3, 'Mundur', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -541,7 +672,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `nik`, `bod`, `business_unit_id`, `marital_id`, `photo`, `mobile_phone`, `previous_email`, `bb_pin`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1421636470, 1, 'Admin', 'istrator', 'ADMIN', '0', '', '0000-00-00 00:00:00', 0, 0, '', '', '', ''),
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1421984370, 1, 'Admin', 'istrator', 'ADMIN', '0', '', '1980-01-01 00:00:00', 1, 1, '', '', '', ''),
 (8, '::1', 'andigaluh', '$2y$08$y7.a5emJ8BkLRssQz6t7XuMRreIUuGndkV25IjBvRv1ADoeZyxBaW', NULL, 'andi@komunigrafik.com', NULL, NULL, NULL, NULL, 1418971675, 1419235251, 1, 'andi galuh', 'sutrisno', '0', '08561951175', '50402116', '1983-10-13 00:00:00', 1, 2, 'ktp.jpg', '0', 'erortea@yahoo.com', 'dfsdfsde');
 
 -- --------------------------------------------------------
@@ -565,8 +696,15 @@ CREATE TABLE IF NOT EXISTS `users_awardwarning` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `users_awardwarning`
+--
+
 
 -- --------------------------------------------------------
 
@@ -586,8 +724,15 @@ CREATE TABLE IF NOT EXISTS `users_certificate` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `users_certificate`
+--
+
 
 -- --------------------------------------------------------
 
@@ -606,8 +751,15 @@ CREATE TABLE IF NOT EXISTS `users_course` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `users_course`
+--
+
 
 -- --------------------------------------------------------
 
@@ -630,8 +782,15 @@ CREATE TABLE IF NOT EXISTS `users_education` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `users_education`
+--
+
 
 -- --------------------------------------------------------
 
@@ -657,8 +816,15 @@ CREATE TABLE IF NOT EXISTS `users_employement` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `users_employement`
+--
+
 
 -- --------------------------------------------------------
 
@@ -685,8 +851,15 @@ CREATE TABLE IF NOT EXISTS `users_experience` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `users_experience`
+--
+
 
 -- --------------------------------------------------------
 
@@ -702,15 +875,15 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
   UNIQUE KEY `uc_users_groups` (`user_id`,`group_id`),
   KEY `fk_users_groups_users1_idx` (`user_id`),
   KEY `fk_users_groups_groups1_idx` (`group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=56 ;
 
 --
 -- Dumping data for table `users_groups`
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
-(1, 1, 1),
-(2, 1, 2),
+(54, 1, 1),
+(55, 1, 2),
 (52, 8, 1),
 (53, 8, 2);
 
@@ -733,8 +906,15 @@ CREATE TABLE IF NOT EXISTS `users_ikatan_dinas` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `users_ikatan_dinas`
+--
+
 
 -- --------------------------------------------------------
 
@@ -759,8 +939,15 @@ CREATE TABLE IF NOT EXISTS `users_jabatan` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `users_jabatan`
+--
+
 
 -- --------------------------------------------------------
 
@@ -784,8 +971,15 @@ CREATE TABLE IF NOT EXISTS `users_sk` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `users_sk`
+--
+
 
 -- --------------------------------------------------------
 
@@ -812,8 +1006,15 @@ CREATE TABLE IF NOT EXISTS `users_sti` (
   `edited_on` datetime NOT NULL,
   `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `users_sti`
+--
+
 
 --
 -- Constraints for dumped tables
@@ -825,7 +1026,3 @@ CREATE TABLE IF NOT EXISTS `users_sti` (
 ALTER TABLE `users_groups`
   ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
