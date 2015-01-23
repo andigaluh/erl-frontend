@@ -1014,7 +1014,7 @@ class Auth extends MX_Controller {
 
         //$user = $this->ion_auth->user($id)->row();
         $user = $this->person_model->getUsers($id)->row();
-        $user_course = $this->person_model->getUserCourse($id);
+
         $user_certificate = $this->person_model->getUserCertificate($id);
         $user_education=$this->person_model->getUserEducation($id);
         $user_exp=$this->person_model->getUserexperience($id);
@@ -1058,8 +1058,7 @@ class Auth extends MX_Controller {
 
         //Users Course Tab
 
-        $this->data['user_course'] = $user_course;
-        $this->data['num_rows_course'] = $user_course->num_rows();
+        
 
         //Users Certificate Tab
 
@@ -1207,6 +1206,138 @@ class Auth extends MX_Controller {
         $this->_render_page('auth/edit_group', $this->data);
     }
 
+    public function submit()
+    {
+        $this->form_validation->set_rules('nik', 'nik', 'trim|required');
+        $this->form_validation->set_rules('name', 'name', 'trim|required');
+        
+
+      if($this->form_validation->run() == FALSE)
+            {
+
+            $this->output->set_content_type('application_json');
+            $this->output->set_output(json_encode(array('result' => 0, $errors = $this->form_validation->error_array() )));
+                return false;
+
+            }
+
+
+        else
+        {
+
+              
+            
+            echo json_encode(array('result'=>1));
+            
+            
+        }
+    }
+
+    public function detail_course($id)
+    {
+         $this->data['title'] = "Course Detail";
+
+        $user_course = $this->person_model->getUserCourse($id);
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $groups=$this->ion_auth->groups()->result_array();
+        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+
+        //validate form input
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+            // Config for image upload
+        }
+
+        $this->data['user'] = $user;
+        $this->data['user_course'] = $user_course;
+        $this->data['num_rows_course'] = $user_course->num_rows();
+
+        $this->_render_page('auth/detail_course', $this->data);
+    
+    }
+
+    public function detail_certificate($id)
+    {
+         $this->data['title'] = "certificate Detail";
+
+        $user_certificate = $this->person_model->getUsercertificate($id);
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $groups=$this->ion_auth->groups()->result_array();
+        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+
+        //validate form input
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+            // Config for image upload
+        }
+
+        $this->data['user'] = $user;
+        $this->data['user_certificate'] = $user_certificate;
+        $this->data['num_rows_certificate'] = $user_certificate->num_rows();
+
+        $this->_render_page('auth/detail_certificate', $this->data);
+    
+    }
+
+     public function detail_education($id)
+    {
+         $this->data['title'] = "education Detail";
+
+        $user_education = $this->person_model->getUsereducation($id);
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $groups=$this->ion_auth->groups()->result_array();
+        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+
+        //validate form input
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+            // Config for image upload
+        }
+
+        $this->data['user'] = $user;
+        $this->data['user_education'] = $user_education;
+        $this->data['num_rows_education'] = $user_education->num_rows();
+
+        $this->_render_page('auth/detail_education', $this->data);
+    
+    }
+
 
     function _get_csrf_nonce()
     {
@@ -1313,7 +1444,11 @@ class Auth extends MX_Controller {
                     $this->template->add_css('pace-theme-flash.css');
                     $this->template->add_css('datepicker.css');
                 }
-                elseif(in_array($view, array('auth/detail')))
+                elseif(in_array($view, array('auth/detail',
+                                             'auth/detail_course',
+                                             'auth/detail_certificate',
+                                             'auth/detail_education'
+                                             )))
                 {
                     $this->template->set_layout('default');
 
