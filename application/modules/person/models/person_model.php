@@ -20,23 +20,20 @@ class Person_model extends CI_Model
         $this->db->join('grade', 'users_employement.grade_id = grade.id');
         $this->db->join('resign_reason', 'users_employement.resign_reason_id = resign_reason.id');
         $this->db->join('active_inactive', 'users_employement.active_inactive_id = active_inactive.id');
+
         $this->db->where('users_employement.user_id', $id);
 
         $query = $this->db->get();
         return $query;
     }
 
-     function updateUserEmp($id,$data2)
-    {
-        $this->db->where('user_id',$id);
-        $this->db->update('users_employement',$data2);
-    }
-
     function getUserCourse($id){
-        $this->db->select('users_course.id,users_course.title as description, users_course.registration_date, course_status.title as status');
+        $this->db->select('users_course.id, users_course.course_status_id as status_id, users_course.title as description, users_course.registration_date, course_status.title as status');
         $this->db->from('users_course');
         $this->db->join('course_status', 'users_course.course_status_id = course_status.id');
+
         $this->db->where('users_course.user_id', $id);
+        $this->db->where('users_course.is_deleted', 0);
 
         $query = $this->db->get();
         return $query;
@@ -46,46 +43,54 @@ class Person_model extends CI_Model
         $this->db->select('users_certificate.id, certification_type.title as certification_type,users_certificate.description, users_certificate.start_date, users_certificate.end_date');
         $this->db->from('users_certificate');
         $this->db->join('certification_type', 'users_certificate.certification_type_id = certification_type.id');
+
         $this->db->where('users_certificate.user_id', $id);
+        $this->db->where('users_certificate.is_deleted', 0);
 
         $query = $this->db->get();
         return $query;
     }
 
     function getUserEducation($id){
-        $this->db->select('education_group.title as edu_group, users_education.id, users_education.user_id, users_education.title as education, users_education.description, users_education.start_date, users_education.end_date, users_education.education_center_id, education_center.id, education_center.title as institution, users_education.education_degree_id, education_degree.id, education_degree.title as degree');
+        $this->db->select('education_group.title as edu_group, users_education.id, users_education.user_id, users_education.title as education, users_education.description, users_education.start_date, users_education.end_date, users_education.education_center_id, education_center.title as institution, users_education.education_degree_id, education_degree.title as degree');
         
         $this->db->from('users_education');
-        $this->db->join('education_degree', 'users_education.education_degree_id = education_degree.id');
-        $this->db->join('education_group', 'users_education.education_group_id = education_group.id');
-        $this->db->join('education_center', 'users_education.education_center_id = education_center.id');
+        $this->db->join('education_degree', 'users_education.education_degree_id = education_degree.id','left');
+        $this->db->join('education_group', 'users_education.education_group_id = education_group.id','left');
+        $this->db->join('education_center', 'users_education.education_center_id = education_center.id','left');
+
         $this->db->where('users_education.user_id', $id);
+        $this->db->where('users_education.is_deleted', 0);
 
         $query = $this->db->get();
         return $query;
     }
 
     function getUserExperience($id){
-        $this->db->select('users_experience.id, users_experience.user_id, users_experience.company, users_experience.start_date, users_experience.end_date, users_experience.position, users_experience.address, users_experience.line_business, users_experience.last_salary, exp_field.title as field, exp_level.title as level, exp_year.title as year, resign_reason.title as resign_reason');
+        $this->db->select('users_experience.id, users_experience.user_id, users_experience.company, users_experience.start_date, users_experience.end_date, users_experience.position, users_experience.address, users_experience.line_business, users_experience.last_salary, resign_reason.title as resign_reason');
         $this->db->from('users_experience');
-        $this->db->join('exp_field', 'users_experience.exp_field_id = exp_field.id');
+        /*$this->db->join('exp_field', 'users_experience.exp_field_id = exp_field.id');
         $this->db->join('exp_level', 'users_experience.exp_level_id = exp_level.id');
         $this->db->join('exp_year', 'users_experience.exp_year_id = exp_year.id');
+        exp_field.title as field, exp_level.title as level, exp_year.title as year,
+        */
         $this->db->join('resign_reason', 'users_experience.resign_reason_id = resign_reason.id');
 
         $this->db->where('users_experience.user_id', $id);
+        $this->db->where('users_experience.is_deleted', 0);
 
         $query = $this->db->get();
         return $query;
     }
 
     function getUserSk($id){
-        $this->db->select('users_sk.id,users_sk.user_id, users_sk.sk_date, users_sk.sk_no, users_sk.effective_date, users_sk.location, users_sk.sign_position, users_sk.sign_name, departement.id, position.id, departement.title as departement, position.title as position');
+        $this->db->select('users_sk.id,users_sk.user_id, users_sk.sk_date, users_sk.sk_no, users_sk.effective_date, users_sk.location, users_sk.sign_position, users_sk.sign_name, departement.title as departement, position.title as position');
         $this->db->from('users_sk');
         $this->db->join('departement', 'users_sk.departement_id = departement.id');
         $this->db->join('position', 'users_sk.position_id = position.id');
 
         $this->db->where('users_sk.user_id', $id);
+        $this->db->where('users_sk.is_deleted', 0);
 
         $query = $this->db->get();
         return $query;
