@@ -219,6 +219,7 @@ $(document).ready(function(){
             });
 
 $(document).ready(function(){
+                var url = $.url();
                 $('#formupdate').submit(function(response){
                     $.post($('#formupdate').attr('action'), $('#formupdate').serialize(),function(json){
                         if(json.st == 0){

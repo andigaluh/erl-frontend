@@ -15,7 +15,7 @@ $(document).ready(function() {
 	$("#resign_reason_id").select2();
 
 	$("#active_inactive_id").select2();
-
+	
 	/***** Tabs *****/
 	//Normal Tabs - Positions are controlled by CSS classes
     $('#tab-1 a').click(function (e) {

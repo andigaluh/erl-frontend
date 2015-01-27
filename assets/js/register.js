@@ -73,6 +73,6 @@ $(document).ready(function() {
             });
 
         $('#kembali-login').click(function (){
-                window.location.href = 'http://' + window.location.hostname + '/hris_erlangga/auth';
+                window.location.href = 'http://' + window.location.hostname + '/template-absen/employee/index.html';
             });
 })

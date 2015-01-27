@@ -1,3 +1,39 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <p class="txtBold txtRed" id="passMsgBad" style="background: #fff; display: none;"><!-- show if failure -->
+                                               
+                                            </p>
+      </div>
+      <div class="modal-body">
+     <?= form_open('auth/submit', array('id'=>'frm'))?> 
+                                    <div class="row form-row">
+                                      <div class="col-md-3">
+                                        <?php echo lang('register_nik_label', 'nik');?>
+                                      </div>
+                                      <div class="col-md-9">
+                                        <input type="text" class="form-control" name="nik" value=""> 
+                                        <input type="text" class="form-control" name="name" value="">          
+                                      </div>
+                                    </div>
+                                    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
+        <input type="submit" name="btn_submit" id="btnRetPass" value="submit" class="lnkBlkWhtArw" style="margin-top: 3px;">
+      </div>
+    <?= form_close()?>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="page-content">
     <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
     <div id="portlet-config" class="modal hide">
@@ -45,7 +81,6 @@
                                 <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('user_subheading');?></span></h4>
                             </div>
                         </div>
-
                         <?php echo form_open(site_url('auth/keywords'))?>
 
                             <div class="row">
@@ -76,7 +111,7 @@
                         </div>
 
                         <a class="btn btn-primary" href="#" rel="async" ajaxify="<?php echo site_url('auth/auth_ajax/test_ajaxify'); ?>">Tambah</a>
-
+                        
                         <table class="table no-more-tables">
                             <thead>
                                 <tr>

@@ -2388,6 +2388,7 @@ class Auth extends MX_Controller {
                     $this->template->add_js('bootstrap-datepicker.js');
                     $this->template->add_js('edit_user.js');
                     $this->template->add_js('core.js');
+                    $this->template->add_js('purl.js');
 
                     
                     $this->template->add_js('select2.min.js');
