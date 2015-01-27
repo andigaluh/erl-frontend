@@ -201,7 +201,58 @@
 })(window);
 
 
-// custom web-HRIS 
+//modal form
+
+$(document).ready(function(){
+                $('#formadd').submit(function(response){
+                    $.post($('#formadd').attr('action'), $('#formadd').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad').html(json.errors).fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgGood').text('Data Saved').fadeIn().delay(3000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+            });
+
+$(document).ready(function(){
+                var url = $.url();
+                $('#formupdate').submit(function(response){
+                    $.post($('#formupdate').attr('action'), $('#formupdate').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad').html(json.errors).fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+            });
+
+$(function(){
+ $('#formdelete').submit(function(response){
+                    $.post($('#formdelete').attr('action'), $('#formdelete').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad').text('Delete Failed').fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgGood').text('Data Deleted').fadeIn().delay(4000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+            });
+
+
+
+
+/*custom web-HRIS 
 $(document).ready(function() {      
     $('#login-form').validate({
         focusInvalid: false, 
@@ -216,4 +267,4 @@ $(document).ready(function() {
             }
         }
     }); 
-})
+})*/

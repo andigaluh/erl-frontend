@@ -42,6 +42,7 @@ $lang['index_active_link']       = 'Active';
 $lang['index_inactive_link']     = 'Inactive';
 $lang['index_create_user_link']  = 'Create a new user';
 $lang['index_create_group_link'] = 'Create a new group';
+$lang['index_course_title_th'] 	 = 'Course Title';
 
 // Deactivate User
 $lang['deactivate_heading']                  = 'Deactivate User';
@@ -183,31 +184,61 @@ $lang['experience_subheading'] = 'Experiences';
 $lang['found_subheading'] = 'Found';
 $lang['search_name_email'] = 'Name or Email';
 
-//person label
+//button
+$lang['add_button'] = 'Add';
+$lang['save_button'] = 'Save';
+$lang['close_button'] = 'Close';
+$lang['edit_button'] = 'Edit';
+$lang['delete_button'] = 'Delete';
+$lang['cancel_button'] = 'Cancel';
 
+//person label
 $lang['person_course_label'] = 'Company Course';
 $lang['person_certificate_label'] = 'Certificate';
+$lang['person_education_label'] = 'Education';
+$lang['person_experience_label'] = 'Experience';
+$lang['person_sk_label'] = 'Surat Keputusan';
+$lang['person_sti_label'] = 'Surat Terima Ijazah';
+$lang['person_jabatan_label'] = 'Position History';
+$lang['person_award_label'] = 'Award Warning';
+$lang['person_ikatan_label'] = 'Ikatan Dinas';
 
 //Users Course
 
 $lang['course_id'] = 'Course ID';
-$lang['course_description'] = 'Description';
+$lang['course_description'] = 'Course Title';
 $lang['course_registration_date'] = 'Registration Date';
-$lang['course_status'] = 'Status';
+$lang['course_status'] = 'Course Status';
+$lang['add_course'] = 'Add Course';
+$lang['edit_course'] = 'Edit Course';
+
 
 //Users Certificate
 
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
+$lang['certificate_id'] = 'Certificate ID';
+$lang['certification_type'] = 'Certification Type';
+$lang['start_date'] = 'Start Date';
+$lang['end_date'] = 'End Date';
+$lang['add_certificate'] = 'Add Certificate';
+$lang['edit_certificate'] = 'Edit Certificate';
 
 //Users Education
 
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
+$lang['education'] = 'Education';
+$lang['description'] = 'Description';
+$lang['education_group'] = 'Education Group';
+$lang['education_degree'] = 'Education Degree';
+$lang['institution'] = 'Institution';
+$lang['add_education'] = 'Add Education';
+$lang['edit_education'] = 'Edit Education';
+
+//Users Exp
+
+$lang['company'] = 'Company';
+$lang['position'] = 'Position';
+$lang['address'] = 'Address';
+$lang['line_business'] = 'Line Of Business';
+$lang['resign_reason'] = 'Resign Reason';
+$lang['last_salary'] = 'Last Salary';
+$lang['add_experience'] = 'Add Experience';
+$lang['edit_experience'] = 'Edit Experience';

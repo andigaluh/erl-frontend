@@ -13,6 +13,7 @@ class Auth extends MX_Controller {
         
         $this->load->database();
         $this->load->model('person/person_model','person_model');
+        $this->load->model('auth/auth_model','auth_model');
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
         $this->lang->load('auth');
@@ -1003,7 +1004,7 @@ class Auth extends MX_Controller {
         $this->_render_page('auth/edit_user', $this->data);
     }
 
-    function detail($id)
+    function detail($id, $ctitle = "ct:", $sort_by = "id", $sort_order = "asc", $offset = 0)
     {
         $this->data['title'] = "Detail User";
 
@@ -1014,15 +1015,7 @@ class Auth extends MX_Controller {
 
         //$user = $this->ion_auth->user($id)->row();
         $user = $this->person_model->getUsers($id)->row();
-
-        $user_certificate = $this->person_model->getUserCertificate($id);
-        $user_education=$this->person_model->getUserEducation($id);
-        $user_exp=$this->person_model->getUserexperience($id);
-        $user_sk=$this->person_model->getUserSk($id);
-        $user_sti=$this->person_model->getUserSti($id);
-        $user_jabatan = $this->person_model->getUserJabatan($id);
-        $user_award = $this->person_model->getUserAward($id);
-        $user_ikatan = $this->person_model->getUserIkatanDinas($id);
+        $user_course = $this->person_model->getUserCourse($id);
         //die($user->row()->organization_title);
         $groups=$this->ion_auth->groups()->result_array();
         $currentGroups = $this->ion_auth->get_users_groups($id)->result();
@@ -1032,6 +1025,273 @@ class Auth extends MX_Controller {
 
         //set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        //set sort order
+            $this->data['sort_order'] = $sort_order;
+            
+            //set sort by
+            $this->data['sort_by'] = $sort_by;
+           
+            //set filter by first name
+            $this->data['ctitle_param'] = $ctitle; 
+            $exp_ctitle = explode(":",$ctitle);
+            $ctitle_re = str_replace("_", " ", $exp_ctitle[1]);
+            $ctitle_post = (strlen($ctitle_re) > 0) ? array('users_course.title'=>$ctitle_re) : array() ;
+            
+            //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
+            $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : $this->config->item('list_limit', 'ion_auth') ;
+
+            $this->data['offset'] = $offset = $this->uri->segment($this->config->item('uri_segment_pager', 'ion_auth'));
+
+            //list of filterize all users  
+            $this->data['course_all'] = $this->ion_auth->like($ctitle_post)->users()->result();
+            
+            //num rows of filterize all users
+            $this->data['num_rows_all'] = $this->ion_auth->like($ctitle_post)->users()->num_rows();
+
+            //list of filterize limit users for pagination  
+            //$this->data['user_course'] = $this->person_model->like($ctitle_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->result();
+
+            $this->data['users_num_rows'] = $this->ion_auth->like($ctitle_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
+
+           /* foreach ($this->data['users'] as $k => $user)
+            {
+                $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+            }*/
+
+             //config pagination
+             $config['base_url'] = base_url().'auth/index/fn:'.$exp_ctitle[1].'/'.$sort_by.'/'.$sort_order.'/';
+             $config['total_rows'] = $this->data['num_rows_all'];
+             $config['per_page'] = $limit;
+             $config['uri_segment'] = $this->config->item('uri_segment_pager', 'ion_auth');
+
+            //inisialisasi config
+             $this->pagination->initialize($config);
+
+            //create pagination
+            $this->data['halaman'] = $this->pagination->create_links();
+
+            $this->data['course_title_search'] = array(
+                'name'  => 'course_detail',
+                'id'    => 'course_detail',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('course_detail'),
+            );
+
+        //pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : '';
+
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', (!empty($user->photo)) ? $user->photo : '');
+        
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+        $this->data['user_course'] = $user_course;
+
+        $f_course_status = array("is_deleted" => 0);
+        $q_course_status = GetAll('course_status', $f_course_status);
+        $this->data['course_status'] = ($q_course_status->num_rows() > 0 ) ? $q_course_status : array();
+       
+
+        $this->_render_page('auth/detail', $this->data);
+    }
+
+    public function get_course($id){
+
+
+        $user = $this->ion_auth->user($id)->row();
+        $this->data['user'] = $user;
+        $user_course = $this->person_model->getUserCourse($id);
+        $this->data['user_course'] = $user_course;
+        $this->data['num_rows_course'] = $user_course->num_rows();
+       
+
+        $this->load->view('table/table_course', $this->data);
+    }
+
+    public function add_course($id)
+    {
+
+        $this->form_validation->set_rules('description', 'Course Title', 'trim|required');
+        $this->form_validation->set_rules('registration_date', 'Registration Date', 'trim|required');
+        $this->form_validation->set_rules('course_status_id', 'Status', 'trim|required');
+        
+
+      if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'title'             => $this->input->post('description'),
+                    'registration_date' => date('Y-m-d',strtotime($this->input->post('registration_date'))),
+                    'course_status_id'  => $this->input->post('course_status_id'),
+                    'user_id'           => $id,
+                    'created_on'        => date('Y-m-d',strtotime('now')),
+                    'created_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->addCourse($data);
+
+            echo json_encode(array('st'=>1));     
+        }
+    }
+
+    public function edit_course($id)
+    {
+        $this->form_validation->set_rules('description', 'Course Title', 'trim|required');
+        $this->form_validation->set_rules('registration_date', 'Registration Date', 'trim|required');
+        $this->form_validation->set_rules('course_status_id', 'Status', 'trim|required');
+        
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {         
+            $data = array(
+                    'title'             => $this->input->post('description'),
+                    'registration_date' => date('Y-m-d',strtotime($this->input->post('registration_date'))),
+                    'course_status_id'  => $this->input->post('course_status_id'),
+                    'edited_on'         => date('Y-m-d',strtotime('now')),
+                    'edited_by'         => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->editCourse($id, $data);
+            echo json_encode(array('st'=>1));
+            
+        }
+
+    }
+
+    public function delete_course($id)
+    {
+        $data = array(
+                'is_deleted'    => 1,
+                'deleted_on'    =>date('Y-m-d',strtotime('now')),
+                'deleted_by'    =>$this->session->userdata('user_id'),
+                );
+
+        $this->auth_model->deleteCourse($id, $data);
+
+        echo json_encode(array('st'=>1));
+    }
+
+
+     public function detail_certificate($id, $fname = "fn:",$email = "em:",$sort_by = "id", $sort_order = "asc", $offset = 0)
+    {
+         $this->data['title'] = "Certificate Detail";
+
+        $user_certificate = $this->person_model->getUserCertificate($id);
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $groups=$this->ion_auth->groups()->result_array();
+        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+
+        //validate form input
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+            // Config for image upload
+        }
+
+         //set sort order
+            $this->data['sort_order'] = $sort_order;
+            
+            //set sort by
+            $this->data['sort_by'] = $sort_by;
+           
+            //set filter by first name
+            $this->data['fname_param'] = $fname; 
+            $exp_fname = explode(":",$fname);
+            $fname_re = str_replace("_", " ", $exp_fname[1]);
+            $fname_post = (strlen($fname_re) > 0) ? array('users.first_name'=>$fname_re) : array() ;
+            
+            //set filter by email
+            $this->data['email_param'] = $email;
+            $exp_email = explode(":",$email);
+            if(strlen($exp_email[1]) > 0) 
+            {
+                $rep_email_char = array("%5Bat%5D","%5Bdot%5D");
+                $std_email_char = array("@",".");
+                
+                $email_post = array('users.email'=>str_replace($rep_email_char,$std_email_char,$exp_email[1]));
+            }else{
+                $email_post = array();
+            }
+            
+            //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
+            $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : $this->config->item('list_limit', 'ion_auth') ;
+
+            $this->data['offset'] = $offset = $this->uri->segment($this->config->item('uri_segment_pager', 'ion_auth'));
+
+            //list of filterize all users  
+            $this->data['users_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->result();
+            
+            //num rows of filterize all users
+            $this->data['num_rows_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->num_rows();
+
+            //list of filterize limit users for pagination  
+            $this->data['users'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->result();
+
+            $this->data['users_num_rows'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
+
+            /*foreach ($this->data['users'] as $k => $user)
+            {
+                $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+            }*/
+
+             //config pagination
+             $config['base_url'] = base_url().'auth/index/fn:'.$exp_fname[1].'/em:'.$exp_email[1].'/'.$sort_by.'/'.$sort_order.'/';
+             $config['total_rows'] = $this->data['num_rows_all'];
+             $config['per_page'] = $limit;
+             $config['uri_segment'] = $this->config->item('uri_segment_pager', 'ion_auth');
+
+            //inisialisasi config
+             $this->pagination->initialize($config);
+
+            //create pagination
+            $this->data['halaman'] = $this->pagination->create_links();
+
+            $this->data['fname_search'] = array(
+                'name'  => 'first_name',
+                'id'    => 'first_name',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('first_name'),
+            );
+
+            $this->data['email_search'] = array(
+                'name'  => 'email',
+                'id'    => 'email',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('email'),
+            );
+
 
         //pass the user to the view
         $this->data['user'] = $user;
@@ -1056,45 +1316,835 @@ class Auth extends MX_Controller {
         $user_folder = $user->id.$user->first_name;
         $this->data['u_folder'] = $user_folder;
 
-        //Users Course Tab
-
-        
-
-        //Users Certificate Tab
-
+        $this->data['user'] = $user;
         $this->data['user_certificate'] = $user_certificate;
         $this->data['num_rows_certificate'] = $user_certificate->num_rows();
 
-        //Education Tab
+        $f_certification_type = array("is_deleted" => 0);
+        $q_certification_type = GetAll('certification_type', $f_certification_type);
+        $this->data['certification_type'] = ($q_certification_type->num_rows() > 0 ) ? $q_certification_type : array();
+
+        $this->_render_page('auth/detail_certificate', $this->data);
+    
+    }
+
+     public function get_certificate($id){
+
+        $user_certificate = $this->person_model->getUsercertificate($id);
+        $this->data['user_certificate'] = $user_certificate;
+        $this->data['num_rows_certificate'] = $user_certificate->num_rows();
+       
+
+        $this->load->view('table/table_certificate', $this->data);
+    }
+
+    public function add_certificate($id){
+
+        $this->form_validation->set_rules('certification_type_id', 'Certification Type', 'trim|required');
+        $this->form_validation->set_rules('start_date', 'Start Date', 'trim|required');
+        $this->form_validation->set_rules('end_date', 'End Date', 'trim|required');
+        
+
+      if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'certification_type_id' => $this->input->post('certification_type_id'),
+                    'start_date' => date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'  => date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'user_id'           => $id,
+                    'created_on'        => date('Y-m-d',strtotime('now')),
+                    'created_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->addCertificate($data);
+
+            echo json_encode(array('st'=>1));     
+        }
+    }
+
+    public function edit_certificate($id){
+
+        $this->form_validation->set_rules('certification_type_id', 'Certification Type', 'trim|required');
+        $this->form_validation->set_rules('start_date', 'Start Date', 'trim|required');
+        $this->form_validation->set_rules('end_date', 'End Date', 'trim|required');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'certification_type_id' => $this->input->post('certification_type_id'),
+                    'start_date' => date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'  => date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'edited_on'        => date('Y-m-d',strtotime('now')),
+                    'edited_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->editCertificate($id, $data);
+
+            echo json_encode(array('st'=>1));     
+        }
+    }
+
+    public function delete_certificate($id){
+
+        $data = array(
+                'is_deleted'    => 1,
+                'deleted_on'    =>date('Y-m-d',strtotime('now')),
+                'deleted_by'    =>$this->session->userdata('user_id'),
+                );
+
+        $this->auth_model->deleteCertificate($id, $data);
+
+        echo json_encode(array('st'=>1));
+    }
+
+     public function detail_education($id, $fname = "fn:",$email = "em:",$sort_by = "id", $sort_order = "asc", $offset = 0)
+    {
+         $this->data['title'] = "education Detail";
+
+        $user_education = $this->person_model->getUsereducation($id);
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $groups=$this->ion_auth->groups()->result_array();
+        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+
+        //validate form input
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+            // Config for image upload
+        }
+
+         //set sort order
+            $this->data['sort_order'] = $sort_order;
+            
+            //set sort by
+            $this->data['sort_by'] = $sort_by;
+           
+            //set filter by first name
+            $this->data['fname_param'] = $fname; 
+            $exp_fname = explode(":",$fname);
+            $fname_re = str_replace("_", " ", $exp_fname[1]);
+            $fname_post = (strlen($fname_re) > 0) ? array('users.first_name'=>$fname_re) : array() ;
+            
+            //set filter by email
+            $this->data['email_param'] = $email;
+            $exp_email = explode(":",$email);
+            if(strlen($exp_email[1]) > 0) 
+            {
+                $rep_email_char = array("%5Bat%5D","%5Bdot%5D");
+                $std_email_char = array("@",".");
+                
+                $email_post = array('users.email'=>str_replace($rep_email_char,$std_email_char,$exp_email[1]));
+            }else{
+                $email_post = array();
+            }
+            
+            //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
+            $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : $this->config->item('list_limit', 'ion_auth') ;
+
+            $this->data['offset'] = $offset = $this->uri->segment($this->config->item('uri_segment_pager', 'ion_auth'));
+
+            //list of filterize all users  
+            $this->data['users_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->result();
+            
+            //num rows of filterize all users
+            $this->data['num_rows_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->num_rows();
+
+            //list of filterize limit users for pagination  
+            $this->data['users'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->result();
+
+            $this->data['users_num_rows'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
+
+            /*foreach ($this->data['users'] as $k => $user)
+            {
+                $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+            }*/
+
+             //config pagination
+             $config['base_url'] = base_url().'auth/index/fn:'.$exp_fname[1].'/em:'.$exp_email[1].'/'.$sort_by.'/'.$sort_order.'/';
+             $config['total_rows'] = $this->data['num_rows_all'];
+             $config['per_page'] = $limit;
+             $config['uri_segment'] = $this->config->item('uri_segment_pager', 'ion_auth');
+
+            //inisialisasi config
+             $this->pagination->initialize($config);
+
+            //create pagination
+            $this->data['halaman'] = $this->pagination->create_links();
+
+            $this->data['fname_search'] = array(
+                'name'  => 'first_name',
+                'id'    => 'first_name',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('first_name'),
+            );
+
+            $this->data['email_search'] = array(
+                'name'  => 'email',
+                'id'    => 'email',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('email'),
+            );
+
+
+        //pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['groups'] = $groups;
+        $this->data['currentGroups'] = $currentGroups;
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : '';
+
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', (!empty($user->photo)) ? $user->photo : '');
+        
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+        $this->data['user'] = $user;
         $this->data['user_education'] = $user_education;
         $this->data['num_rows_education'] = $user_education->num_rows();
 
-        //Experience Tab
-        $this->data['user_exp'] = $user_exp;
-        $this->data['num_rows_exp'] = $user_exp->num_rows();
+        $f_education_group = array("is_deleted" => 0);
+        $q_education_group = GetAll('education_group', $f_education_group);
+        $this->data['q_education_group'] = $q_education_group;
+        $this->data['education_group'] = ($q_education_group->num_rows() > 0 ) ? $q_education_group : array();
 
-        //SuraKeputusan Tab
+        $f_education_degree = array("is_deleted" => 0);
+        $q_education_degree = GetAll('education_degree', $f_education_degree);
+        $this->data['q_education_degree'] = $q_education_degree;
+        $this->data['education_degree'] = ($q_education_degree->num_rows() > 0 ) ? $q_education_degree : array();
+
+        $f_education_center = array("is_deleted" => 0);
+        $q_education_center = GetAll('education_center', $f_education_center);
+        $this->data['q_education_center'] = $q_education_center;
+        $this->data['education_center'] = ($q_education_center->num_rows() > 0 ) ? $q_education_center : array();
+
+        $this->_render_page('auth/detail_education', $this->data);
+    }
+
+    public function get_education($id){
+
+        $user_education = $this->person_model->getUsereducation($id);
+        $this->data['user_education'] = $user_education;
+        $this->data['num_rows_education'] = $user_education->num_rows();
+       
+
+        $this->load->view('table/table_education', $this->data);
+    }
+
+    public function add_education($id)
+    {
+        $this->form_validation->set_rules('title', 'Education', 'trim|required');
+        $this->form_validation->set_rules('description', 'Description', 'trim|required');
+        $this->form_validation->set_rules('education_degree_id', 'Degree', 'trim|required');
+        $this->form_validation->set_rules('education_group_id', 'Education Group', 'trim|required');
+        $this->form_validation->set_rules('education_center_id', 'Institution', 'trim|required');      
+        $this->form_validation->set_rules('start_date', 'Start Date', 'trim|required');
+        $this->form_validation->set_rules('end_date', 'End Date', 'trim|required');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'title'=>$this->input->post('title'),
+                    'description'             => $this->input->post('description'),
+                    'education_center_id' => $this->input->post('education_center_id'),
+                    'education_degree_id'  => $this->input->post('education_degree_id'),
+                    'education_group_id'           => $this->input->post('education_group_id'),
+                    'start_date'    =>date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'  =>date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'user_id' =>$id,
+                    'created_on'        => date('Y-m-d',strtotime('now')),
+                    'created_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->addEducation($data);
+
+            echo json_encode(array('st'=>1));     
+        }
+    }
+
+    public function edit_education($id)
+    {
+        $this->form_validation->set_rules('title', 'Education', 'trim|required');
+        $this->form_validation->set_rules('description', 'Description', 'trim|required');
+        $this->form_validation->set_rules('education_degree_id', 'Degree', 'trim|required');
+        $this->form_validation->set_rules('education_group_id', 'Education Group', 'trim|required');
+        $this->form_validation->set_rules('education_center_id', 'Institution', 'trim|required');      
+        $this->form_validation->set_rules('start_date', 'Start Date', 'trim|required');
+        $this->form_validation->set_rules('end_date', 'End Date', 'trim|required');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'title'=>$this->input->post('title'),
+                    'description'             => $this->input->post('description'),
+                    'education_center_id' => $this->input->post('education_center_id'),
+                    'education_degree_id'  => $this->input->post('education_degree_id'),
+                    'education_group_id'           => $this->input->post('education_group_id'),
+                    'start_date'    =>date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'  =>date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'edited_on'        => date('Y-m-d',strtotime('now')),
+                    'edited_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->editEducation($id, $data);
+
+            echo json_encode(array('st'=>1));     
+        }
+    }
+
+    public function delete_education($id)
+    {
+        $data = array(
+                'is_deleted'    => 1,
+                'deleted_on'    =>date('Y-m-d',strtotime('now')),
+                'deleted_by'    =>$this->session->userdata('user_id'),
+                );
+
+        $this->auth_model->deleteEducation($id, $data);
+
+        echo json_encode(array('st'=>1));
+    }
+
+    public function detail_experience($id, $fname = "fn:",$email = "em:",$sort_by = "id", $sort_order = "asc", $offset = 0)
+    {
+         $this->data['title'] = "Experience Detail";
+
+        $user_experience = $this->person_model->getUserExperience($id);
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $groups=$this->ion_auth->groups()->result_array();
+        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+
+        //validate form input
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+            // Config for image upload
+        }
+
+         //set sort order
+            $this->data['sort_order'] = $sort_order;
+            
+            //set sort by
+            $this->data['sort_by'] = $sort_by;
+           
+            //set filter by first name
+            $this->data['fname_param'] = $fname; 
+            $exp_fname = explode(":",$fname);
+            $fname_re = str_replace("_", " ", $exp_fname[1]);
+            $fname_post = (strlen($fname_re) > 0) ? array('users.first_name'=>$fname_re) : array() ;
+            
+            //set filter by email
+            $this->data['email_param'] = $email;
+            $exp_email = explode(":",$email);
+            if(strlen($exp_email[1]) > 0) 
+            {
+                $rep_email_char = array("%5Bat%5D","%5Bdot%5D");
+                $std_email_char = array("@",".");
+                
+                $email_post = array('users.email'=>str_replace($rep_email_char,$std_email_char,$exp_email[1]));
+            }else{
+                $email_post = array();
+            }
+            
+            //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
+            $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : $this->config->item('list_limit', 'ion_auth') ;
+
+            $this->data['offset'] = $offset = $this->uri->segment($this->config->item('uri_segment_pager', 'ion_auth'));
+
+            //list of filterize all users  
+            $this->data['users_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->result();
+            
+            //num rows of filterize all users
+            $this->data['num_rows_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->num_rows();
+
+            //list of filterize limit users for pagination  
+            $this->data['users'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->result();
+
+            $this->data['users_num_rows'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
+
+            /*foreach ($this->data['users'] as $k => $user)
+            {
+                $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+            }*/
+
+             //config pagination
+             $config['base_url'] = base_url().'auth/index/fn:'.$exp_fname[1].'/em:'.$exp_email[1].'/'.$sort_by.'/'.$sort_order.'/';
+             $config['total_rows'] = $this->data['num_rows_all'];
+             $config['per_page'] = $limit;
+             $config['uri_segment'] = $this->config->item('uri_segment_pager', 'ion_auth');
+
+            //inisialisasi config
+             $this->pagination->initialize($config);
+
+            //create pagination
+            $this->data['halaman'] = $this->pagination->create_links();
+
+            $this->data['fname_search'] = array(
+                'name'  => 'first_name',
+                'id'    => 'first_name',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('first_name'),
+            );
+
+            $this->data['email_search'] = array(
+                'name'  => 'email',
+                'id'    => 'email',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('email'),
+            );
+
+
+        //pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['groups'] = $groups;
+        $this->data['currentGroups'] = $currentGroups;
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : '';
+
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', (!empty($user->photo)) ? $user->photo : '');
+        
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+        $this->data['user'] = $user;
+        $this->data['user_experience'] = $user_experience;
+        $this->data['num_rows_experience'] = $user_experience->num_rows();
+
+        $f_exp_field = array("is_deleted" => 0);
+        $q_exp_field = GetAll('exp_field', $f_exp_field);
+        $this->data['exp_field'] = ($q_exp_field->num_rows() > 0 ) ? $q_exp_field : array();
+
+        $f_exp_level = array("is_deleted" => 0);
+        $q_exp_level = GetAll('exp_level', $f_exp_level);
+        $this->data['exp_level'] = ($q_exp_level->num_rows() > 0 ) ? $q_exp_level : array();
+
+        $f_exp_year = array("is_deleted" => 0);
+        $q_exp_year = GetAll('exp_year', $f_exp_year);
+        $this->data['exp_year'] = ($q_exp_year->num_rows() > 0 ) ? $q_exp_year : array();
+        
+        $f_resign_reason = array("is_deleted" => 0);
+        $q_resign_reason = GetAll('resign_reason', $f_resign_reason);
+        $this->data['resign_reason'] = ($q_resign_reason->num_rows() > 0 ) ? $q_resign_reason : array();
+
+        $this->_render_page('auth/detail_experience', $this->data);
+    }
+
+    public function get_experience($id){
+
+        $user_experience = $this->person_model->getUserexperience($id);
+        $this->data['user_experience'] = $user_experience;
+        $this->data['num_rows_experience'] = $user_experience->num_rows();
+       
+
+        $this->load->view('table/table_experience', $this->data);
+    }
+
+    public function add_experience($id)
+    {
+
+        $this->form_validation->set_rules('company', 'Company', 'trim|required');
+        $this->form_validation->set_rules('position', 'Position', 'trim|required');
+        $this->form_validation->set_rules('address', 'Address', 'trim|required');
+        $this->form_validation->set_rules('line_business', 'Education Group', 'trim|required');
+        $this->form_validation->set_rules('resign_reason_id', 'Resign Reason', 'trim|required');
+        $this->form_validation->set_rules('last_salary', 'Last Salary', 'trim|required|numeric');      
+        $this->form_validation->set_rules('start_date', 'Start Date', 'trim|required');
+        $this->form_validation->set_rules('end_date', 'End Date', 'trim|required');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'company'           => $this->input->post('company'),
+                    'position'          => $this->input->post('position'),
+                    'address'           => $this->input->post('address'),
+                    'line_business'     => $this->input->post('line_business'),
+                    'resign_reason_id'  => $this->input->post('resign_reason_id'),
+                    'last_salary'       => $this->input->post('last_salary'),
+                    'start_date'        => date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'          => date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'user_id'           => $id,
+                    'created_on'        => date('Y-m-d',strtotime('now')),
+                    'created_by'        => $this->session->userdata('user_id'),
+                    /*
+                    'exp_level_id' =>'',
+                    'exp_year_id'=>'',
+                    'exp_year_id' =>'',
+                    */
+                    );
+
+            $this->auth_model->addExperience($data);
+
+            echo json_encode(array('st'=>1));     
+        }
+    }
+
+    public function edit_experience($id)
+    {
+        $this->form_validation->set_rules('company', 'Company', 'trim|required');
+        $this->form_validation->set_rules('position', 'Position', 'trim|required');
+        $this->form_validation->set_rules('address', 'Address', 'trim|required');
+        $this->form_validation->set_rules('line_business', 'Education Group', 'trim|required');
+        $this->form_validation->set_rules('resign_reason_id', 'Resign Reason', 'trim|required');
+        $this->form_validation->set_rules('last_salary', 'Last Salary', 'trim|required|numeric');      
+        $this->form_validation->set_rules('start_date', 'Start Date', 'trim|required');
+        $this->form_validation->set_rules('end_date', 'End Date', 'trim|required');
+
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'company'           => $this->input->post('company'),
+                    'position'          => $this->input->post('position'),
+                    'address'           => $this->input->post('address'),
+                    'line_business'     => $this->input->post('line_business'),
+                    'resign_reason_id'  => $this->input->post('resign_reason_id'),
+                    'last_salary'       => $this->input->post('last_salary'),
+                    'start_date'        => date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'          => date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'edited_on'        => date('Y-m-d',strtotime('now')),
+                    'edited_by'        => $this->session->userdata('user_id'),
+                    /*
+                    'exp_level_id' =>'',
+                    'exp_year_id'=>'',
+                    'exp_year_id' =>'',
+                    */
+                    );
+
+            $this->auth_model->editExperience($id, $data);
+
+            echo json_encode(array('st'=>1));     
+        }
+
+    }
+
+    public function delete_experience($id)
+    {
+        $data = array(
+                'is_deleted'    => 1,
+                'deleted_on'    =>date('Y-m-d',strtotime('now')),
+                'deleted_by'    =>$this->session->userdata('user_id'),
+                );
+
+        $this->auth_model->deleteExperience($id, $data);
+
+        echo json_encode(array('st'=>1));
+    }   
+
+    public function detail_sk($id, $fname = "fn:",$email = "em:",$sort_by = "id", $sort_order = "asc", $offset = 0)
+    {
+        $this->data['title'] = "SK Detail";
+
+        $user_sk = $this->person_model->getUsersk($id);
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $groups=$this->ion_auth->groups()->result_array();
+        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+
+        //validate form input
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+            // Config for image upload
+        }
+
+         //set sort order
+            $this->data['sort_order'] = $sort_order;
+            
+            //set sort by
+            $this->data['sort_by'] = $sort_by;
+           
+            //set filter by first name
+            $this->data['fname_param'] = $fname; 
+            $exp_fname = explode(":",$fname);
+            $fname_re = str_replace("_", " ", $exp_fname[1]);
+            $fname_post = (strlen($fname_re) > 0) ? array('users.first_name'=>$fname_re) : array() ;
+            
+            //set filter by email
+            $this->data['email_param'] = $email;
+            $exp_email = explode(":",$email);
+            if(strlen($exp_email[1]) > 0) 
+            {
+                $rep_email_char = array("%5Bat%5D","%5Bdot%5D");
+                $std_email_char = array("@",".");
+                
+                $email_post = array('users.email'=>str_replace($rep_email_char,$std_email_char,$exp_email[1]));
+            }else{
+                $email_post = array();
+            }
+            
+            //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
+            $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : $this->config->item('list_limit', 'ion_auth') ;
+
+            $this->data['offset'] = $offset = $this->uri->segment($this->config->item('uri_segment_pager', 'ion_auth'));
+
+            //list of filterize all users  
+            $this->data['users_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->result();
+            
+            //num rows of filterize all users
+            $this->data['num_rows_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->num_rows();
+
+            //list of filterize limit users for pagination  
+            $this->data['users'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->result();
+
+            $this->data['users_num_rows'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
+
+            /*foreach ($this->data['users'] as $k => $user)
+            {
+                $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+            }*/
+
+             //config pagination
+             $config['base_url'] = base_url().'auth/index/fn:'.$exp_fname[1].'/em:'.$exp_email[1].'/'.$sort_by.'/'.$sort_order.'/';
+             $config['total_rows'] = $this->data['num_rows_all'];
+             $config['per_page'] = $limit;
+             $config['uri_segment'] = $this->config->item('uri_segment_pager', 'ion_auth');
+
+            //inisialisasi config
+             $this->pagination->initialize($config);
+
+            //create pagination
+            $this->data['halaman'] = $this->pagination->create_links();
+
+            $this->data['fname_search'] = array(
+                'name'  => 'first_name',
+                'id'    => 'first_name',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('first_name'),
+            );
+
+            $this->data['email_search'] = array(
+                'name'  => 'email',
+                'id'    => 'email',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('email'),
+            );
+
+
+        //pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['groups'] = $groups;
+        $this->data['currentGroups'] = $currentGroups;
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : '';
+
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', (!empty($user->photo)) ? $user->photo : '');
+        
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+        $this->data['user'] = $user;
         $this->data['user_sk'] = $user_sk;
         $this->data['num_rows_sk'] = $user_sk->num_rows();
 
-        //Surat Terima Ijazah Tab
-        $this->data['user_sti'] = $user_sti;
-        $this->data['num_rows_sti'] = $user_sti->num_rows();
+        $f_position = array("is_deleted" => 0);
+        $q_position = GetAll('position', $f_position);
+        $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
 
-        //Riwayat Jabatan Tab
-        $this->data['user_jabatan'] = $user_jabatan;
-        $this->data['num_rows_jabatan'] = $user_jabatan->num_rows();
+        $f_departement = array("is_deleted" => 0);
+        $q_departement = GetAll('departement', $f_departement);
+        $this->data['q_departement'] = $q_departement;
+        $this->data['departement'] = ($q_departement->num_rows() > 0 ) ? $q_departement : array();
 
-        //Award Warning Tab
-        $this->data['user_award'] = $user_award;
-        $this->data['num_rows_award'] = $user_award->num_rows();
 
-        //Ikatan Dinas Tab
-        $this->data['user_ikatan'] = $user_ikatan;
-        $this->data['num_rows_ikatan'] = $user_ikatan->num_rows();
-
-        $this->_render_page('auth/detail', $this->data);
+        $this->_render_page('auth/detail_sk', $this->data);
     }
+
+    public function get_sk($id){
+
+        $user_sk = $this->person_model->getUsersk($id);
+        $this->data['user_sk'] = $user_sk;
+        $this->data['num_rows_sk'] = $user_sk->num_rows();
+       
+
+        $this->load->view('table/table_sk', $this->data);
+    }
+
+
+    public function add_sk($id)
+    {
+        $this->form_validation->set_rules('sk_date','SK Date','trim|required');
+        $this->form_validation->set_rules('sk_no','SK No','trim|required');
+        $this->form_validation->set_rules('position_id','Position','trim|required');
+        $this->form_validation->set_rules('effective_date','Effective Date','trim|required');
+        $this->form_validation->set_rules('departement_id','Departement','trim|required');
+        $this->form_validation->set_rules('location','Location','trim|required');
+        $this->form_validation->set_rules('sign_name','Sign Name','trim|required');
+        $this->form_validation->set_rules('sign_position','Sign Position','trim|required');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'sk_no'             => $this->input->post('sk_no'),
+                    'position_id'       => $this->input->post('position_id'),
+                    'departement_id'    => $this->input->post('departement_id'),
+                    'sk_date'           => date('Y-m-d',strtotime($this->input->post('sk_date'))),
+                    'effective_date'    => date('Y-m-d',strtotime($this->input->post('effective_date'))),
+                    'location'          =>$this->input->post('location'),
+                    'sign_name'         =>$this->input->post('sign_name'),
+                    'sign_position'     =>$this->input->post('sign_position'),
+                    'user_id'           => $id,
+                    'created_on'        => date('Y-m-d',strtotime('now')),
+                    'created_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->addSk($data);
+
+            echo json_encode(array('st'=>1));     
+        }
+    }
+
+    public function edit_sk($id)
+    {
+        $this->form_validation->set_rules('sk_date','SK Date','trim|required');
+        $this->form_validation->set_rules('sk_no','SK No','trim|required');
+        $this->form_validation->set_rules('position_id','Position','trim|required');
+        $this->form_validation->set_rules('effective_date','Effective Date','trim|required');
+        $this->form_validation->set_rules('departement_id','Departement','trim|required');
+        $this->form_validation->set_rules('location','Location','trim|required');
+        $this->form_validation->set_rules('sign_name','Sign Name','trim|required');
+        $this->form_validation->set_rules('sign_position','Sign Position','trim|required');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'sk_no'             => $this->input->post('sk_no'),
+                    'position_id'       => $this->input->post('position_id'),
+                    'departement_id'    => $this->input->post('departement_id'),
+                    'sk_date'           => date('Y-m-d',strtotime($this->input->post('sk_date'))),
+                    'effective_date'    => date('Y-m-d',strtotime($this->input->post('effective_date'))),
+                    'location'          =>$this->input->post('location'),
+                    'sign_name'         =>$this->input->post('sign_name'),
+                    'sign_position'     =>$this->input->post('sign_position'),
+                    'edited_on'        => date('Y-m-d',strtotime('now')),
+                    'edited_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->addSk($data);
+
+            echo json_encode(array('st'=>1));
+        }
+
+    }
+
+    public function delete_sk($id)
+    {
+        $data = array(
+                'is_deleted'    => 1,
+                'deleted_on'    =>date('Y-m-d',strtotime('now')),
+                'deleted_by'    =>$this->session->userdata('user_id'),
+                );
+
+        $this->auth_model->deleteSk($id, $data);
+
+        echo json_encode(array('st'=>1));
+    }
+
+
+
 
     // create a new group
     function create_group()
@@ -1206,137 +2256,7 @@ class Auth extends MX_Controller {
         $this->_render_page('auth/edit_group', $this->data);
     }
 
-    public function submit()
-    {
-        $this->form_validation->set_rules('nik', 'nik', 'trim|required');
-        $this->form_validation->set_rules('name', 'name', 'trim|required');
-        
 
-      if($this->form_validation->run() == FALSE)
-            {
-
-            $this->output->set_content_type('application_json');
-            $this->output->set_output(json_encode(array('result' => 0, $errors = $this->form_validation->error_array() )));
-                return false;
-
-            }
-
-
-        else
-        {
-
-              
-            
-            echo json_encode(array('result'=>1));
-            
-            
-        }
-    }
-
-    public function detail_course($id)
-    {
-         $this->data['title'] = "Course Detail";
-
-        $user_course = $this->person_model->getUserCourse($id);
-
-        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
-        {
-            redirect('auth', 'refresh');
-        }
-
-        $user = $this->ion_auth->user($id)->row();
-        $groups=$this->ion_auth->groups()->result_array();
-        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
-
-        //validate form input
-        
-        if (isset($_POST) && !empty($_POST))
-        {
-            // do we have a valid request?
-            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
-            {
-                show_error($this->lang->line('error_csrf'));
-            }
-            // Config for image upload
-        }
-
-        $this->data['user'] = $user;
-        $this->data['user_course'] = $user_course;
-        $this->data['num_rows_course'] = $user_course->num_rows();
-
-        $this->_render_page('auth/detail_course', $this->data);
-    
-    }
-
-    public function detail_certificate($id)
-    {
-         $this->data['title'] = "certificate Detail";
-
-        $user_certificate = $this->person_model->getUsercertificate($id);
-
-        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
-        {
-            redirect('auth', 'refresh');
-        }
-
-        $user = $this->ion_auth->user($id)->row();
-        $groups=$this->ion_auth->groups()->result_array();
-        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
-
-        //validate form input
-        
-        if (isset($_POST) && !empty($_POST))
-        {
-            // do we have a valid request?
-            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
-            {
-                show_error($this->lang->line('error_csrf'));
-            }
-            // Config for image upload
-        }
-
-        $this->data['user'] = $user;
-        $this->data['user_certificate'] = $user_certificate;
-        $this->data['num_rows_certificate'] = $user_certificate->num_rows();
-
-        $this->_render_page('auth/detail_certificate', $this->data);
-    
-    }
-
-     public function detail_education($id)
-    {
-         $this->data['title'] = "education Detail";
-
-        $user_education = $this->person_model->getUsereducation($id);
-
-        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
-        {
-            redirect('auth', 'refresh');
-        }
-
-        $user = $this->ion_auth->user($id)->row();
-        $groups=$this->ion_auth->groups()->result_array();
-        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
-
-        //validate form input
-        
-        if (isset($_POST) && !empty($_POST))
-        {
-            // do we have a valid request?
-            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
-            {
-                show_error($this->lang->line('error_csrf'));
-            }
-            // Config for image upload
-        }
-
-        $this->data['user'] = $user;
-        $this->data['user_education'] = $user_education;
-        $this->data['num_rows_education'] = $user_education->num_rows();
-
-        $this->_render_page('auth/detail_education', $this->data);
-    
-    }
 
 
     function _get_csrf_nonce()
@@ -1445,10 +2365,15 @@ class Auth extends MX_Controller {
                     $this->template->add_css('datepicker.css');
                 }
                 elseif(in_array($view, array('auth/detail',
-                                             'auth/detail_course',
                                              'auth/detail_certificate',
-                                             'auth/detail_education'
-                                             )))
+                                             'auth/detail_education',
+                                             'auth/detail_experience',
+                                             'auth/detail_sk',
+                                             'auth/detail_sti',
+                                             'auth/detail_jabatan',
+                                             'auth/detail_award',
+                                             'auth/detail_ikatan',
+                    )))
                 {
                     $this->template->set_layout('default');
 
@@ -1463,6 +2388,7 @@ class Auth extends MX_Controller {
                     $this->template->add_js('bootstrap-datepicker.js');
                     $this->template->add_js('edit_user.js');
                     $this->template->add_js('core.js');
+
                     
                     $this->template->add_js('select2.min.js');
                     

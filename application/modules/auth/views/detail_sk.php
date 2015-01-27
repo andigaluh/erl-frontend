@@ -44,7 +44,6 @@
                     <div class="grid-body no-border">
                         
                         <div class="row">
-                            <div <?php ( ! empty($message)) && print('class="alert alert-info"'); ?> id="infoMessage"><?php echo $message;?></div>
                                 <div class="col-md-4">
                                     <h4><?php echo lang('employee_information_subheading')?></h4>
                                     <div class="form-group">
@@ -158,7 +157,7 @@
                         <?php include 'auth_detail_navbar.php';?>
                         <hr />
 
-                        <!--start Course Row -->
+                        <!--start sk Row -->
 
                         <div class="row">
                             
@@ -167,7 +166,7 @@
                                         <br/>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('course_subheading');?></span></h4>
+                                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('sk_subheading');?></span></h4>
                                             </div>
                                         </div>
 
@@ -176,8 +175,8 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="row">
-                                                        <div class="col-md-4 search_label"><?php echo form_label(lang('index_course_title_th'),'course_title_search')?></div>
-                                                        <div class="col-md-8"><?php echo bs_form_input($course_title_search)?></div>
+                                                        <div class="col-md-4 search_label"><?php echo form_label(lang('index_sk_title_th'),'sk_title_search')?></div>
+                                                        <div class="col-md-8"><?php// echo bs_form_input($sk_title_search)?></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
@@ -189,11 +188,12 @@
                                         <?php echo form_close()?>
                                         
                                         <br/>
+
                                         <div class="row">
                                             <div class="col-md-12">
                                             <div class="row">
                                             <div class="col-md-5">
-                                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addCourseModal">Tambah</button>
+                                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addskModal">Tambah</button>
                                             </div>
                                             <div class="col-md-7">
                                                 <div id="MsgGood" class="msggood" style="display:none;"></div>
@@ -201,15 +201,14 @@
                                             </div>
                                             </div>
                                         </div>
-                                        <div id="tabel" class="row">
-                                        
-                                        </div>
-                                        
+
+                                        <div id="tabel">
+
                                         <div class="row">
                                             
                                             <div class="col-md-2 page_limit">
-                                                <?php echo form_open(uri_string());?>
-                                                <?php 
+                                                <!--<?php echo form_open(uri_string());?>
+                                                <?php/* 
                                                     $selectComponentData = array(
                                                         10  => '10',
                                                         25 => '25',
@@ -218,12 +217,12 @@
                                                         100 => '100',);
                                                     $selectComponentJs = 'class="select2" onChange="this.form.submit()" id="limit"';
                                                     echo "Per page: ".form_dropdown('limit', $selectComponentData, $limit, $selectComponentJs);
-                                                ?>
+                                                */?> -->
                                                 <?php echo form_close();?>
                                             </div>
                                             <div class="col-md-10">
                                                 <ul class="pagination">
-                                                    <?php echo $halaman;?>
+                                                    <?php// echo $halaman;?>
                                                 </ul>
                                             </div>
                                         </div>
@@ -240,54 +239,108 @@
 </div>
 
 
-<!-- Add Course Modal -->
-<div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Add sk Modal -->
+<div class="modal fade" id="addskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_course', 'add_course')?></h4>
-        <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
+        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_sk', 'add_sk')?></h4>
+        <p class="txtBold txtRed" class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
       </div>
       <div class="modal-body">
-        <?= form_open('auth/add_course/'.$user->id, array('id'=>'formadd'))?> 
+        <?= form_open('auth/add_sk/'.$user->id, array('id'=>'formadd'))?> 
              <div class="row form-row">
+
                 <div class="col-md-3">
-                    <?php echo lang('course_description', 'course_title');?>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" name="description">         
-                </div>
-                <div class="col-md-3">
-                    <?php echo lang('course_registration_date', 'course_registration_date');?>
+                    <?php echo lang('sk_date', 'sk_date');?>
                 </div>
                 <div class="col-md-9">
                         <div class="input-with-icon right">
                             <div class="input-append success date no-padding">
-                                <input type="text" class="form-control" name="registration_date">
+                                <input type="text" class="form-control" name="sk_date">
                                 <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
                             </div>
                         </div>
                 </div>
+
                 <div class="col-md-3">
-                    <?php echo lang('course_status', 'course_status');?>
+                    <?php echo lang('sk_no', 'sk_no');?>
                 </div>
                 <div class="col-md-9">
-                    <select name="course_status_id" class="select2" id="course_status_id" style="width:100%">
+                    <input type="text" class="form-control" name="sk_no">         
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('position', 'position');?>
+                </div>
+                <div class="col-md-9">
+                    <select name="position_id" class="select2" id="position_id" style="width:100%">
                         <?php
-                            foreach ($course_status->result_array() as $key => $value) {
-                            $selected = ($course_status_id <> 0 && $course_status_id == $value['id']) ? 'selected = selected' : '';
+                            foreach ($position->result_array() as $key => $value) {
+                            $selected = ($position_id <> 0 && $position_id == $value['id']) ? 'selected = selected' : '';
                             echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }
                             ?>
-                        </select>
+                        </select>        
                 </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('departement', 'departement');?>
+                </div>
+                <div class="col-md-9">
+                    <select name="departement_id" class="select2" id="departement_id" style="width:100%">
+                        <?php
+                            if($q_departement->num_rows() > 0){
+                            foreach ($departement->result_array() as $key => $value) {
+                            $selected = ($departement_id <> 0 && $departement_id == $value['id']) ? 'selected = selected' : '';
+                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                            }}else{
+                                echo '<option value="0">'.'No Data'.'</option>';
+                            }
+                            ?>
+                        </select>        
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('effective_date', 'effective_date');?>
+                </div>
+                <div class="col-md-9">
+                        <div class="input-with-icon right">
+                            <div class="input-append success date no-padding">
+                                <input type="text" class="form-control" name="effective_date">
+                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('location', 'location');?>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="location">         
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('sign_name', 'sign_name');?>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="sign_name">         
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('sign_position', 'sign_position');?>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="sign_position">         
+                </div>
+
             </div>
                                     
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close_button')?></button> 
-        <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <input type="submit" name="btn_submit" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
       </div>
         <?php echo form_close()?>
     </div>
@@ -300,90 +353,144 @@
 
 
 
-<!--Edit Modal-->
 
-<?php foreach($user_course->result() as $row){?>
-<div class="modal fade" id="editCourseModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_course', 'edit_course')?></h4>
-        <p class="error_msg" id="MsgBad2" style="background: #fff; display: none;"></p>
-      </div>
-      <div class="modal-body">
-        <?= form_open('auth/edit_course/'.$row->id, array('id'=>'formupdate'))?> 
-             <div class="row form-row">
-                <div class="col-md-3">
-                    <?php echo lang('course_description', 'course_title');?>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" name="description" value="<?php echo $row->description?>">         
-                </div>
-                <div class="col-md-3">
-                    <?php echo lang('course_registration_date', 'course_registration_date');?>
-                </div>
-                <div class="col-md-9">
-                        <div class="input-with-icon right">
-                            <div class="input-append success date no-padding">
-                                <input type="text" class="form-control" name="registration_date" value="<?php echo $row->registration_date?>">
-                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+<!--Edit Modal-->
+<?php foreach($user_sk->result() as $row){?>
+<div class="modal fade" id="editskModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_sk', 'edit_sk')?></h4>
+            <p class="txtBold txtRed" class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
+        </div>
+            <div class="modal-body">
+                <?= form_open('auth/edit_sk/'.$user->id, array('id'=>'formupdate'))?> 
+                <div class="row form-row">
+
+                    <div class="col-md-3">
+                        <?php echo lang('sk_date', 'sk_date');?>
+                    </div>
+                    <div class="col-md-9">
+                            <div class="input-with-icon right">
+                                <div class="input-append success date no-padding">
+                                    <input type="text" class="form-control" name="sk_date" value="<?php echo $row->sk_date?>">
+                                    <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                                </div>
                             </div>
-                        </div>
-                </div>
-                <div class="col-md-3">
-                    <?php echo lang('course_status', 'course_status');?>
-                </div>
-                <div class="col-md-9">
-                    <select name="course_status_id" class="select2" id="course_status_id" style="width:100%">
-                        <?php
-                            foreach ($course_status->result_array() as $key => $value) {
-                            $selected = ($row->status_id <> 0 && $row->status_id == $value['id']) ? 'selected = selected' : '';
-                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                            }
-                            ?>
-                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('sk_no', 'sk_no');?>
+                    </div>
+                    <div class="col-md-9">
+                    <input type="text" class="form-control" name="sk_no" value="<?php echo $row->sk_no?>">
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('position', 'position');?>
+                    </div>
+                    <div class="col-md-9">
+                        <select name="position_id" class="select2" id="position_id" style="width:100%">
+                            <?php
+                                foreach ($position->result_array() as $key => $value) {
+                                $selected = ($position_id <> 0 && $position_id == $value['id']) ? 'selected = selected' : '';
+                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                }
+                                ?>
+                            </select>        
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('departement', 'departement');?>
+                    </div>
+                    <div class="col-md-9">
+                        <select name="departement_id" class="select2" id="departement_id" style="width:100%">
+                            <?php
+                                if($q_departement->num_rows() > 0){
+                                foreach ($departement->result_array() as $key => $value) {
+                                $selected = ($departement_id <> 0 && $departement_id == $value['id']) ? 'selected = selected' : '';
+                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                }}else{
+                                    echo '<option value="0">'.'No Data'.'</option>';
+                                }
+                                ?>
+                            </select>        
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('effective_date', 'effective_date');?>
+                    </div>
+                    <div class="col-md-9">
+                            <div class="input-with-icon right">
+                                <div class="input-append success date no-padding">
+                                    <input type="text" class="form-control" name="effective_date" value="<?php echo $row->effective_date?>">
+                                    <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('location', 'location');?>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="location" value="<?php echo $row->location?>">         
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('sign_name', 'sign_name');?>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="sign_name" value="<?php echo $row->sign_name?>">         
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('sign_position', 'sign_position');?>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="sign_position" value="<?php echo $row->sign_position?>">         
+                    </div>
                 </div>
             </div>
-                                    
-      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close_button')?></button> 
-        <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <input type="submit" name="btn_submit" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
       </div>
         <?php echo form_close()?>
     </div>
   </div>
 </div>
 <?php } ?>
-<!-- End Edit Modal-->
 
 
-<!--Delete Modal-->
-<?php foreach($user_course->result() as $row){?>
-<div class="modal fade" id="deleteCourseModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <?php echo form_open('auth/delete_course/'.$row->id, array("id"=>"formdelete"))?>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-body">
-      <p>Are You Sure ?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('cancel_button')?></button> 
-        <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-default" value="<?php echo lang('delete_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
-      </div>
-        <?php echo form_close()?>
+
+<!--Delete Modal Window-->
+<?php foreach($user_sk->result() as $row){?>
+<div class="modal fade" id="deleteskModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <?php echo form_open('auth/delete_sk/'.$row->id, array("id"=>"formdelete"))?>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-body">
+                    <p>Are You Sure ?</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('cancel_button')?></button> 
+                <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-danger" value="<?php echo lang('delete_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+                </div>
+            <?php echo form_close()?>
+        </div>
     </div>
-  </div>
 </div>
-<?php } ?>
+<?php }?>
 
 <script type="text/javascript">
     window.onload = function(){getTable();};
 
     function getTable() 
     {
-        $('#tabel').load('<?php echo site_url('auth/get_course/'.$user->id); ?>');
+        $('#tabel').load('<?php echo site_url('auth/get_sk/'.$user->id); ?>');
     }
 </script>
+
+

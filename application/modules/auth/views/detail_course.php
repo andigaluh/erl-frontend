@@ -56,7 +56,7 @@
                                 <div class="grid simple ">                            
                                     <div class="grid-body no-border">
                                         <br/>
-                                        
+                                        <!--
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('user_subheading');?></span></h4>
@@ -84,7 +84,7 @@
                                                     </div>
                                                 </div>    
                                             </div>
-                                        
+                                        -->
                                         <?php echo form_close()?>
                                         
                                         <br/>
@@ -176,7 +176,7 @@
                                                 </ul>
                                             </div>
 
-                                            <!--Navbar-->
+                                            
                                             <div class="row">
 
                                             <div class="col-md-12">
@@ -188,10 +188,9 @@
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <ul class="nav nav-pills nav-justified">
-                                                                    
-                                                                    <li role="presentation" class="active"><a href="<?php echo base_url('auth/detail_course/'.$user->id);?>"><?php echo lang('person_course_label')?></a></li>
-                                                                    <li role="presentation"><a href="<?php echo base_url('auth/detail_certificate/'.$user->id);?>"><?php echo lang('person_certificate_label')?></a></li>
-                                                                    <li role="presentation"><a href="<?php echo base_url('auth/detail_education/'.$user->id);?>"><?php echo lang('person_education_label')?>Education</a></li>
+                                                                    <li role="presentation" class="active"><a href="#"><?php echo lang('person_course_label')?></a></li>
+                                                                    <li role="presentation"><a href="<?php echo base_url('auth/detail_course/'.$user->id);?>"><?php echo lang('person_certificate_label')?></a></li>
+                                                                    <li role="presentation"><a href="#"><?php echo lang('person_education_label')?></a></li>
                                                                     <li role="presentation"><a href="#"><?php echo lang('person_experience_label')?></a></li>
                                                                     <li role="presentation"><a href="#"><?php echo lang('person_sk_label')?></a></li>
                                                                     <li role="presentation"><a href="#"><?php echo lang('person_sti_label')?></a></li>
@@ -203,7 +202,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- End Navbar>
                                         </div>
 
 
