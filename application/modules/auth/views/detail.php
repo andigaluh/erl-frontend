@@ -19,7 +19,7 @@
         </ul> -->
         <div class="page-title">
             <a href="<?php echo site_url('auth')?>"><i class="icon-custom-left"></i></a>
-            <h3><?php echo lang('detail_user_heading');?></h3> 
+            <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('users_course_subheading');?></span></h3> 
         </div>
         <!-- <div class="row">
             <div class="col-md-12">
@@ -155,7 +155,7 @@
                                     </div>
                                 </div>
                         </div>
-                        <?php include 'auth_detail_navbar.php';?>
+                        <?php echo $this->load->view('auth_detail_navbar');?>
                         <hr />
 
                         <!--start Course Row -->
@@ -164,25 +164,24 @@
                             
                                 <div class="grid simple ">                            
                                     <div class="grid-body no-border">
-                                        <br/>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('course_subheading');?></span></h4>
                                             </div>
                                         </div>
-
                                         <form action="" method="post">
-                                       
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-8">
                                                     <div class="row">
-                                                        <div class="col-md-4 search_label"><?php echo form_label(lang('index_course_title_th'),'course_title_search')?></div>
-                                                        <div class="col-md-8"><input type="text" name="title"></div>
+                                                        <div class="col-md-2 search_label"><?php echo form_label(lang('index_course_title_th'),'course_title_search')?></div>
+                                                        <div class="col-md-10"><?php echo bs_form_input('title');?></div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-4">
                                                     <div class="row">
-                                                        <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+                                                        <?php echo form_submit('submit',lang('search_button'),'class="btn btn-primary"')?>
+                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addCourseModal"><?php echo lang('add_button');?></button>
+                                                        <!-- <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('search_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;"> -->
                                                     </div>
                                                 </div>    
                                             </div>
@@ -191,22 +190,16 @@
                                         <br/>
                                         <div class="row">
                                             <div class="col-md-12">
-                                            <div class="row">
-                                            <div class="col-md-5">
-                                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addCourseModal">Tambah</button>
-                                            </div>
-                                            <div class="col-md-7">
-                                                <div id="MsgGood" class="msggood" style="display:none;"></div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="MsgGood" class="msggood text-center" style="display:none;"></div>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
                                         </div>
                                         <div id="tabel" class="row">
-                                        
                                         </div>
-                                        
                                         <div class="row">
-                                            
                                             <div class="col-md-2 page_limit">
                                                 <?php echo form_open(uri_string());?>
                                                 <?php 

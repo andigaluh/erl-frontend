@@ -188,6 +188,8 @@
             }
             e.preventDefault();
         });
+
+        $('#limit').select2();
     });
 
     // Execute queued scripts
@@ -216,6 +218,7 @@ $(document).ready(function(){
                     }, 'json');
                     return false;
                 });
+                $('#course_status_id').select2();
             });
 
 $(document).ready(function(){
@@ -231,6 +234,7 @@ $(document).ready(function(){
                     }, 'json');
                     return false;
                 });
+                $('#course_status_id').select2();
             });
 
 $(function(){

@@ -183,6 +183,7 @@ $lang['education_subheading'] = 'Educations';
 $lang['experience_subheading'] = 'Experiences';
 $lang['found_subheading'] = 'Found';
 $lang['search_name_email'] = 'Name or Email';
+$lang['users_course_subheading'] = "User's Course";
 
 //button
 $lang['add_button'] = 'Add';
@@ -191,6 +192,7 @@ $lang['close_button'] = 'Close';
 $lang['edit_button'] = 'Edit';
 $lang['delete_button'] = 'Delete';
 $lang['cancel_button'] = 'Cancel';
+$lang['search_button'] = 'Search';
 
 //person label
 $lang['person_course_label'] = 'Company Course';
