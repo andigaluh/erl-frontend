@@ -1011,7 +1011,7 @@
 													                        <label class="form-label text-right">Acknowledge by</label>
 													                      </div>
 													                      <div class="col-md-10">
-													                        <input name="posisi_penandatangan" id="posisi_penandatangan" type="text"  class="form-control" placeholder="Posisi Penandatangan" value="<?php echo $row->acknowledge?>" disabled="disabled">
+													                        <input name="posisi_penandatangan" id="posisi_penandatangan" type="text"  class="form-control" placeholder="Posisi Penandatangan" value="<?php echo $row->acknowledgeby?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    

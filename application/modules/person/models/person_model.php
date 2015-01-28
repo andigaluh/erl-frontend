@@ -60,6 +60,7 @@ class Person_model extends CI_Model
         $this->db->join('education_center', 'users_education.education_center_id = education_center.id','left');
 
         $this->db->where('users_education.user_id', $id);
+        $this->db->order_by('users_education.id','asc');
         $this->db->where('users_education.is_deleted', 0);
 
         $query = $this->db->get();
@@ -86,10 +87,11 @@ class Person_model extends CI_Model
     function getUserSk($id){
         $this->db->select('users_sk.id,users_sk.user_id, users_sk.sk_date, users_sk.sk_no, users_sk.effective_date, users_sk.location, users_sk.sign_position, users_sk.sign_name, departement.title as departement, position.title as position');
         $this->db->from('users_sk');
-        $this->db->join('departement', 'users_sk.departement_id = departement.id');
+        $this->db->join('departement', 'users_sk.departement_id = departement.id', 'left');
         $this->db->join('position', 'users_sk.position_id = position.id');
 
         $this->db->where('users_sk.user_id', $id);
+        $this->db->order_by('users_sk.id','asc');
         $this->db->where('users_sk.is_deleted', 0);
 
         $query = $this->db->get();
@@ -97,14 +99,17 @@ class Person_model extends CI_Model
     }
 
     function getUserSti($id){
-        $this->db->select('users_sti.id, users_sti.activation_date, users_sti.identity_no, users_sti.ijazah_history, users_sti.ijazah_name, users_sti.ijazah_number, users_sti.institution, users_sti.published_place, users_sti.receivedby_id, users.username, departement.title as departement, position.title as position, acknowledge.username as acknowledge');
+        $this->db->select('users_sti.*, users.username, departement.title as departement, position.title as position, acknowledge.username as acknowledgeby, received.username as receivedby');
         $this->db->from('users_sti');
         $this->db->join('users', 'users_sti.user_id = users.id');
-        $this->db->join('departement', 'users_sti.departement_id = departement.id');
+        $this->db->join('departement', 'users_sti.departement_id = departement.id', 'left');
         $this->db->join('position', 'users_sti.position_id = position.id');
         $this->db->join('users as acknowledge', 'users_sti.acknowledgeby_id = acknowledge.id');
+        $this->db->join('users as received', 'users_sti.receivedby_id = received.id');
 
         $this->db->where('user_id', $id);
+        $this->db->order_by('users_sti.id','asc');
+        $this->db->where('users_sti.is_deleted', 0);
 
         $query = $this->db->get();
         return $query;
@@ -120,6 +125,7 @@ class Person_model extends CI_Model
         $this->db->join('position', 'users_jabatan.position_id = position.id');
 
         $this->db->where('user_id', $id);
+        $this->db->where('users_jabatan.is_deleted', 0);
 
         $query = $this->db->get();
         return $query;
@@ -131,6 +137,7 @@ class Person_model extends CI_Model
         $this->db->join('award_warning_type', 'users_awardwarning.award_warning_type_id = award_warning_type.id');
 
         $this->db->where('user_id', $id);
+        $this->db->where('users_awardwarning.is_deleted', 0);
 
         $query = $this->db->get();
         return $query;
@@ -142,7 +149,7 @@ class Person_model extends CI_Model
         $this->db->join('users', 'users_ikatan_dinas.user_id = users.id');
         $this->db->join('ikatan_dinas_type', 'users_ikatan_dinas.ikatan_dinas_type = ikatan_dinas_type.id');
         
-        $this->db->where('user_id', $id);
+        $this->db->where('users_ikatan_dinas.is_deleted', 0);
 
         $query = $this->db->get();
         return $query;

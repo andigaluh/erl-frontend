@@ -1,6 +1,6 @@
 <div id="tabel" class="row">
                                             <div class="col-md-6">
-                                            <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_sk;?>&nbsp;<?php echo lang('sk_subheading');?></span></h4>
+                                            <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_sti;?>&nbsp;<?php echo lang('sti_subheading');?></span></h4>
                                                
                                             </div>
                                              <div class="bs-example"  data-example-id="labels-in-headings" style="z-index:-10;">
@@ -15,21 +15,22 @@
                                                             <label for="checkbox10"></label>
                                                         </div>
                                                     </th>
-                                                    <th width="2%"><?php //echo anchor('auth/detail/'.$user->id.'/'.$ctitle_param.'/sk_title/'.(($sort_order == 'asc' && $sort_by == 'sk_title') ? 'desc' : 'asc'), lang('sk_description'));?></th>
-                                                    <th width="10%"><?php echo lang('sk_date')//anchor('auth/index/'.$fname_param.'/'.$email_param.'/last_name/'.(($sort_order == 'asc' && $sort_by == 'last_name') ? 'desc' : 'asc'), lang('index_lname_th'));?></th>
-                                                    <th width="10%"><?php echo lang('sk_no')//anchor('auth/index/'.$fname_param.'/'.$email_param.'/email/'.(($sort_order == 'asc' && $sort_by == 'email') ? 'desc' : 'asc'), lang('index_email_th'));?></th>
-                                                    <th width="10%"><?php echo lang('position');?></th>
+                                                    <th width="2%"><?php //echo anchor('auth/detail/'.$user->id.'/'.$ctitle_param.'/sti_title/'.(($sort_order == 'asc' && $sort_by == 'sti_title') ? 'desc' : 'asc'), lang('sti_description'));?></th>
+                                                    <th width="10%"><?php echo lang('identity_no')//anchor('auth/index/'.$fname_param.'/'.$email_param.'/last_name/'.(($sort_order == 'asc' && $sort_by == 'last_name') ? 'desc' : 'asc'), lang('index_lname_th'));?></th>
+                                                    <th width="10%"><?php echo lang('ijazah_name')//anchor('auth/index/'.$fname_param.'/'.$email_param.'/email/'.(($sort_order == 'asc' && $sort_by == 'email') ? 'desc' : 'asc'), lang('index_email_th'));?></th>
+                                                    <th width="10%"><?php echo lang('ijazah_number');?></th>
+                                                    <th width="10%"><?php echo lang('ijazah_history');?></th>
+                                                    <th width="10%"><?php echo lang('institution')?></th>
                                                     <th width="10%"><?php echo lang('departement');?></th>
-                                                    <th width="10%"><?php echo lang('effective_date');?></th>
-                                                    <th width="10%"><?php echo lang('location');?></th>
-                                                    <th width="5%"><?php echo lang('sign_name');?></th>
-                                                    <th width="10%"><?php echo lang('sign_position');?></th>
+                                                    <th width="5%"><?php echo lang('position');?></th>
+                                                    <th width="10%"><?php echo lang('receivedby');?></th>
+                                                    <th width="10%"><?php echo lang('acknowledgeby');?></th>
                                                     <th width="20%"><?php echo lang('index_action_th');?></th>                                  
                                                 </tr>
                                             </thead>
                                             <tbody id="tabel">
-                                            <?php if ($user_sk->num_rows() > 0){
-                                                        foreach($user_sk->result() as $row){?>
+                                            <?php if ($user_sti->num_rows() > 0){
+                                                        foreach($user_sti->result() as $row){?>
                                                 <tr>
                                                     <td valign="middle">
                                                          <div class="checkbox check-default">
@@ -40,18 +41,19 @@
 
 
                                                     <td valign="middle"><?php echo $row->id;?></td>
-                                                    <td valign="middle"><span class="muted"><?php echo $row->sk_date;?></span></td>
-                                                    <td valign="middle"><span class="muted"><?php echo $row->sk_no;?></span></td>
-                                                    <td valign="middle"><span class="muted"><?php echo $row->position;?></span></td>
+                                                    <td valign="middle"><span class="muted"><?php echo $row->identity_no;?></span></td>
+                                                    <td valign="middle"><span class="muted"><?php echo $row->ijazah_name;?></span></td>
+                                                    <td valign="middle"><span class="muted"><?php echo $row->ijazah_number;?></span></td>
+                                                    <td valign="middle"><span class="muted"><?php echo $row->ijazah_history;?></span></td>
+                                                    <td valign="middle"><span class="muted"><?php echo $row->institution;?></span></td>
                                                     <td valign="middle"><span class="muted"><?php echo $row->departement;?></span></td>
-                                                    <td valign="middle"><span class="muted"><?php echo $row->effective_date;?></span></td>
-                                                    <td valign="middle"><span class="muted"><?php echo $row->location;?></span></td>
-                                                    <td valign="middle"><span class="muted"><?php echo $row->sign_name;?></span></td>
-                                                    <td valign="middle"><span class="muted"><?php echo $row->sign_position;?></span></td>
+                                                    <td valign="middle"><span class="muted"><?php echo $row->position;?></span></td>
+                                                    <td valign="middle"><span class="muted"><?php echo $row->receivedby;?></span></td>
+                                                    <td valign="middle"><span class="muted"><?php echo $row->acknowledgeby;?></span></td>
                                                     <td valign="middle">
-                                                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editskModal<?= $row->id?>"><?php echo lang('edit_button')?></button>
+                                                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editstiModal<?= $row->id?>"><?php echo lang('edit_button')?></button>
                                                         &nbsp;|&nbsp;
-                                                        <button class='btn btn-danger btn-xs' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteskModal<?php echo $row->id?>">Delete</button>
+                                                        <button class='btn btn-danger btn-xs' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deletestiModal<?php echo $row->id?>">Delete</button>
                                                     </td>
 
                                                 </tr>

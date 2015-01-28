@@ -8,6 +8,19 @@ class Auth_model extends CI_Model
         $this->load->database();
     }
 
+    function getCourse($id,$title_post){
+        $this->db->select('users_course.id, users_course.course_status_id as status_id, users_course.title as description, users_course.registration_date, course_status.title as status');
+        $this->db->from('users_course');
+        $this->db->join('course_status', 'users_course.course_status_id = course_status.id');
+
+        $this->db->where('users_course.user_id', $id);
+        $this->db->where('users_course.is_deleted', 0);
+        $this->db->like('users_course.title',$title_post);
+        
+        $query = $this->db->get();
+        return $query;
+    }
+
     function addCourse($data)
     {
     	$this->db->insert('users_course', $data);
@@ -81,6 +94,66 @@ class Auth_model extends CI_Model
     function deletesk($id, $data){
         $this->db->where('id', $id);
         $this->db->update('users_sk', $data);
+    }
+
+    function addsti($data)
+    {
+        $this->db->insert('users_sti', $data);
+    }
+
+    function editsti($id, $data){
+        $this->db->where('id', $id);
+        $this->db->update('users_sti', $data);
+    }
+
+    function deletesti($id, $data){
+        $this->db->where('id', $id);
+        $this->db->update('users_sti', $data);
+    }
+
+    function addjabatan($data)
+    {
+        $this->db->insert('users_jabatan', $data);
+    }
+
+    function editjabatan($id, $data){
+        $this->db->where('id', $id);
+        $this->db->update('users_jabatan', $data);
+    }
+
+    function deletejabatan($id, $data){
+        $this->db->where('id', $id);
+        $this->db->update('users_jabatan', $data);
+    }
+
+    function addaward($data)
+    {
+        $this->db->insert('users_award', $data);
+    }
+
+    function editaward($id, $data){
+        $this->db->where('id', $id);
+        $this->db->update('users_award', $data);
+    }
+
+    function deleteaward($id, $data){
+        $this->db->where('id', $id);
+        $this->db->update('users_award', $data);
+    }
+
+    function addikatan($data)
+    {
+        $this->db->insert('users_ikatan', $data);
+    }
+
+    function editikatan($id, $data){
+        $this->db->where('id', $id);
+        $this->db->update('users_ikatan', $data);
+    }
+
+    function deleteikatan($id, $data){
+        $this->db->where('id', $id);
+        $this->db->update('users_ikatan', $data);
     }
 
 }

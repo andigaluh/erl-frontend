@@ -250,7 +250,6 @@ $(function(){
 
 
 
-
 /*custom web-HRIS 
 $(document).ready(function() {      
     $('#login-form').validate({

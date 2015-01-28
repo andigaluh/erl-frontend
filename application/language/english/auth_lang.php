@@ -242,3 +242,45 @@ $lang['resign_reason'] = 'Resign Reason';
 $lang['last_salary'] = 'Last Salary';
 $lang['add_experience'] = 'Add Experience';
 $lang['edit_experience'] = 'Edit Experience';
+
+//Users SK
+
+$lang['sk_date'] = 'SK Date';
+$lang['sk_no'] = 'SK No';
+$lang['departement'] = 'Departement';
+$lang['effective_date'] = 'Effective Date';
+$lang['location'] = 'Location';
+$lang['sign_name'] = 'Sign Name';
+$lang['sign_position'] = 'Sign Position';
+$lang['add_sk'] = 'Add SK';
+$lang['edit_sk'] = 'Edit SK';
+
+//Users STI
+$lang['add_sti'] = 'Add STI';
+$lang['edit_sti'] = 'Edit STI';
+$lang['identity_no'] = 'Identity No';
+$lang['ijazah_name'] = 'Ijazah Name';
+$lang['ijazah_no'] = 'Ijazah Number';
+$lang['ijazah_history'] = 'Ijazah History';
+$lang['published_place'] = 'Published Place';
+$lang['activation_date'] = 'Activation Date';
+$lang['receivedby'] = 'Received By';
+$lang['acknowledgeby'] = 'Acknowledge By';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';

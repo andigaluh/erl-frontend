@@ -1017,8 +1017,8 @@ class Auth extends MX_Controller {
         $user = $this->person_model->getUsers($id)->row();
         $user_course = $this->person_model->getUserCourse($id);
         //die($user->row()->organization_title);
-        $groups=$this->ion_auth->groups()->result_array();
-        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+        //$groups=$this->ion_auth->groups()->result_array();
+        //$currentGroups = $this->ion_auth->get_users_groups($id)->result();
 
         //display the edit user form
         $this->data['csrf'] = $this->_get_csrf_nonce();
@@ -1033,10 +1033,10 @@ class Auth extends MX_Controller {
             $this->data['sort_by'] = $sort_by;
            
             //set filter by first name
-            $this->data['ctitle_param'] = $ctitle; 
-            $exp_ctitle = explode(":",$ctitle);
-            $ctitle_re = str_replace("_", " ", $exp_ctitle[1]);
-            $ctitle_post = (strlen($ctitle_re) > 0) ? array('users_course.title'=>$ctitle_re) : array() ;
+            //$this->data['ctitle_param'] = $ctitle; 
+            //$exp_ctitle = explode(":",$ctitle);
+            //$ctitle_re = str_replace("_", " ", $exp_ctitle[1]);
+            //$ctitle_post = (strlen($ctitle_re) > 0) ? array('users_course.title'=>$ctitle_re) : array() ;
             
             //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
             $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : $this->config->item('list_limit', 'ion_auth') ;
@@ -1044,15 +1044,15 @@ class Auth extends MX_Controller {
             $this->data['offset'] = $offset = $this->uri->segment($this->config->item('uri_segment_pager', 'ion_auth'));
 
             //list of filterize all users  
-            $this->data['course_all'] = $this->ion_auth->like($ctitle_post)->users()->result();
+            //$this->data['course_all'] = $this->ion_auth->like($ctitle_post)->users()->result();
             
             //num rows of filterize all users
-            $this->data['num_rows_all'] = $this->ion_auth->like($ctitle_post)->users()->num_rows();
+            //$this->data['num_rows_all'] = $this->ion_auth->like($ctitle_post)->users()->num_rows();
 
             //list of filterize limit users for pagination  
-            //$this->data['user_course'] = $this->person_model->like($ctitle_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->result();
+            $this->data['user_course_list'] = $this->auth_model->getCourse($limit=10,$offset=null,$ctitle);
 
-            $this->data['users_num_rows'] = $this->ion_auth->like($ctitle_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
+            //$this->data['users_num_rows'] = $this->ion_auth->like($ctitle_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
 
            /* foreach ($this->data['users'] as $k => $user)
             {
@@ -1060,16 +1060,16 @@ class Auth extends MX_Controller {
             }*/
 
              //config pagination
-             $config['base_url'] = base_url().'auth/index/fn:'.$exp_ctitle[1].'/'.$sort_by.'/'.$sort_order.'/';
-             $config['total_rows'] = $this->data['num_rows_all'];
-             $config['per_page'] = $limit;
-             $config['uri_segment'] = $this->config->item('uri_segment_pager', 'ion_auth');
+             //$config['base_url'] = base_url().'auth/index/fn:'.$exp_ctitle[1].'/'.$sort_by.'/'.$sort_order.'/';
+             //$config['total_rows'] = $this->data['num_rows_all'];
+             //$config['per_page'] = $limit;
+             //$config['uri_segment'] = $this->config->item('uri_segment_pager', 'ion_auth');
 
             //inisialisasi config
-             $this->pagination->initialize($config);
+             //$this->pagination->initialize($config);
 
             //create pagination
-            $this->data['halaman'] = $this->pagination->create_links();
+            //$this->data['halaman'] = $this->pagination->create_links();
 
             $this->data['course_title_search'] = array(
                 'name'  => 'course_detail',
@@ -1109,14 +1109,16 @@ class Auth extends MX_Controller {
         $this->_render_page('auth/detail', $this->data);
     }
 
-    public function get_course($id){
+    public function get_course($id, $ctitle='', $sort_by = "id", $sort_order = "asc", $offset = 0){
 
 
         $user = $this->ion_auth->user($id)->row();
         $this->data['user'] = $user;
+        $ctitle = $this->uri->segment(4);
         $user_course = $this->person_model->getUserCourse($id);
         $this->data['user_course'] = $user_course;
         $this->data['num_rows_course'] = $user_course->num_rows();
+        $this->data['user_course_list'] = $this->auth_model->getCourse($id,$ctitle, $limit=10,$offset=null);
        
 
         $this->load->view('table/table_course', $this->data);
@@ -2143,6 +2145,212 @@ class Auth extends MX_Controller {
         echo json_encode(array('st'=>1));
     }
 
+    public function detail_sti($id, $fname = "fn:",$email = "em:",$sort_by = "id", $sort_order = "asc", $offset = 0){
+
+        $this->data['title'] = "STI Detail";
+
+        $user_sti = $this->person_model->getUsersti($id);
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        
+
+        //validate form input
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+            // Config for image upload
+        }
+
+        $this->data['user'] = $user;
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : '';
+
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', (!empty($user->photo)) ? $user->photo : '');
+        
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+        $this->data['user'] = $user;
+        $this->data['user_sti'] = $user_sti;
+        $this->data['num_rows_sti'] = $user_sti->num_rows();
+
+        $f_position = array("is_deleted" => 0);
+        $q_position = GetAll('position', $f_position);
+        $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
+
+        $f_departement = array("is_deleted" => 0);
+        $q_departement = GetAll('departement', $f_departement);
+        $this->data['q_departement'] = $q_departement;
+        $this->data['departement'] = ($q_departement->num_rows() > 0 ) ? $q_departement : array();
+
+        $f_receivedby = array("is_deleted" => 0);
+        $q_receivedby = GetAll('users', $f_receivedby);
+        $this->data['q_receivedby'] = $q_receivedby;
+        $this->data['receivedby'] = ($q_receivedby->num_rows() > 0 ) ? $q_receivedby : array();
+
+
+        $this->_render_page('auth/detail_sti', $this->data);
+    }
+
+    public function get_sti($id){
+        $user_sti = $this->person_model->getUsersti($id);
+        $this->data['user_sti'] = $user_sti;
+        $this->data['num_rows_sti'] = $user_sti->num_rows();
+       
+
+        $this->load->view('table/table_sti', $this->data);
+    }
+
+    public function add_sti($id){
+        $this->form_validation->set_rules('identity_no','Identity No','trim|required');
+        $this->form_validation->set_rules('ijazah_no','Ijazah No','trim|required');
+        $this->form_validation->set_rules('ijazah_name','Ijazah Name','trim|required');
+        $this->form_validation->set_rules('ijazah_history','Ijazah History','trim|required');
+        $this->form_validation->set_rules('activation_date','Activation Date','trim|required');
+        $this->form_validation->set_rules('position_id','Position','trim|required');
+        $this->form_validation->set_rules('departement_id','Departement','trim|required');
+        $this->form_validation->set_rules('receivedby_id','Received By','trim|required');
+        $this->form_validation->set_rules('acknowledgeby_id','Acknowledge By','trim|required');
+        $this->form_validation->set_rules('institution','Institution','trim|required');
+        $this->form_validation->set_rules('published_place','Published Place','trim|required');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'identity_no' => $this->input->post('identity_no'),
+                    'ijazah_number'=> $this->input->post('ijazah_no'),
+                    'ijazah_name'=> $this->input->post('ijazah_name'),
+                    'ijazah_history'=> $this->input->post('ijazah_history'),
+                    'activation_date'=> $this->input->post('activation_date'),
+                    'institution'=> $this->input->post('institution'),
+                    'published_place'=> $this->input->post('published_place'),
+                    'departement_id'=> $this->input->post('departement_id'),
+                    'position_id'=> $this->input->post('position_id'),
+                    'receivedby_id'=> $this->input->post('receivedby_id'),
+                    'acknowledgeby_id'=> $this->input->post('acknowledgeby_id'),
+                    'user_id'           => $id,
+                    'created_on'        => date('Y-m-d',strtotime('now')),
+                    'created_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->addSti($data);
+
+            echo json_encode(array('st'=>1));     
+        }
+    }
+
+    public function edit_sti($id){
+        $this->form_validation->set_rules('identity_no','Identity No','trim|required');
+        $this->form_validation->set_rules('ijazah_no','Ijazah No','trim|required');
+        $this->form_validation->set_rules('ijazah_name','Ijazah Name','trim|required');
+        $this->form_validation->set_rules('ijazah_history','Ijazah History','trim|required');
+        $this->form_validation->set_rules('activation_date','Activation Date','trim|required');
+        $this->form_validation->set_rules('position_id','Position','trim|required');
+        $this->form_validation->set_rules('departement_id','Departement','trim|required');
+        $this->form_validation->set_rules('receivedby_id','Received By','trim|required');
+        $this->form_validation->set_rules('acknowledgeby_id','Acknowledge By','trim|required');
+        $this->form_validation->set_rules('institution','Institution','trim|required');
+        $this->form_validation->set_rules('published_place','Published Place','trim|required');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+        }
+        else
+        {
+           
+            $data = array(
+                    'identity_no' => $this->input->post('identity_no'),
+                    'ijazah_number'=> $this->input->post('ijazah_no'),
+                    'ijazah_name'=> $this->input->post('ijazah_name'),
+                    'ijazah_history'=> $this->input->post('ijazah_history'),
+                    'activation_date'=> $this->input->post('activation_date'),
+                    'institution'=> $this->input->post('institution'),
+                    'published_place'=> $this->input->post('published_place'),
+                    'departement_id'=> $this->input->post('departement_id'),
+                    'position_id'=> $this->input->post('position_id'),
+                    'receivedby_id'=> $this->input->post('receivedby_id'),
+                    'acknowledgeby_id'=> $this->input->post('acknowledgeby_id'),
+                    'edited_on'        => date('Y-m-d',strtotime('now')),
+                    'edited_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->editsti($id, $data);
+
+            echo json_encode(array('st'=>1));     
+        }
+    }
+
+    public function delete_sti($id){
+        $data = array(
+                'is_deleted'    => 1,
+                'deleted_on'    =>date('Y-m-d',strtotime('now')),
+                'deleted_by'    =>$this->session->userdata('user_id'),
+                );
+
+        $this->auth_model->deletesti($id, $data);
+
+        echo json_encode(array('st'=>1));
+    }
+
+    public function detail_jabatan(){
+
+    }
+
+    public function add_jabatan(){
+
+    }
+
+    public function edit_jabatan(){
+
+    }
+
+    public function delete_jabatan(){
+
+    }
+
+    public function detail_award(){
+
+    }
+
+    public function add_award(){
+
+    }
+
+    public function edit_award(){
+
+    }
+
+    public function delete_award(){
+
+    }
+
 
 
 
@@ -2388,7 +2596,6 @@ class Auth extends MX_Controller {
                     $this->template->add_js('bootstrap-datepicker.js');
                     $this->template->add_js('edit_user.js');
                     $this->template->add_js('core.js');
-                    $this->template->add_js('purl.js');
 
                     
                     $this->template->add_js('select2.min.js');

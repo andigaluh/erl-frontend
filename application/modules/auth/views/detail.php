@@ -171,22 +171,22 @@
                                             </div>
                                         </div>
 
-                                        <?php echo form_open(site_url('auth/keywords'))?>
+                                        <form action="" method="post">
                                        
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <div class="col-md-4 search_label"><?php echo form_label(lang('index_course_title_th'),'course_title_search')?></div>
-                                                        <div class="col-md-8"><?php echo bs_form_input($course_title_search)?></div>
+                                                        <div class="col-md-8"><input type="text" name="title"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="row">
-                                                        <div class="col-md-12"><?php echo form_submit('submit','Search','class="btn btn-primary"')?></div>
+                                                        <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
                                                     </div>
                                                 </div>    
                                             </div>
-                                        <?php echo form_close()?>
+                                        </form>
                                         
                                         <br/>
                                         <div class="row">
@@ -223,7 +223,7 @@
                                             </div>
                                             <div class="col-md-10">
                                                 <ul class="pagination">
-                                                    <?php echo $halaman;?>
+                                                    <?php ////echo $halaman;?>
                                                 </ul>
                                             </div>
                                         </div>
