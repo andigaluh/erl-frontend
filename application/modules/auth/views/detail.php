@@ -303,7 +303,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_course', 'edit_course')?></h4>
       </div>
-      <p class="error_msg" id="MsgBad2" style="background: #fff; display: none;"></p>
+      <p class="error_msg" id="MsgBad2<?=$row->id?>" style="background: #fff; display: none;"></p>
       <div class="modal-body">
         <?= form_open('auth/edit_course/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
              <div class="row form-row">
@@ -311,7 +311,7 @@
                     <?php echo lang('course_description', 'course_title');?>
                 </div>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" name="description" value="<?php echo $row->description?>">         
+                    <input type="text" class="form-control" id="description" name="description" value="<?php echo $row->description?>">         
                 </div>
                 <div class="col-md-3">
                     <?php echo lang('course_registration_date', 'course_registration_date');?>
@@ -319,7 +319,7 @@
                 <div class="col-md-9">
                         <div class="input-with-icon right">
                             <div class="input-append success date no-padding">
-                                <input type="text" class="form-control" name="registration_date" value="<?php echo $row->registration_date?>">
+                                <input type="text" class="form-control" id="registration_date" name="registration_date" value="<?php echo $row->registration_date?>">
                                 <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
                             </div>
                         </div>
@@ -378,14 +378,16 @@
         $('#tabel').load('<?php echo site_url('auth/get_course/'.$user->id); ?>');
     }
     $(document).ready(function(){
-                $('#formupdate'+<?php echo $row->id?>).submit(function(response){
-                    $.post($('#formupdate'+<?php echo $row->id?>).attr('action'), $('#formupdate'+<?php echo $row->id?>).serialize(),function(json){
+                $('#formupdate<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
                         if(json.st == 0){
-                            $('#MsgBad2').html(json.errors).fadeIn();
+                            $('#MsgBad2<?=$row->id?>').html(json.errors).fadeIn();
                         }else{
                             getTable();
                             $("[data-dismiss=modal]").trigger({ type: "click" });
-                            $('#MsgBad2').hide();
+                            $('#MsgBad2<?=$row->id?>').hide();
+                            $('#description').val('');
+                            $('#registration_date').val('');
                             $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
                         }
                     }, 'json');
@@ -395,8 +397,8 @@
             });
 
 $(function(){
- $('#formdelete'+<?php echo $row->id?>).submit(function(response){
-                    $.post($('#formdelete'+<?php echo $row->id?>).attr('action'), $('#formdelete'+<?php echo $row->id?>).serialize(),function(json){
+ $('#formdelete<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formdelete<?php echo $row->id?>').attr('action'), $('#formdelete<?php echo $row->id?>').serialize(),function(json){
                         if(json.st == 0){
                             $('#MsgBad').text('Delete Failed').fadeIn();
                         }else{
