@@ -305,7 +305,7 @@
       </div>
       <p class="error_msg" id="MsgBad2" style="background: #fff; display: none;"></p>
       <div class="modal-body">
-        <?= form_open('auth/edit_course/'.$row->id, array('id'=>'formupdate'))?> 
+        <?= form_open('auth/edit_course/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
              <div class="row form-row">
                 <div class="col-md-3">
                     <?php echo lang('course_description', 'course_title');?>
@@ -357,7 +357,7 @@
 <div class="modal fade" id="deleteCourseModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <?php echo form_open('auth/delete_course/'.$row->id, array("id"=>"formdelete"))?>
+      <?php echo form_open('auth/delete_course/'.$row->id, array("id"=>"formdelete".$row->id))?>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
       <div class="modal-body">
       <p>Are You Sure ?</p>
@@ -370,13 +370,43 @@
     </div>
   </div>
 </div>
-<?php } ?>
-
+<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.min.js'?>"></script>
 <script type="text/javascript">
-    window.onload = function(){getTable();};
-    
+    window.onload = function(){getTable();};  
     function getTable() 
     {
         $('#tabel').load('<?php echo site_url('auth/get_course/'.$user->id); ?>');
     }
+    $(document).ready(function(){
+                $('#formupdate'+<?php echo $row->id?>).submit(function(response){
+                    $.post($('#formupdate'+<?php echo $row->id?>).attr('action'), $('#formupdate'+<?php echo $row->id?>).serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad2').html(json.errors).fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad2').hide();
+                            $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+                $('#course_status_id').select2();
+            });
+
+$(function(){
+ $('#formdelete'+<?php echo $row->id?>).submit(function(response){
+                    $.post($('#formdelete'+<?php echo $row->id?>).attr('action'), $('#formdelete'+<?php echo $row->id?>).serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad').text('Delete Failed').fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgGood').text('Data Deleted').fadeIn().delay(4000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+            });
 </script>
+<?php } ?>

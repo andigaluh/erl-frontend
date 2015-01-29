@@ -213,6 +213,7 @@ $(document).ready(function(){
                         }else{
                             getTable();
                             $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad').hide();
                             $('#MsgGood').text('Data Saved').fadeIn().delay(3000).fadeOut("slow");
                             $('#modaldialog').find('#formadd')[0].reset();
                         }
@@ -230,6 +231,7 @@ $(document).ready(function(){
                         }else{
                             getTable();
                             $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad2').hide();
                             $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
                         }
                     }, 'json');
