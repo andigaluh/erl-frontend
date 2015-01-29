@@ -4719,6 +4719,7 @@ box-shadow: inset 0px 1px 2px 0px rgba(0,0,0,0.11)!important;
 	border-radius: 3px 3px 3px 3px;
 	 border: 1px solid #F0DBB4;
 	 transition: all 0.2s linear 0s;
+	 margin-bottom: 10px !important;
 }
 
 .alert-success{

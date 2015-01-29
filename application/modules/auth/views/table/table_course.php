@@ -1,9 +1,4 @@
-<div id="tabel" class="row">
-    <div class="col-md-6">
-        <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_course;?>&nbsp;<?php echo lang('course_subheading');?></span></h4>  
-    </div>
-    <div class="bs-example"  data-example-id="labels-in-headings" style="z-index:-10;"></div>
-</div>
+
 <table class="table no-more-tables">
     <thead>
         <tr>
@@ -67,3 +62,9 @@
 
     </tbody>
 </table>
+<!-- <div class="row">
+    <div class="col-md-6">
+        <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_course;?>&nbsp;<?php echo lang('course_subheading');?></span></h4>  
+    </div>
+    
+</div> -->

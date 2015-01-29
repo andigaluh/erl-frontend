@@ -166,7 +166,8 @@
                                     <div class="grid-body no-border">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('course_subheading');?></span></h4>
+                                                <h4><?php echo lang('users_course_subheading');?></h4>  
+  
                                             </div>
                                         </div>
                                         <?php echo form_open('auth/search/'.$user->id, array( 'id'=>'search'))?>
