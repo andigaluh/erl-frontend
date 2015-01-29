@@ -236,7 +236,7 @@
 
 <!-- Add Course Modal -->
 <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog" id="modaldialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -250,7 +250,7 @@
                     <?php echo lang('course_description', 'course_title');?>
                 </div>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" name="description">         
+                    <input type="text" class="form-control" id="description" name="description">         
                 </div>
                 <div class="col-md-3">
                     <?php echo lang('course_registration_date', 'course_registration_date');?>
@@ -258,7 +258,7 @@
                 <div class="col-md-9">
                         <div class="input-with-icon right">
                             <div class="input-append success date no-padding">
-                                <input type="text" class="form-control" name="registration_date">
+                                <input type="text" class="form-control" id="registration_date" name="registration_date">
                                 <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
                             </div>
                         </div>

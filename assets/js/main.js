@@ -214,6 +214,7 @@ $(document).ready(function(){
                             getTable();
                             $("[data-dismiss=modal]").trigger({ type: "click" });
                             $('#MsgGood').text('Data Saved').fadeIn().delay(3000).fadeOut("slow");
+                            $('#modaldialog').find('#formadd')[0].reset();
                         }
                     }, 'json');
                     return false;
@@ -268,8 +269,6 @@ $(function(){
                     return false;
                 });
             });
-
-
 
 /*custom web-HRIS 
 $(document).ready(function() {      
