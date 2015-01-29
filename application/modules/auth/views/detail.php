@@ -169,12 +169,12 @@
                                                 <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('course_subheading');?></span></h4>
                                             </div>
                                         </div>
-                                        <form action="" method="post">
+                                        <?php echo form_open('auth/search/'.$user->id, array( 'id'=>'search'))?>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="row">
                                                         <div class="col-md-2 search_label"><?php echo form_label(lang('index_course_title_th'),'course_title_search')?></div>
-                                                        <div class="col-md-10"><?php echo bs_form_input('title');?></div>
+                                                        <div class="col-md-10"><?php echo bs_form_input(array('id'=>'title', 'name'=>'title'));?></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -185,7 +185,7 @@
                                                     </div>
                                                 </div>    
                                             </div>
-                                        </form>
+                                        <?php echo form_close()?>
                                         
                                         <br/>
                                         <div class="row">
@@ -374,7 +374,7 @@
 
 <script type="text/javascript">
     window.onload = function(){getTable();};
-
+    
     function getTable() 
     {
         $('#tabel').load('<?php echo site_url('auth/get_course/'.$user->id); ?>');

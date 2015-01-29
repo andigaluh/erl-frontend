@@ -19,7 +19,7 @@
         </ul> -->
         <div class="page-title">
             <a href="<?php echo site_url('auth')?>"><i class="icon-custom-left"></i></a>
-            <h3><?php echo lang('detail_user_heading');?></h3> 
+            <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('users_jabatan_subheading');?></span></h3> 
         </div>
         <!-- <div class="row">
             <div class="col-md-12">
@@ -44,6 +44,7 @@
                     <div class="grid-body no-border">
                         
                         <div class="row">
+                            <div <?php //( ! empty($message)) && print('class="alert alert-info"'); ?> id="infoMessage"><?php //echo $message;?></div>
                                 <div class="col-md-4">
                                     <h4><?php echo lang('employee_information_subheading')?></h4>
                                     <div class="form-group">
@@ -154,34 +155,32 @@
                                     </div>
                                 </div>
                         </div>
-                        <?php include 'auth_detail_navbar.php';?>
+                        <?php echo $this->load->view('auth_detail_navbar');?>
                         <hr />
 
-                        <!--start sk Row -->
+                        <!--start jabatan Row -->
 
                         <div class="row">
                             
                                 <div class="grid simple ">                            
                                     <div class="grid-body no-border">
-                                        <br/>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('sk_subheading');?></span></h4>
+                                            <div class="col-md-12">
+                                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('jabatan_subheading');?></span></h4>
                                             </div>
                                         </div>
-
                                         <?php echo form_open('auth/search/'.$user->id, array( 'id'=>'search'))?>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="row">
-                                                        <div class="col-md-2 search_label"><?php echo form_label(lang('index_sk_title_th'),'sk_title_search')?></div>
+                                                        <div class="col-md-2 search_label"><?php echo form_label(lang('index_jabatan_title_th'),'jabatan_title_search')?></div>
                                                         <div class="col-md-10"><?php echo bs_form_input(array('id'=>'title', 'name'=>'title'));?></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="row">
                                                         <?php echo form_submit('submit',lang('search_button'),'class="btn btn-primary"')?>
-                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addskModal"><?php echo lang('add_button');?></button>
+                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addjabatanModal"><?php echo lang('add_button');?></button>
                                                         <!-- <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('search_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;"> -->
                                                     </div>
                                                 </div>    
@@ -198,14 +197,12 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div id="tabel">
-
+                                        <div id="tabel" class="row">
+                                        </div>
                                         <div class="row">
-                                            
                                             <div class="col-md-2 page_limit">
-                                                <!--<?php echo form_open(uri_string());?>
-                                                <?php/* 
+                                                <?php echo form_open(uri_string());?>
+                                                <?php 
                                                     $selectComponentData = array(
                                                         10  => '10',
                                                         25 => '25',
@@ -213,13 +210,13 @@
                                                         75 => '75',
                                                         100 => '100',);
                                                     $selectComponentJs = 'class="select2" onChange="this.form.submit()" id="limit"';
-                                                    echo "Per page: ".form_dropdown('limit', $selectComponentData, $limit, $selectComponentJs);
-                                                */?> -->
+                                                    //echo "Per page: ".form_dropdown('limit', $selectComponentData, $limit, $selectComponentJs);
+                                                ?>
                                                 <?php echo form_close();?>
                                             </div>
                                             <div class="col-md-10">
                                                 <ul class="pagination">
-                                                    <?php// echo $halaman;?>
+                                                    <?php ////echo $halaman;?>
                                                 </ul>
                                             </div>
                                         </div>
@@ -236,36 +233,31 @@
 </div>
 
 
-<!-- Add sk Modal -->
-<div class="modal fade" id="addskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Add jabatan Modal -->
+<div class="modal fade" id="addjabatanModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_sk', 'add_sk')?></h4>
-        <p class="txtBold txtRed" class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
-      </div>
-      <div class="modal-body">
-        <?= form_open('auth/add_sk/'.$user->id, array('id'=>'formadd'))?> 
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_jabatan', 'add_jabatan')?></h4>
+	        <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
+	      </div>
+      	<div class="modal-body">
+        	<?= form_open('auth/add_jabatan/'.$user->id, array('id'=>'formadd'))?> 
              <div class="row form-row">
 
-                <div class="col-md-3">
-                    <?php echo lang('sk_date', 'sk_date');?>
+             	<div class="col-md-3">
+                    <?php echo lang('organization', 'organization');?>
                 </div>
                 <div class="col-md-9">
-                        <div class="input-with-icon right">
-                            <div class="input-append success date no-padding">
-                                <input type="text" class="form-control" name="sk_date">
-                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
-                            </div>
-                        </div>
-                </div>
-
-                <div class="col-md-3">
-                    <?php echo lang('sk_no', 'sk_no');?>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" name="sk_no">         
+                    <select name="organization_id" class="select2" id="organization_id" style="width:100%">
+                        <?php
+                            foreach ($organization->result_array() as $key => $value) {
+                            $selected = ($organization_id <> 0 && $organization_id == $value['id']) ? 'selected = selected' : '';
+                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                            }
+                            ?>
+                        </select>
                 </div>
 
                 <div class="col-md-3">
@@ -279,65 +271,80 @@
                             echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }
                             ?>
-                        </select>        
+                        </select>
                 </div>
 
                 <div class="col-md-3">
-                    <?php echo lang('departement', 'departement');?>
+                    <?php echo lang('groups', 'groups');?>
                 </div>
                 <div class="col-md-9">
-                    <select name="departement_id" class="select2" id="departement_id" style="width:100%">
-                        <?php
-                            if($q_departement->num_rows() > 0){
-                            foreach ($departement->result_array() as $key => $value) {
-                            $selected = ($departement_id <> 0 && $departement_id == $value['id']) ? 'selected = selected' : '';
-                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                    <select name="groups_id" class="select2" id="groups_id" style="width:100%">
+                         <?php  if($q_groups->num_rows() > 0){
+                            foreach ($groups->result_array() as $key => $value) {
+                            $selected = ($groups_id <> 0 && $groups_id == $value['id']) ? 'selected = selected' : '';
+                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['name'].'</option>';
                             }}else{
                                 echo '<option value="0">'.'No Data'.'</option>';
                             }
+                        
                             ?>
-                        </select>        
+                        </select>     
                 </div>
 
                 <div class="col-md-3">
-                    <?php echo lang('effective_date', 'effective_date');?>
+                    <?php echo lang('grade', 'grade');?>
+                </div>
+                <div class="col-md-9">
+                    <select name="grade_id" class="select2" id="grade_id" style="width:100%">
+                        <?php
+                            foreach ($grade->result_array() as $key => $value) {
+                            $selected = ($grade_id <> 0 && $grade_id == $value['id']) ? 'selected = selected' : '';
+                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                            }
+                            ?>
+                        </select>
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('start_date', 'start_date');?>
                 </div>
                 <div class="col-md-9">
                         <div class="input-with-icon right">
                             <div class="input-append success date no-padding">
-                                <input type="text" class="form-control" name="effective_date">
+                                <input type="text" class="form-control" name="start_date">
                                 <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
                             </div>
                         </div>
                 </div>
 
                 <div class="col-md-3">
-                    <?php echo lang('location', 'location');?>
+                    <?php echo lang('end_date', 'end_date');?>
                 </div>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" name="location">         
+                        <div class="input-with-icon right">
+                            <div class="input-append success date no-padding">
+                                <input type="text" class="form-control" name="end_date">
+                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                            </div>
+                        </div>
                 </div>
 
                 <div class="col-md-3">
-                    <?php echo lang('sign_name', 'sign_name');?>
+                    <?php echo lang('sk_date', 'sk_date');?>
                 </div>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" name="sign_name">         
+                        <div class="input-with-icon right">
+                            <div class="input-append success date no-padding">
+                                <input type="text" class="form-control" name="sk_date">
+                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                            </div>
+                        </div>
                 </div>
-
-                <div class="col-md-3">
-                    <?php echo lang('sign_position', 'sign_position');?>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" name="sign_position">         
-                </div>
-
-            </div>
-                                    
-      </div>
+            </div>                              
+      	</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close_button')?></button> 
-        <input type="submit" name="btn_submit" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
       </div>
         <?php echo form_close()?>
     </div>
@@ -350,108 +357,143 @@
 
 
 
-
 <!--Edit Modal-->
-<?php foreach($user_sk->result() as $row){?>
-<div class="modal fade" id="editskModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_sk', 'edit_sk')?></h4>
-            <p class="txtBold txtRed" class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
-        </div>
-            <div class="modal-body">
-                <?= form_open('auth/edit_sk/'.$user->id, array('id'=>'formupdate'))?> 
-                <div class="row form-row">
 
-                    <div class="col-md-3">
-                        <?php echo lang('sk_date', 'sk_date');?>
-                    </div>
-                    <div class="col-md-9">
-                            <div class="input-with-icon right">
-                                <div class="input-append success date no-padding">
-                                    <input type="text" class="form-control" name="sk_date" value="<?php echo $row->sk_date?>">
-                                    <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
-                                </div>
-                            </div>
-                    </div>
+<?php foreach($user_jabatan->result() as $row){?>
+<div class="modal fade" id="editjabatanModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_jabatan', 'edit_jabatan')?></h4>
+        <p class="error_msg" id="MsgBad2" style="background: #fff; display: none;"></p>
+      </div>
+      <div class="modal-body">
+        <?= form_open('auth/edit_jabatan/'.$row->id, array('id'=>'formupdate'))?> 
+             <div class="row form-row">
 
-                    <div class="col-md-3">
-                        <?php echo lang('sk_no', 'sk_no');?>
-                    </div>
-                    <div class="col-md-9">
-                    <input type="text" class="form-control" name="sk_no" value="<?php echo $row->sk_no?>">
-                    </div>
-
-                    <div class="col-md-3">
-                        <?php echo lang('position', 'position');?>
-                    </div>
-                    <div class="col-md-9">
-                        <select name="position_id" class="select2" id="position_id" style="width:100%">
-                            <?php
-                                foreach ($position->result_array() as $key => $value) {
-                                $selected = ($position_id <> 0 && $position_id == $value['id']) ? 'selected = selected' : '';
-                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                                }
-                                ?>
-                            </select>        
-                    </div>
-
-                    <div class="col-md-3">
-                        <?php echo lang('departement', 'departement');?>
-                    </div>
-                    <div class="col-md-9">
-                        <select name="departement_id" class="select2" id="departement_id" style="width:100%">
-                            <?php
-                                if($q_departement->num_rows() > 0){
-                                foreach ($departement->result_array() as $key => $value) {
-                                $selected = ($departement_id <> 0 && $departement_id == $value['id']) ? 'selected = selected' : '';
-                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                                }}else{
-                                    echo '<option value="0">'.'No Data'.'</option>';
-                                }
-                                ?>
-                            </select>        
-                    </div>
-
-                    <div class="col-md-3">
-                        <?php echo lang('effective_date', 'effective_date');?>
-                    </div>
-                    <div class="col-md-9">
-                            <div class="input-with-icon right">
-                                <div class="input-append success date no-padding">
-                                    <input type="text" class="form-control" name="effective_date" value="<?php echo $row->effective_date?>">
-                                    <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
-                                </div>
-                            </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <?php echo lang('location', 'location');?>
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" name="location" value="<?php echo $row->location?>">         
-                    </div>
-
-                    <div class="col-md-3">
-                        <?php echo lang('sign_name', 'sign_name');?>
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" name="sign_name" value="<?php echo $row->sign_name?>">         
-                    </div>
-
-                    <div class="col-md-3">
-                        <?php echo lang('sign_position', 'sign_position');?>
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" name="sign_position" value="<?php echo $row->sign_position?>">         
-                    </div>
+             	<div class="col-md-3">
+                    <?php echo lang('organization', 'organization');?>
                 </div>
-            </div>
+                <div class="col-md-9">
+                    <select name="organization_id" class="select2" id="organization_id" style="width:100%">
+                        <?php
+                            foreach ($organization->result_array() as $key => $value) {
+                            $selected = ($organization_id <> 0 && $organization_id == $value['id']) ? 'selected = selected' : '';
+                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                            }
+                            ?>
+                        </select>
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('position', 'position');?>
+                </div>
+                <div class="col-md-9">
+                    <select name="position_id" class="select2" id="position_id" style="width:100%">
+                        <?php
+                            foreach ($position->result_array() as $key => $value) {
+                            $selected = ($position_id <> 0 && $position_id == $value['id']) ? 'selected = selected' : '';
+                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                            }
+                            ?>
+                        </select>
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('groups', 'groups');?>
+                </div>
+                <div class="col-md-9">
+                    <select name="groups_id" class="select2" id="groups_id" style="width:100%">
+                         <?php  if($q_groups->num_rows() > 0){
+                            foreach ($groups->result_array() as $key => $value) {
+                            $selected = ($groups_id <> 0 && $groups_id == $value['id']) ? 'selected = selected' : '';
+                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['name'].'</option>';
+                            }}else{
+                                echo '<option value="0">'.'No Data'.'</option>';
+                            }
+                        
+                            ?>
+                        </select>        
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('grade', 'grade');?>
+                </div>
+                <div class="col-md-9">
+                    <select name="grade_id" class="select2" id="grade_id" style="width:100%">
+                        <?php
+                            foreach ($grade->result_array() as $key => $value) {
+                            $selected = ($grade_id <> 0 && $grade_id == $value['id']) ? 'selected = selected' : '';
+                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                            }
+                            ?>
+                        </select>
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('start_date', 'start_date');?>
+                </div>
+                <div class="col-md-9">
+                        <div class="input-with-icon right">
+                            <div class="input-append success date no-padding">
+                                <input type="text" class="form-control" name="start_date">
+                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('end_date', 'end_date');?>
+                </div>
+                <div class="col-md-9">
+                        <div class="input-with-icon right">
+                            <div class="input-append success date no-padding">
+                                <input type="text" class="form-control" name="end_date">
+                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('sk_date', 'sk_date');?>
+                </div>
+                <div class="col-md-9">
+                        <div class="input-with-icon right">
+                            <div class="input-append success date no-padding">
+                                <input type="text" class="form-control" name="sk_date">
+                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                            </div>
+                        </div>
+                </div>
+            </div>                
+                                    
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close_button')?></button> 
-        <input type="submit" name="btn_submit" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+      </div>
+        <?php echo form_close()?>
+    </div>
+  </div>
+</div>
+<?php } ?>
+<!-- End Edit Modal-->
+
+
+<!--Delete Modal-->
+<?php foreach($user_jabatan->result() as $row){?>
+<div class="modal fade" id="deletejabatanModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <?php echo form_open('auth/delete_jabatan/'.$row->id, array("id"=>"formdelete"))?>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+      <p>Are You Sure ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('cancel_button')?></button> 
+        <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-default" value="<?php echo lang('delete_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
       </div>
         <?php echo form_close()?>
     </div>
@@ -459,35 +501,11 @@
 </div>
 <?php } ?>
 
-
-
-<!--Delete Modal Window-->
-<?php foreach($user_sk->result() as $row){?>
-<div class="modal fade" id="deleteskModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <?php echo form_open('auth/delete_sk/'.$row->id, array("id"=>"formdelete"))?>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
-                <div class="modal-body">
-                    <p>Are You Sure ?</p>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('cancel_button')?></button> 
-                <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-danger" value="<?php echo lang('delete_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
-                </div>
-            <?php echo form_close()?>
-        </div>
-    </div>
-</div>
-<?php }?>
-
 <script type="text/javascript">
     window.onload = function(){getTable();};
-
+    
     function getTable() 
     {
-        $('#tabel').load('<?php echo site_url('auth/get_sk/'.$user->id); ?>');
+        $('#tabel').load('<?php echo site_url('auth/get_jabatan/'.$user->id); ?>');
     }
 </script>
-
-

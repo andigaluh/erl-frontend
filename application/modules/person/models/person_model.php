@@ -27,13 +27,16 @@ class Person_model extends CI_Model
         return $query;
     }
 
-    function getUserCourse($id){
+    function getUserCourse($id, $filter=null){
         $this->db->select('users_course.id, users_course.course_status_id as status_id, users_course.title as description, users_course.registration_date, course_status.title as status');
         $this->db->from('users_course');
         $this->db->join('course_status', 'users_course.course_status_id = course_status.id');
 
         $this->db->where('users_course.user_id', $id);
         $this->db->where('users_course.is_deleted', 0);
+        if($filter){
+            $this->db->like('users_course.title', $filter);
+        }
 
         $query = $this->db->get();
         return $query;
@@ -116,13 +119,14 @@ class Person_model extends CI_Model
     }
 
     function getUserJabatan($id){
-        $this->db->select('users_jabatan.id, users.username, organization.title as organization, position.title as position, grade.title as grade, users_jabatan.sk_date');
+        $this->db->select('users_jabatan.*, users.username, organization.title as organization,groups.description as groups, position.title as position, grade.title as grade');
         
         $this->db->from('users_jabatan');
         $this->db->join('users', 'users_jabatan.user_id = users.id');
         $this->db->join('organization', 'users_jabatan.organization_id = organization.id');
         $this->db->join('grade', 'users_jabatan.grade_id = grade.id');
         $this->db->join('position', 'users_jabatan.position_id = position.id');
+        $this->db->join('groups', 'users_jabatan.employee_group_id = groups.id', 'left');
 
         $this->db->where('user_id', $id);
         $this->db->where('users_jabatan.is_deleted', 0);

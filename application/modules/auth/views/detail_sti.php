@@ -170,35 +170,32 @@
                                             </div>
                                         </div>
 
-                                        <?php echo form_open(site_url('auth/keywords'))?>
-                                       
+                                        <?php echo form_open('auth/search/'.$user->id, array( 'id'=>'search'))?>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-8">
                                                     <div class="row">
-                                                        <div class="col-md-4 search_label"><?php echo form_label(lang('index_sti_title_th'),'sti_title_search')?></div>
-                                                        <div class="col-md-8"><?php// echo bs_form_input($sti_title_search)?></div>
+                                                        <div class="col-md-2 search_label"><?php echo form_label(lang('index_sti_title_th'),'sti_title_search')?></div>
+                                                        <div class="col-md-10"><?php echo bs_form_input(array('id'=>'title', 'name'=>'title'));?></div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-4">
                                                     <div class="row">
-                                                        <div class="col-md-12"><?php echo form_submit('submit','Search','class="btn btn-primary"')?></div>
+                                                        <?php echo form_submit('submit',lang('search_button'),'class="btn btn-primary"')?>
+                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addstiModal"><?php echo lang('add_button');?></button>
+                                                        <!-- <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('search_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;"> -->
                                                     </div>
                                                 </div>    
                                             </div>
                                         <?php echo form_close()?>
                                         
                                         <br/>
-
                                         <div class="row">
                                             <div class="col-md-12">
-                                            <div class="row">
-                                            <div class="col-md-5">
-                                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addstiModal">Tambah</button>
-                                            </div>
-                                            <div class="col-md-7">
-                                                <div id="MsgGood" class="msggood" style="display:none;"></div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="MsgGood" class="msggood text-center" style="display:none;"></div>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
                                         </div>
 

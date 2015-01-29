@@ -43,6 +43,11 @@ $lang['index_inactive_link']     = 'Inactive';
 $lang['index_create_user_link']  = 'Create a new user';
 $lang['index_create_group_link'] = 'Create a new group';
 $lang['index_course_title_th'] 	 = 'Course Title';
+$lang['index_certificate_title_th'] 	= 'Certificate Title';
+$lang['index_education_title_th'] 		= 'Education Title';
+$lang['index_experience_title_th'] 	 	= 'Experience Title';
+$lang['index_sk_title_th']		 = 'SK Title';
+$lang['index_sti_title_th']		 = 'STI Title';
 
 // Deactivate User
 $lang['deactivate_heading']                  = 'Deactivate User';
@@ -262,7 +267,7 @@ $lang['add_sti'] = 'Add STI';
 $lang['edit_sti'] = 'Edit STI';
 $lang['identity_no'] = 'Identity No';
 $lang['ijazah_name'] = 'Ijazah Name';
-$lang['ijazah_no'] = 'Ijazah Number';
+$lang['ijazah_number'] = 'Ijazah Number';
 $lang['ijazah_history'] = 'Ijazah History';
 $lang['published_place'] = 'Published Place';
 $lang['activation_date'] = 'Activation Date';

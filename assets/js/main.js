@@ -252,6 +252,24 @@ $(function(){
                 });
             });
 
+$(function(){
+ $('#search').submit(function(response){
+                    $.post($('#search').attr('action'), $('#search').serialize(),function(json){
+                        function getTable2() 
+                        {
+                            $('#tabel').load(json.base_url+'auth/get_course/'+json.id+'/'+json.title);
+                        }
+                        if(json.st == 0){
+                            $('#MsgGood').text('Search Failed').fadeIn();
+                        }else{
+                            getTable2();
+                            $('#MsgGood').text('Data Deleted').fadeIn().delay(4000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+            });
+
 
 
 /*custom web-HRIS 

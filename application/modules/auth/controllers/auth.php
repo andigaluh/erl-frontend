@@ -1109,13 +1109,25 @@ class Auth extends MX_Controller {
         $this->_render_page('auth/detail', $this->data);
     }
 
-    public function get_course($id, $ctitle='', $sort_by = "id", $sort_order = "asc", $offset = 0){
+    public function search($id){
+
+        $title = $this->input->post('title');
+        $base = base_url();
+
+        if($title=null){
+            echo json_encode(array('st'=>0));
+        }else{
+            echo json_encode(array('st' =>1, 'title'=>$this->input->post('title'), 'base_url' => $base, 'id'=>$id));
+        }
+    }
+
+    public function get_course($id, $filter=null){
 
 
         $user = $this->ion_auth->user($id)->row();
         $this->data['user'] = $user;
         $ctitle = $this->uri->segment(4);
-        $user_course = $this->person_model->getUserCourse($id);
+        $user_course = $this->person_model->getUserCourse($id, $filter);
         $this->data['user_course'] = $user_course;
         $this->data['num_rows_course'] = $user_course->num_rows();
         $this->data['user_course_list'] = $this->auth_model->getCourse($id,$ctitle, $limit=10,$offset=null);
@@ -2319,8 +2331,91 @@ class Auth extends MX_Controller {
         echo json_encode(array('st'=>1));
     }
 
-    public function detail_jabatan(){
+    public function detail_jabatan($id){
 
+        $this->data['title'] = "jabatan Detail";
+
+        $user_jabatan = $this->person_model->getUserjabatan($id);
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        
+
+        //validate form input
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+            // Config for image upload
+        }
+
+        $this->data['user'] = $user;
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : '';
+
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', (!empty($user->photo)) ? $user->photo : '');
+        
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+        $this->data['user'] = $user;
+        $this->data['user_jabatan'] = $user_jabatan;
+        $this->data['num_rows_jabatan'] = $user_jabatan->num_rows();
+
+        $f_organization = array("is_deleted" => 0);
+        $q_organization = GetAll('organization', $f_organization);
+        $this->data['organization'] = ($q_organization->num_rows() > 0 ) ? $q_organization : array();
+
+        $f_position = array("is_deleted" => 0);
+        $q_position = GetAll('position', $f_position);
+        $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
+
+        $f_groups = array("is_deleted" => 0);
+        $q_groups = GetAll('groups', $f_groups);
+        $this->data['q_groups'] = $q_groups;
+        $this->data['groups'] = ($q_groups->num_rows() > 0 ) ? $q_groups : array();
+
+        $f_grade = array("is_deleted" => 0);
+        $q_grade = GetAll('grade', $f_grade);
+        $this->data['q_grade'] = $q_grade;
+        $this->data['grade'] = ($q_grade->num_rows() > 0 ) ? $q_grade : array();
+
+        /*$f_branch = array("is_deleted" => 0);
+        $q_branch = GetAll('branch', $f_branch);
+        $this->data['q_branch'] = $q_branch;
+        $this->data['branch'] = ($q_branch->num_rows() > 0 ) ? $q_branch : array();
+        */
+
+        $this->_render_page('auth/detail_jabatan', $this->data);
+
+    }
+
+    public function get_jabatan($id){
+        $user_jabatan = $this->person_model->getUserjabatan($id);
+        $this->data['user_jabatan'] = $user_jabatan;
+        $this->data['num_rows_jabatan'] = $user_jabatan->num_rows();
+       
+
+        $this->load->view('table/table_jabatan', $this->data);
     }
 
     public function add_jabatan(){
