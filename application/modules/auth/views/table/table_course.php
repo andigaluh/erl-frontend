@@ -1,5 +1,5 @@
 
-<table class="table no-more-tables">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th width="1%">
@@ -32,9 +32,8 @@
             <td valign="middle"><span class="muted"><?php echo $row->registration_date;?></span></td>
             <td valign="middle"><span class="muted"><?php echo $row->status;?></span></td>
             <td valign="middle">
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editCourseModal<?= $row->id?>"><?php echo lang('edit_button')?></button>
-                &nbsp;|&nbsp;
-                <button class='btn btn-danger btn-xs' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteCourseModal<?php echo $row->id?>">Delete</button>
+                <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editCourseModal<?= $row->id?>"><i class="icon-paste"></i>&nbsp;<?php echo lang('edit_button')?></button>
+                <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteCourseModal<?php echo $row->id?>"><i class="icon-warning-sign"></i>&nbsp;<?php echo lang('delete_button')?></button>
             </td>
 
         </tr>

@@ -180,9 +180,8 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="row">
-                                                        <?php echo form_submit('submit',lang('search_button'),'class="btn btn-primary"')?>
-                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addCourseModal"><?php echo lang('add_button');?></button>
-                                                        <!-- <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('search_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;"> -->
+                                                        <button type="submit" class="btn btn-info"><i class="icon-search"></i>&nbsp;<?php echo lang('search_button')?></button>
+                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addCourseModal"><i class="icon-plus"></i>&nbsp;<?php echo lang('add_button');?></button>
                                                     </div>
                                                 </div>    
                                             </div>
@@ -241,8 +240,8 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_course', 'add_course')?></h4>
-        <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
       </div>
+      <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
       <div class="modal-body">
         <?= form_open('auth/add_course/'.$user->id, array('id'=>'formadd'))?> 
              <div class="row form-row">
@@ -280,8 +279,8 @@
                                     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close_button')?></button> 
-        <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
+        <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_add" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button> 
       </div>
         <?php echo form_close()?>
     </div>
@@ -303,8 +302,8 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_course', 'edit_course')?></h4>
-        <p class="error_msg" id="MsgBad2" style="background: #fff; display: none;"></p>
       </div>
+      <p class="error_msg" id="MsgBad2" style="background: #fff; display: none;"></p>
       <div class="modal-body">
         <?= form_open('auth/edit_course/'.$row->id, array('id'=>'formupdate'))?> 
              <div class="row form-row">
@@ -342,8 +341,8 @@
                                     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close_button')?></button> 
-        <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
+        <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_update" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button> 
       </div>
         <?php echo form_close()?>
     </div>
