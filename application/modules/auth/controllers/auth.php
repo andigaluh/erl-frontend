@@ -1134,7 +1134,7 @@ class Auth extends MX_Controller {
 
       if($this->form_validation->run() == FALSE)
         {
-            echo json_encode(array('st'=>0, 'errors'=>validation_errors()));
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors('<div class="alert alert-danger" role="alert">', '</div>')));
         }
         else
         {
