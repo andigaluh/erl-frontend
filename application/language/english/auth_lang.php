@@ -189,6 +189,9 @@ $lang['experience_subheading'] = 'Experiences';
 $lang['found_subheading'] = 'Found';
 $lang['search_name_email'] = 'Name or Email';
 $lang['users_course_subheading'] = "User's Course";
+$lang['delete_confirmation'] = "Delete Confirmation";
+$lang['delete_this_data'] = "Are you sure want to delete ";
+$lang['personal_label'] = "Personal";
 
 //button
 $lang['add_button'] = 'Add';

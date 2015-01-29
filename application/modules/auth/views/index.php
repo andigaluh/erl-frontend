@@ -32,6 +32,8 @@
   </div>
 </div>
 
+<!-- <a class="btn btn-primary" href="#" rel="async" ajaxify="<?php echo site_url('auth/auth_ajax/test_ajaxify'); ?>">Tambah</a> -->
+<!-- Modal End -->
 
 
 <div class="page-content">
@@ -57,20 +59,6 @@
             <i class="icon-custom-left"></i>
             <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('users_subheading');?></span></h3> 
         </div>
-        <!-- <div class="row">
-            <div class="col-md-12">
-                <div class="search-bar grid simple ">      
-                    <select name="dep" id="sdep" class="simple-dropdown select2">
-                        <option value="" selected="selected">Semua departmen</option>
-                        <option value="1">Factory Management</option>
-                        <option value="2">Process</option>
-                        <option value="3">Engineering Sec. Mechanical</option>
-                        <option value="4">Engineering Sec. Power Plant</option>                                    
-                    </select>
-                    <button type="button" class="btn btn-primary btn-cons"><i class="icon-search"></i>&nbsp;&nbsp;Cari</button>
-                </div>
-            </div>
-        </div> -->
         <div class="row">
             <div class="col-md-12">
                 <div class="grid simple ">                            
@@ -98,21 +86,15 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="row">
-                                        <div class="col-md-12"><?php echo form_submit('submit','Search','class="btn btn-primary"')?></div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-info"><i class="icon-search"></i>&nbsp;<?php echo lang('search_button')?></button>
+                                        </div>
                                     </div>
                                 </div>    
                             </div>
                         <?php echo form_close()?>
                         <br/>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_all;?>&nbsp;<?php echo lang('users_subheading');?></span></h4>
-                            </div>
-                        </div>
-
-                        <a class="btn btn-primary" href="#" rel="async" ajaxify="<?php echo site_url('auth/auth_ajax/test_ajaxify'); ?>">Tambah</a>
-                        
-                        <table class="table no-more-tables">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th width="1%">
@@ -122,7 +104,7 @@
                                         </div>
                                     </th>
                                     <th width="10%"><?php echo anchor('auth/index/'.$fname_param.'/'.$email_param.'/first_name/'.(($sort_order == 'asc' && $sort_by == 'first_name') ? 'desc' : 'asc'), lang('index_fname_th'));?></th>
-                                    <th width="10%"><?php echo anchor('auth/index/'.$fname_param.'/'.$email_param.'/last_name/'.(($sort_order == 'asc' && $sort_by == 'last_name') ? 'desc' : 'asc'), lang('index_lname_th'));?></th>
+                                    <!-- <th width="10%"><?php echo anchor('auth/index/'.$fname_param.'/'.$email_param.'/last_name/'.(($sort_order == 'asc' && $sort_by == 'last_name') ? 'desc' : 'asc'), lang('index_lname_th'));?></th> -->
                                     <th width="10%"><?php echo anchor('auth/index/'.$fname_param.'/'.$email_param.'/email/'.(($sort_order == 'asc' && $sort_by == 'email') ? 'desc' : 'asc'), lang('index_email_th'));?></th>
                                     <th width="10%"><?php echo lang('index_groups_th');?></th>
                                     <th width="10%"><?php echo anchor('auth/index/'.$fname_param.'/'.$email_param.'/active/'.(($sort_order == 'asc' && $sort_by == 'active') ? 'desc' : 'asc'), lang('index_status_th'));?></th>
@@ -139,7 +121,7 @@
                                         </div>
                                     </td>
                                     <td valign="middle"><?php echo $user->first_name;?></td>
-                                    <td valign="middle"><span class="muted"><?php echo $user->last_name;?></span></td>
+                                    <!-- <td valign="middle"><span class="muted"><?php echo $user->last_name;?></span></td> -->
                                     <td valign="middle"><span class="muted"><?php echo $user->email;?></span></td>
                                     <td valign="middle"><span class="muted">
                                         <?php foreach ($user->groups as $group):?>
@@ -152,16 +134,23 @@
                                         </span>
                                     </td>
                                     <td valign="middle">
-                                        <span class="muted"><?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?></span>
+                                        <?php //echo anchor("auth/edit_user/".$user->id, 'Edit') ;?>
+                                        <a href="<?php echo site_url('auth/edit_user/'.$user->id)?>">
+                                            <button type="button" class="btn btn-info btn-small"><i class="icon-paste"></i>&nbsp;<?php echo lang('edit_button')?></button>
+                                        </a>
+                                        <a href="<?php echo site_url('auth/detail/'.$user->id)?>">
+                                            <button class='btn btn-primary btn-small' type="button"><i class="icon-male"></i>&nbsp;<?php echo lang('personal_label')?></button>
+                                        </a>
+                                        <!-- <span class="muted"><?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?></span>
                                         &nbsp;|&nbsp; 
-                                        <span class="muted"><?php echo anchor("auth/detail/".$user->id, 'Personal') ;?></span>
+                                        <span class="muted"><?php echo anchor("auth/detail/".$user->id, 'Personal') ;?></span> -->
                                     </td>
                                 </tr>
                             <?php endforeach;?>
                             </tbody>
                         </table>
                         <div class="row">
-                            <div class="col-md-2 page_limit">
+                            <div class="col-md-4 page_limit">
                                 <?php echo form_open(uri_string());?>
                                 <?php 
                                     $selectComponentData = array(
@@ -172,6 +161,7 @@
                                         100 => '100',);
                                     $selectComponentJs = 'class="select2" onChange="this.form.submit()" id="limit"';
                                     echo "Per page: ".form_dropdown('limit', $selectComponentData, $limit, $selectComponentJs);
+                                    echo '&nbsp;'.lang('found_subheading').'&nbsp;'.$num_rows_all.'&nbsp;'.lang('users_subheading');
                                 ?>
                                 <?php echo form_close();?>
                             </div>

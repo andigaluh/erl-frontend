@@ -46,27 +46,45 @@
                         <div class="row column-seperation">
                             <?php echo form_open("auth/deactivate/".$user->id);?>
                                 <div class="col-md-12 ">
-                                    <div class="form-group">
-                                        <?php echo lang('deactivate_confirm_y_label', 'confirm');?>
-                                        <div class="input-with-icon right">                                       
-                                            <i class=""></i>
-                                            <input type="radio" name="confirm" value="yes" checked="checked" />                               
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <?php echo lang('deactivate_confirm_y_label', 'confirm');?>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="input-with-icon right">                                       
+                                                        <i class=""></i>
+                                                        <input type="radio" name="confirm" value="yes" checked="checked" />                               
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <?php echo lang('deactivate_confirm_n_label', 'confirm');?>
-                                        <div class="input-with-icon right">                                       
-                                            <i class=""></i>
-                                            <input type="radio" name="confirm" value="no" />                              
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <?php echo lang('deactivate_confirm_n_label', 'confirm');?>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="input-with-icon right">                                       
+                                                        <i class=""></i>
+                                                        <input type="radio" name="confirm" value="no" />                              
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-actions-register">
-                                	<?php echo form_hidden($csrf); ?>
-    								<?php echo form_hidden(array('id'=>$user->id)); ?> 
-                                    <div class="pull-right">
-                                      <button type="submit" class="btn btn-success btn-cons"><i class="icon-ok"></i><?php echo lang('deactivate_submit_btn');?></button>
-                                      
+                                <div class="col-md-12">
+                                    <div class="form-actions-register" style="margin-top:10px !important">
+                                    	<?php echo form_hidden($csrf); ?>
+        								<?php echo form_hidden(array('id'=>$user->id)); ?> 
+                                        <div class="pull-left">
+                                          <button type="submit" class="btn btn-success btn-cons"><i class="icon-ok"></i>&nbsp;<?php echo lang('deactivate_submit_btn');?></button>
+                                          <a href="<?php echo site_url('auth/index')?>">
+                                            <button class="btn btn-white btn-cons" type="button"><?php echo lang('cancel_button')?></button>
+                                          </a>
+                                        </div>
                                     </div>
                                 </div>
                             <?php echo form_close();?>

@@ -210,8 +210,10 @@
                                 </div>
                                 <div class="form-actions-register">  
                                     <div class="pull-right">
-                                      <button type="submit" class="btn btn-success btn-cons"><i class="icon-ok"></i><?php echo lang('edit_user_submit_btn');?></button>
-                                      
+                                      <button type="submit" class="btn btn-success"><i class="icon-ok"></i>&nbsp;<?php echo lang('save_button');?></button>
+                                      <a href="<?php echo site_url('auth/index')?>">
+                                        <button class="btn btn-white" type="button"><?php echo lang('cancel_button')?></button>
+                                      </a>
                                     </div>
                                 </div>
                             <?php echo form_close();?>
