@@ -192,7 +192,7 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div id="MsgGood" class="msggood text-center" style="display:none;"></div>
+                                                        <div id="MsgGood" class="alert alert-success text-center" style="display:none;"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -357,14 +357,18 @@
 <div class="modal fade" id="deleteCourseModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"><?php echo lang('delete_confirmation').' for '.$row->description; ?></h4>
+        </div>
       <?php echo form_open('auth/delete_course/'.$row->id, array("id"=>"formdelete".$row->id))?>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
       <div class="modal-body">
-      <p>Are You Sure ?</p>
+        <p><?php echo lang('delete_this_data').$row->description.' ?'; ?></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('cancel_button')?></button> 
-        <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-default" value="<?php echo lang('delete_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="icon-ban-circle"></i>&nbsp;<?php echo lang('cancel_button')?></button> 
+        <button type="submit" class="btn btn-danger lnkBlkWhtArw" name="btn_update" id="btnRetPass" style="margin-top: 3px;"><i class="icon-warning-sign"></i>&nbsp;<?php echo lang('delete_button')?></button>
       </div>
         <?php echo form_close()?>
     </div>
