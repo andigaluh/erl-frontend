@@ -225,7 +225,7 @@ $(document).ready(function(){
                 $('#formupdate').submit(function(response){
                     $.post($('#formupdate').attr('action'), $('#formupdate').serialize(),function(json){
                         if(json.st == 0){
-                            $('#MsgBad').html(json.errors).fadeIn();
+                            $('#MsgBad2').html(json.errors).fadeIn();
                         }else{
                             getTable();
                             $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -263,7 +263,6 @@ $(function(){
                             $('#MsgGood').text('Search Failed').fadeIn();
                         }else{
                             getTable2();
-                            $('#MsgGood').text('Data Deleted').fadeIn().delay(4000).fadeOut("slow");
                         }
                     }, 'json');
                     return false;

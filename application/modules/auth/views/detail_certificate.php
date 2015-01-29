@@ -309,8 +309,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><?=$row->id?><?php echo lang('edit_certificate', 'edit_certificate')?></h4>
-        <p class="txtBold txtRed" class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
+        <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_certificate', 'edit_certificate')?></h4>
+        <p class="txtBold txtRed" class="error_msg" id="MsgBad2" style="background: #fff; display: none;"></p>
       </div>
       <div class="modal-body">
         <?= form_open('auth/edit_certificate/'.$row->id, array('id'=>'formupdate'))?> 
