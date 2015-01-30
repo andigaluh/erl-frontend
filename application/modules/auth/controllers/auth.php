@@ -1371,8 +1371,6 @@ class Auth extends MX_Controller {
            
         //pass the user to the view
         $this->data['user'] = $user;
-        $this->data['groups'] = $groups;
-        $this->data['currentGroups'] = $currentGroups;
         $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';

@@ -42,19 +42,6 @@
             <td valign="middle" colspan="5">
                 <p class="text-center">No Data</p>
             </td>
-           <!--  <td valign="middle">
-                 <div class="checkbox check-default">
-                    <input id="checkbox11" type="checkbox" value="1">
-                    <label for="checkbox11"></label>
-                </div>
-            </td>
-            <td valign="middle">No Data</td>
-            <td valign="middle"><span class="muted">No Data</span></td>
-            <td valign="middle"><span class="muted">No Data</span></td>
-            <td valign="middle"><span class="muted">No Data</span></td>
-            <td valign="middle">
-                No Data
-            </td> -->
         </tr>
 
     <?php } ?>

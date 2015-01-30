@@ -1,10 +1,4 @@
-<div id="tabel" class="row">
-    <div class="col-md-6">
-        <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_education;?>&nbsp;<?php echo lang('education_subheading');?></span></h4>  
-    </div>
-    <div class="bs-example"  data-example-id="labels-in-headings" style="z-index:-10;"></div>
-</div>
-<table class="table no-more-tables">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th width="1%">
@@ -24,7 +18,7 @@
             <th width="15%"><?php echo lang('index_action_th');?></th>                                  
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tabel">
         <?php if ($user_education->num_rows() > 0){
             foreach($user_education->result() as $row){?>
         <tr>
@@ -43,9 +37,8 @@
             <td valign="middle"><span class="muted"><?php echo $row->degree;?></span></td>
             <td valign="middle"><span class="muted"><?php echo $row->institution;?></span></td>
             <td valign="middle">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editeducationModal<?= $row->id?>"><?php echo lang('edit_button')?></button>
-            &nbsp;|&nbsp;
-            <button class='btn btn-danger btn-xs' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteeducationModal<?php echo $row->id?>">Delete</button>
+                <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editeducationModal<?= $row->id?>"><i class="icon-paste"></i>&nbsp;<?php echo lang('edit_button')?></button>
+                <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteeducationModal<?php echo $row->id?>"><i class="icon-warning-sign"></i>&nbsp;<?php echo lang('delete_button')?></button>
             </td>
         </tr>
         <?php }}else{?>
@@ -53,19 +46,6 @@
             <td valign="middle" colspan="5">
                 <p class="text-center">No Data</p>
             </td>
-           <!--  <td valign="middle">
-                 <div class="checkbox check-default">
-                    <input id="checkbox11" type="checkbox" value="1">
-                    <label for="checkbox11"></label>
-                </div>
-            </td>
-            <td valign="middle">No Data</td>
-            <td valign="middle"><span class="muted">No Data</span></td>
-            <td valign="middle"><span class="muted">No Data</span></td>
-            <td valign="middle"><span class="muted">No Data</span></td>
-            <td valign="middle">
-                No Data
-            </td> -->
         </tr>
         <?php } ?>
     </tbody>

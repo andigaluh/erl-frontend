@@ -19,7 +19,7 @@
         </ul> -->
         <div class="page-title">
             <a href="<?php echo site_url('auth')?>"><i class="icon-custom-left"></i></a>
-            <h3><?php echo lang('detail_user_heading');?></h3> 
+            <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('users_education_subheading');?></span></h3> 
         </div>
         <!-- <div class="row">
             <div class="col-md-12">
@@ -154,7 +154,7 @@
                                     </div>
                                 </div>
                         </div>
-                        <?php include 'auth_detail_navbar.php';?>
+                        <?php echo $this->load->view('auth_detail_navbar');?>
                         <hr />
 
                         <!--start education Row -->
@@ -163,26 +163,24 @@
                             
                                 <div class="grid simple ">                            
                                     <div class="grid-body no-border">
-                                        <br/>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('education_subheading');?></span></h4>
+                                            <div class="col-md-12">
+                                                <h4><?php echo lang('users_education_subheading');?></h4>  
+  
                                             </div>
                                         </div>
-
                                         <?php echo form_open('auth/search/'.$user->id, array( 'id'=>'search'))?>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="row">
-                                                        <div class="col-md-3 search_label"><?php echo form_label(lang('index_education_title_th'),'education_title_search')?></div>
-                                                        <div class="col-md-9"><?php echo bs_form_input(array('id'=>'title', 'name'=>'title'));?></div>
+                                                        <div class="col-md-2 search_label"><?php echo form_label(lang('index_education_title_th'),'education_title_search')?></div>
+                                                        <div class="col-md-10"><?php echo bs_form_input(array('id'=>'title', 'name'=>'title'));?></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="row">
-                                                        <?php echo form_submit('submit',lang('search_button'),'class="btn btn-primary"')?>
-                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addeducationModal"><?php echo lang('add_button');?></button>
-                                                        <!-- <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('search_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;"> -->
+                                                        <button type="submit" class="btn btn-info"><i class="icon-search"></i>&nbsp;<?php echo lang('search_button')?></button>
+                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addeducationModal"><i class="icon-plus"></i>&nbsp;<?php echo lang('add_button');?></button>
                                                     </div>
                                                 </div>    
                                             </div>
@@ -356,15 +354,15 @@
 <!--Edit Modal-->
 <?php foreach($user_education->result() as $row){?>
 <div class="modal fade" id="editeducationModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog" id="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_education', 'edit_education')?></h4>
-        <p class="txtBold txtRed" class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
+        <p class="txtBold txtRed" class="error_msg" id="MsgBad2<?=$row->id?>" style="background: #fff; display: none;"></p>
       </div>
       <div class="modal-body">
-        <?= form_open('auth/edit_education/'.$row->id, array('id'=>'formupdate'))?> 
+        <?= form_open('auth/edit_education/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
              <div class="row form-row">
                 <div class="col-md-3">
                     <?php echo lang('education_description', 'education_title');?>
@@ -475,7 +473,7 @@
 <div class="modal fade" id="deleteeducationModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <?php echo form_open('auth/delete_education/'.$row->id, array("id"=>"formdelete"))?>
+            <?php echo form_open('auth/delete_education/'.$row->id, array("id"=>"formdelete".$row->id))?>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
                 <div class="modal-body">
                     <p>Are You Sure ?</p>
@@ -488,15 +486,45 @@
         </div>
     </div>
 </div>
-<?php }?>
-
+<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.min.js'?>"></script>
 <script type="text/javascript">
-    window.onload = function(){getTable();};
-
+    window.onload = function(){getTable();};  
     function getTable() 
     {
         $('#tabel').load('<?php echo site_url('auth/get_education/'.$user->id); ?>');
     }
+    $(document).ready(function(){
+                $('#formupdate<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad2<?=$row->id?>').html(json.errors).fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad2<?=$row->id?>').hide();
+                            $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
+                            $('#modal-dialog').find('#formadd<?=$row->id?>')[0].reset();
+                            
+                        }
+                    }, 'json');
+                    return false;
+                });
+                $('#education_status_id').select2();
+            });
+
+$(function(){
+ $('#formdelete<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formdelete<?php echo $row->id?>').attr('action'), $('#formdelete<?php echo $row->id?>').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad').text('Delete Failed').fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgGood').text('Data Deleted').fadeIn().delay(4000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+            });
 </script>
-
-
+<?php } ?>
