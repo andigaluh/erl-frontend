@@ -1004,7 +1004,7 @@ class Auth extends MX_Controller {
         $this->_render_page('auth/edit_user', $this->data);
     }
 
-    function detail($id, $ctitle = "ct:", $sort_by = "id", $sort_order = "asc", $offset = 0)
+    function detail($id, $sort_by = "id", $sort_order = "asc", $offset = 0)
     {
         $this->data['title'] = "Detail User";
 
@@ -1013,14 +1013,9 @@ class Auth extends MX_Controller {
             redirect('auth', 'refresh');
         }
 
-        //$user = $this->ion_auth->user($id)->row();
         $user = $this->person_model->getUsers($id)->row();
         $user_course = $this->person_model->getUserCourse($id);
-        //die($user->row()->organization_title);
-        //$groups=$this->ion_auth->groups()->result_array();
-        //$currentGroups = $this->ion_auth->get_users_groups($id)->result();
 
-        //display the edit user form
         $this->data['csrf'] = $this->_get_csrf_nonce();
 
         //set the flash data error message if there is one
@@ -1050,7 +1045,7 @@ class Auth extends MX_Controller {
             //$this->data['num_rows_all'] = $this->ion_auth->like($ctitle_post)->users()->num_rows();
 
             //list of filterize limit users for pagination  
-            $this->data['user_course_list'] = $this->auth_model->getCourse($limit=10,$offset=null,$ctitle);
+            //$this->data['user_course_list'] = $this->auth_model->getCourse($limit=10,$offset=null,$ctitle);
 
             //$this->data['users_num_rows'] = $this->ion_auth->like($ctitle_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
 
@@ -1070,13 +1065,6 @@ class Auth extends MX_Controller {
 
             //create pagination
             //$this->data['halaman'] = $this->pagination->create_links();
-
-            $this->data['course_title_search'] = array(
-                'name'  => 'course_detail',
-                'id'    => 'course_detail',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('course_detail'),
-            );
 
         //pass the user to the view
         $this->data['user'] = $user;
@@ -1121,16 +1109,19 @@ class Auth extends MX_Controller {
         }
     }
 
-    public function get_course($id, $filter=null){
+    public function get_course($id, $filter=null)
+    {
 
-
-        $user = $this->ion_auth->user($id)->row();
         $this->data['user'] = $user;
         $ctitle = $this->uri->segment(4);
         $user_course = $this->person_model->getUserCourse($id, $filter);
         $this->data['user_course'] = $user_course;
         $this->data['num_rows_course'] = $user_course->num_rows();
         $this->data['user_course_list'] = $this->auth_model->getCourse($id,$ctitle, $limit=10,$offset=null);
+
+        $f_course_status = array("is_deleted" => 0);
+        $q_course_status = GetAll('course_status', $f_course_status);
+        $this->data['course_status'] = ($q_course_status->num_rows() > 0 ) ? $q_course_status : array();
        
 
         $this->load->view('table/table_course', $this->data);
@@ -1207,20 +1198,17 @@ class Auth extends MX_Controller {
     }
 
 
-     public function detail_certificate($id, $fname = "fn:",$email = "em:",$sort_by = "id", $sort_order = "asc", $offset = 0)
+     public function detail_certificate($id, $sort_by = "id", $sort_order = "asc", $offset = 0)
     {
-         $this->data['title'] = "Certificate Detail";
-
-        $user_certificate = $this->person_model->getUserCertificate($id);
+        $this->data['title'] = "Certificate Detail";
 
         if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
         {
             redirect('auth', 'refresh');
         }
 
-        $user = $this->ion_auth->user($id)->row();
-        $groups=$this->ion_auth->groups()->result_array();
-        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+        $user = $this->person_model->getUsers($id)->row();
+        $user_certificate = $this->person_model->getUserCertificate($id);
 
         //validate form input
         
@@ -1239,78 +1227,14 @@ class Auth extends MX_Controller {
             
             //set sort by
             $this->data['sort_by'] = $sort_by;
-           
-            //set filter by first name
-            $this->data['fname_param'] = $fname; 
-            $exp_fname = explode(":",$fname);
-            $fname_re = str_replace("_", " ", $exp_fname[1]);
-            $fname_post = (strlen($fname_re) > 0) ? array('users.first_name'=>$fname_re) : array() ;
-            
-            //set filter by email
-            $this->data['email_param'] = $email;
-            $exp_email = explode(":",$email);
-            if(strlen($exp_email[1]) > 0) 
-            {
-                $rep_email_char = array("%5Bat%5D","%5Bdot%5D");
-                $std_email_char = array("@",".");
-                
-                $email_post = array('users.email'=>str_replace($rep_email_char,$std_email_char,$exp_email[1]));
-            }else{
-                $email_post = array();
-            }
             
             //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
             $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : $this->config->item('list_limit', 'ion_auth') ;
 
             $this->data['offset'] = $offset = $this->uri->segment($this->config->item('uri_segment_pager', 'ion_auth'));
 
-            //list of filterize all users  
-            $this->data['users_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->result();
-            
-            //num rows of filterize all users
-            $this->data['num_rows_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->num_rows();
-
-            //list of filterize limit users for pagination  
-            $this->data['users'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->result();
-
-            $this->data['users_num_rows'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
-
-            /*foreach ($this->data['users'] as $k => $user)
-            {
-                $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
-            }*/
-
-             //config pagination
-             $config['base_url'] = base_url().'auth/index/fn:'.$exp_fname[1].'/em:'.$exp_email[1].'/'.$sort_by.'/'.$sort_order.'/';
-             $config['total_rows'] = $this->data['num_rows_all'];
-             $config['per_page'] = $limit;
-             $config['uri_segment'] = $this->config->item('uri_segment_pager', 'ion_auth');
-
-            //inisialisasi config
-             $this->pagination->initialize($config);
-
-            //create pagination
-            $this->data['halaman'] = $this->pagination->create_links();
-
-            $this->data['fname_search'] = array(
-                'name'  => 'first_name',
-                'id'    => 'first_name',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('first_name'),
-            );
-
-            $this->data['email_search'] = array(
-                'name'  => 'email',
-                'id'    => 'email',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('email'),
-            );
-
-
         //pass the user to the view
         $this->data['user'] = $user;
-        $this->data['groups'] = $groups;
-        $this->data['currentGroups'] = $currentGroups;
         $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
@@ -1338,16 +1262,14 @@ class Auth extends MX_Controller {
         $q_certification_type = GetAll('certification_type', $f_certification_type);
         $this->data['certification_type'] = ($q_certification_type->num_rows() > 0 ) ? $q_certification_type : array();
 
-        $this->_render_page('auth/detail_certificate', $this->data);
-    
+        $this->_render_page('auth/detail_certificate', $this->data);   
     }
 
-     public function get_certificate($id){
+     public function get_certificate($id,$filter=null){
 
-        $user_certificate = $this->person_model->getUsercertificate($id);
+        $user_certificate = $this->person_model->getUsercertificate($id, $filter);
         $this->data['user_certificate'] = $user_certificate;
-        $this->data['num_rows_certificate'] = $user_certificate->num_rows();
-       
+        $this->data['num_rows_certificate'] = $user_certificate->num_rows();    
 
         $this->load->view('table/table_certificate', $this->data);
     }
@@ -1421,20 +1343,17 @@ class Auth extends MX_Controller {
         echo json_encode(array('st'=>1));
     }
 
-     public function detail_education($id, $fname = "fn:",$email = "em:",$sort_by = "id", $sort_order = "asc", $offset = 0)
+     public function detail_education($id, $sort_by = "id", $sort_order = "asc", $offset = 0)
     {
-         $this->data['title'] = "education Detail";
-
-        $user_education = $this->person_model->getUsereducation($id);
+        $this->data['title'] = "education Detail";
 
         if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
         {
             redirect('auth', 'refresh');
         }
 
-        $user = $this->ion_auth->user($id)->row();
-        $groups=$this->ion_auth->groups()->result_array();
-        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+        $user = $this->person_model->getUsers($id)->row();
+        $user_education = $this->person_model->getUsereducation($id);
 
         //validate form input
         
@@ -1454,73 +1373,6 @@ class Auth extends MX_Controller {
             //set sort by
             $this->data['sort_by'] = $sort_by;
            
-            //set filter by first name
-            $this->data['fname_param'] = $fname; 
-            $exp_fname = explode(":",$fname);
-            $fname_re = str_replace("_", " ", $exp_fname[1]);
-            $fname_post = (strlen($fname_re) > 0) ? array('users.first_name'=>$fname_re) : array() ;
-            
-            //set filter by email
-            $this->data['email_param'] = $email;
-            $exp_email = explode(":",$email);
-            if(strlen($exp_email[1]) > 0) 
-            {
-                $rep_email_char = array("%5Bat%5D","%5Bdot%5D");
-                $std_email_char = array("@",".");
-                
-                $email_post = array('users.email'=>str_replace($rep_email_char,$std_email_char,$exp_email[1]));
-            }else{
-                $email_post = array();
-            }
-            
-            //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
-            $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : $this->config->item('list_limit', 'ion_auth') ;
-
-            $this->data['offset'] = $offset = $this->uri->segment($this->config->item('uri_segment_pager', 'ion_auth'));
-
-            //list of filterize all users  
-            $this->data['users_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->result();
-            
-            //num rows of filterize all users
-            $this->data['num_rows_all'] = $this->ion_auth->like($fname_post)->like($email_post)->users()->num_rows();
-
-            //list of filterize limit users for pagination  
-            $this->data['users'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->result();
-
-            $this->data['users_num_rows'] = $this->ion_auth->like($fname_post)->like($email_post)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->users()->num_rows();
-
-            /*foreach ($this->data['users'] as $k => $user)
-            {
-                $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
-            }*/
-
-             //config pagination
-             $config['base_url'] = base_url().'auth/index/fn:'.$exp_fname[1].'/em:'.$exp_email[1].'/'.$sort_by.'/'.$sort_order.'/';
-             $config['total_rows'] = $this->data['num_rows_all'];
-             $config['per_page'] = $limit;
-             $config['uri_segment'] = $this->config->item('uri_segment_pager', 'ion_auth');
-
-            //inisialisasi config
-             $this->pagination->initialize($config);
-
-            //create pagination
-            $this->data['halaman'] = $this->pagination->create_links();
-
-            $this->data['fname_search'] = array(
-                'name'  => 'first_name',
-                'id'    => 'first_name',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('first_name'),
-            );
-
-            $this->data['email_search'] = array(
-                'name'  => 'email',
-                'id'    => 'email',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('email'),
-            );
-
-
         //pass the user to the view
         $this->data['user'] = $user;
         $this->data['groups'] = $groups;
@@ -1566,9 +1418,9 @@ class Auth extends MX_Controller {
         $this->_render_page('auth/detail_education', $this->data);
     }
 
-    public function get_education($id){
+    public function get_education($id,$filter=null){
 
-        $user_education = $this->person_model->getUsereducation($id);
+        $user_education = $this->person_model->getUsereducation($id, $filter);
         $this->data['user_education'] = $user_education;
         $this->data['num_rows_education'] = $user_education->num_rows();
        
@@ -1591,8 +1443,7 @@ class Auth extends MX_Controller {
             echo json_encode(array('st'=>0, 'errors'=>validation_errors('<div class="alert alert-danger" role="alert">', '</div>')));
         }
         else
-        {
-           
+        {      
             $data = array(
                     'title'=>$this->input->post('title'),
                     'description'             => $this->input->post('description'),
@@ -1671,7 +1522,7 @@ class Auth extends MX_Controller {
             redirect('auth', 'refresh');
         }
 
-        $user = $this->ion_auth->user($id)->row();
+        $user = $this->person_model->getUsers($id)->row();
         $groups=$this->ion_auth->groups()->result_array();
         $currentGroups = $this->ion_auth->get_users_groups($id)->result();
 
@@ -1928,7 +1779,7 @@ class Auth extends MX_Controller {
             redirect('auth', 'refresh');
         }
 
-        $user = $this->ion_auth->user($id)->row();
+        $user = $this->person_model->getUsers($id)->row();
         $groups=$this->ion_auth->groups()->result_array();
         $currentGroups = $this->ion_auth->get_users_groups($id)->result();
 
@@ -2168,7 +2019,7 @@ class Auth extends MX_Controller {
             redirect('auth', 'refresh');
         }
 
-        $user = $this->ion_auth->user($id)->row();
+        $user = $this->person_model->getUsers($id)->row();
         
 
         //validate form input
@@ -2342,7 +2193,7 @@ class Auth extends MX_Controller {
             redirect('auth', 'refresh');
         }
 
-        $user = $this->ion_auth->user($id)->row();
+        $user = $this->person_model->getUsers($id)->row();
         
 
         //validate form input
@@ -2691,6 +2542,7 @@ class Auth extends MX_Controller {
                     $this->template->add_js('bootstrap-datepicker.js');
                     $this->template->add_js('edit_user.js');
                     $this->template->add_js('core.js');
+                    $this->template->add_js('purl.js');
 
                     
                     $this->template->add_js('select2.min.js');

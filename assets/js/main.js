@@ -258,9 +258,16 @@ $(function(){
 $(function(){
  $('#search').submit(function(response){
                     $.post($('#search').attr('action'), $('#search').serialize(),function(json){
+                        var url = $.url();
+                        var uri = url.segment(3);
+                        var get = uri.substring(7);
+                        if(get.length<1){
+                            get = 'course';
+                        }
+
                         function getTable2() 
                         {
-                            $('#tabel').load(json.base_url+'auth/get_course/'+json.id+'/'+json.title);
+                            $('#tabel').load(json.base_url+'auth/get_'+get+'/'+json.id+'/'+json.title);
                         }
                         if(json.st == 0){
                             $('#MsgGood').text('Search Failed').fadeIn();

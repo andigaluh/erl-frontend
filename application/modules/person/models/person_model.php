@@ -42,7 +42,7 @@ class Person_model extends CI_Model
         return $query;
     }
 
-    function getUserCertificate($id){
+    function getUserCertificate($id, $filter=null){
         $this->db->select('users_certificate.id, certification_type.title as certification_type,users_certificate.description, users_certificate.start_date, users_certificate.end_date');
         $this->db->from('users_certificate');
         $this->db->join('certification_type', 'users_certificate.certification_type_id = certification_type.id');
@@ -50,11 +50,15 @@ class Person_model extends CI_Model
         $this->db->where('users_certificate.user_id', $id);
         $this->db->where('users_certificate.is_deleted', 0);
 
+        if($filter){
+            $this->db->like('certification_type.title', $filter);
+        }
+
         $query = $this->db->get();
         return $query;
     }
 
-    function getUserEducation($id){
+    function getUserEducation($id, $filter=null){
         $this->db->select('education_group.title as edu_group, users_education.id, users_education.user_id, users_education.title as education, users_education.description, users_education.start_date, users_education.end_date, users_education.education_center_id, education_center.title as institution, users_education.education_degree_id, education_degree.title as degree');
         
         $this->db->from('users_education');
@@ -65,6 +69,10 @@ class Person_model extends CI_Model
         $this->db->where('users_education.user_id', $id);
         $this->db->order_by('users_education.id','asc');
         $this->db->where('users_education.is_deleted', 0);
+
+        if($filter){
+            $this->db->like('users_education.title', $filter);
+        }
 
         $query = $this->db->get();
         return $query;

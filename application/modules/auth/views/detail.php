@@ -294,7 +294,6 @@
 
 
 <!--Edit Modal-->
-
 <?php foreach($user_course->result() as $row){?>
 <div class="modal fade" id="editCourseModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
