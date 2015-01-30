@@ -1111,13 +1111,9 @@ class Auth extends MX_Controller {
 
     public function get_course($id, $filter=null)
     {
-
-        $this->data['user'] = $user;
-        $ctitle = $this->uri->segment(4);
         $user_course = $this->person_model->getUserCourse($id, $filter);
         $this->data['user_course'] = $user_course;
         $this->data['num_rows_course'] = $user_course->num_rows();
-        $this->data['user_course_list'] = $this->auth_model->getCourse($id,$ctitle, $limit=10,$offset=null);
 
         $f_course_status = array("is_deleted" => 0);
         $q_course_status = GetAll('course_status', $f_course_status);
