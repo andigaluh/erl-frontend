@@ -1,3 +1,4 @@
+<script src="<?php echo assets_url('js/edit_user.js'); ?>"></script>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -90,6 +91,127 @@ $(function(){
                     }, 'json');
                     return false;
                 });
+            });
+</script>
+<?php } ?>
+
+<!--Edit Modal-->
+<?php foreach($user_experience->result() as $row){?>
+<div class="modal fade" id="editexperienceModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<?= form_open('auth/edit_experience/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
+  <div class="modal-dialog" id="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_experience', 'edit_experience')?></h4>
+        <p class="txtBold txtRed" class="error_msg" id="MsgBad2<?=$row->id?>" style="background: #fff; display: none;"></p>
+      </div>
+      <div class="modal-body">
+        <?= form_open('auth/edit_experience/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
+             <div class="row form-row">
+                <div class="col-md-3">
+                    <?php echo lang('company', 'company');?>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="company" value="<?php echo $row->company?>">         
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('position', 'position');?>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="position" value="<?php echo $row->position?>">         
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('start_date', 'start_date');?>
+                </div>
+                <div class="col-md-9">
+                        <div class="input-with-icon right">
+                            <div class="input-append success date no-padding">
+                                <input type="text" class="form-control" name="start_date" value="<?php echo $row->start_date?>">
+                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-md-3">
+                    <?php echo lang('end_date', 'end_date');?>
+                </div>
+                <div class="col-md-9">
+                        <div class="input-with-icon right">
+                            <div class="input-append success date no-padding">
+                                <input type="text" class="form-control" name="end_date" value="<?php echo $row->end_date?>">
+                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                            </div>
+                        </div>
+                </div>
+
+                 <div class="col-md-3">
+                    <?php echo lang('address', 'address');?>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="address" value="<?php echo $row->address?>">         
+                </div>
+
+                 <div class="col-md-3">
+                    <?php echo lang('line_business', 'line_business');?>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="line_business" value="<?php echo $row->line_business?>">         
+                </div>
+
+                 <div class="col-md-3">
+                    <?php echo lang('resign_reason', 'resign_reason');?>
+                </div>
+                <div class="col-md-9">
+                    <select name="resign_reason_id" class="select2" id="resign_reason_id" style="width:100%">
+                        <?php
+                            foreach ($resign_reason->result_array() as $key => $value) {
+                            $selected = ($resign_reason_id <> 0 && $resign_reason_id == $value['id']) ? 'selected = selected' : '';
+                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                            }
+                            ?>
+                    </select>              
+                </div>
+
+                 <div class="col-md-3">
+                    <?php echo lang('last_salary', 'last_salary');?>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="last_salary" value="<?php echo $row->last_salary?>">         
+                </div>
+
+
+            </div>
+                                    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
+                <button type="submit" class="btn btn-primary lnkBlkWhtArw" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button>
+      </div>
+       
+    </div>
+  </div>
+   <?php echo form_close()?>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+                $('#formupdate<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad2<?=$row->id?>').html(json.errors).fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad2<?=$row->id?>').hide();
+                            $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");                           
+                        }
+                    }, 'json');
+                    return false;
+                });
+                $('#resign_reason_id').select2();
             });
 </script>
 <?php } ?>

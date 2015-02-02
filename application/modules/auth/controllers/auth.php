@@ -1438,7 +1438,7 @@ class Auth extends MX_Controller {
         $this->data['education_center'] = ($q_education_center->num_rows() > 0 ) ? $q_education_center : array();
        
 
-        $this->load->view('table/table_education', $this->data);
+        $this->_render_page('table/table_education', $this->data);
     }
 
     public function add_education($id)
@@ -1675,6 +1675,22 @@ class Auth extends MX_Controller {
         $user_experience = $this->person_model->getUserexperience($id);
         $this->data['user_experience'] = $user_experience;
         $this->data['num_rows_experience'] = $user_experience->num_rows();
+
+        $f_exp_field = array("is_deleted" => 0);
+        $q_exp_field = GetAll('exp_field', $f_exp_field);
+        $this->data['exp_field'] = ($q_exp_field->num_rows() > 0 ) ? $q_exp_field : array();
+
+        $f_exp_level = array("is_deleted" => 0);
+        $q_exp_level = GetAll('exp_level', $f_exp_level);
+        $this->data['exp_level'] = ($q_exp_level->num_rows() > 0 ) ? $q_exp_level : array();
+
+        $f_exp_year = array("is_deleted" => 0);
+        $q_exp_year = GetAll('exp_year', $f_exp_year);
+        $this->data['exp_year'] = ($q_exp_year->num_rows() > 0 ) ? $q_exp_year : array();
+        
+        $f_resign_reason = array("is_deleted" => 0);
+        $q_resign_reason = GetAll('resign_reason', $f_resign_reason);
+        $this->data['resign_reason'] = ($q_resign_reason->num_rows() > 0 ) ? $q_resign_reason : array();
        
 
         $this->load->view('table/table_experience', $this->data);
@@ -1926,6 +1942,15 @@ class Auth extends MX_Controller {
         $user_sk = $this->person_model->getUsersk($id);
         $this->data['user_sk'] = $user_sk;
         $this->data['num_rows_sk'] = $user_sk->num_rows();
+
+        $f_position = array("is_deleted" => 0);
+        $q_position = GetAll('position', $f_position);
+        $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
+
+        $f_departement = array("is_deleted" => 0);
+        $q_departement = GetAll('departement', $f_departement);
+        $this->data['q_departement'] = $q_departement;
+        $this->data['departement'] = ($q_departement->num_rows() > 0 ) ? $q_departement : array();
        
 
         $this->load->view('table/table_sk', $this->data);
@@ -2093,6 +2118,20 @@ class Auth extends MX_Controller {
         $user_sti = $this->person_model->getUsersti($id);
         $this->data['user_sti'] = $user_sti;
         $this->data['num_rows_sti'] = $user_sti->num_rows();
+
+        $f_position = array("is_deleted" => 0);
+        $q_position = GetAll('position', $f_position);
+        $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
+
+        $f_departement = array("is_deleted" => 0);
+        $q_departement = GetAll('departement', $f_departement);
+        $this->data['q_departement'] = $q_departement;
+        $this->data['departement'] = ($q_departement->num_rows() > 0 ) ? $q_departement : array();
+
+        $f_receivedby = array("is_deleted" => 0);
+        $q_receivedby = GetAll('users', $f_receivedby);
+        $this->data['q_receivedby'] = $q_receivedby;
+        $this->data['receivedby'] = ($q_receivedby->num_rows() > 0 ) ? $q_receivedby : array();
        
 
         $this->load->view('table/table_sti', $this->data);
@@ -2277,9 +2316,27 @@ class Auth extends MX_Controller {
         $user_jabatan = $this->person_model->getUserjabatan($id, $filter);
         $this->data['user_jabatan'] = $user_jabatan;
         $this->data['num_rows_jabatan'] = $user_jabatan->num_rows();
+
+        $f_organization = array("is_deleted" => 0);
+        $q_organization = GetAll('organization', $f_organization);
+        $this->data['organization'] = ($q_organization->num_rows() > 0 ) ? $q_organization : array();
+
+        $f_position = array("is_deleted" => 0);
+        $q_position = GetAll('position', $f_position);
+        $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
+
+        $f_groups = array("is_deleted" => 0);
+        $q_groups = GetAll('groups', $f_groups);
+        $this->data['q_groups'] = $q_groups;
+        $this->data['groups'] = ($q_groups->num_rows() > 0 ) ? $q_groups : array();
+
+        $f_grade = array("is_deleted" => 0);
+        $q_grade = GetAll('grade', $f_grade);
+        $this->data['q_grade'] = $q_grade;
+        $this->data['grade'] = ($q_grade->num_rows() > 0 ) ? $q_grade : array();
        
 
-        $this->load->view('table/table_jabatan', $this->data);
+        $this->_render_page('table/table_jabatan', $this->data);
     }
 
     public function add_jabatan($id){
@@ -2413,8 +2470,12 @@ class Auth extends MX_Controller {
         $this->data['user_award'] = $user_award;
         $this->data['num_rows_award'] = $user_award->num_rows();
        
+        $f_award_warning_type = array("is_deleted" => 0);
+        $q_award_warning_type = GetAll('award_warning_type', $f_award_warning_type);
+        $this->data['q_award_warning_type'] = $q_award_warning_type;
+        $this->data['award_warning_type'] = ($q_award_warning_type->num_rows() > 0 ) ? $q_award_warning_type : array();
 
-        $this->load->view('table/table_award', $this->data);
+        $this->_render_page('table/table_award', $this->data);
     }
 
     public function add_award($id){
@@ -2548,7 +2609,12 @@ class Auth extends MX_Controller {
         $this->data['user_ikatan_dinas'] = $user_ikatan_dinas;
         $this->data['num_rows_ikatan_dinas'] = $user_ikatan_dinas->num_rows();
 
-        $this->load->view('table/table_ikatan_dinas', $this->data);
+        $f_ikatan_dinas_type = array("is_deleted" => 0);
+        $q_ikatan_dinas_type = GetAll('ikatan_dinas_type', $f_ikatan_dinas_type);
+        $this->data['q_ikatan_dinas_type'] = $q_ikatan_dinas_type;
+        $this->data['ikatan_dinas_type'] = ($q_ikatan_dinas_type->num_rows() > 0 ) ? $q_ikatan_dinas_type : array();
+
+        $this->_render_page('table/table_ikatan_dinas', $this->data);
     }
 
     public function add_ikatan_dinas($id){
@@ -2854,7 +2920,14 @@ class Auth extends MX_Controller {
                                              'auth/detail_award',
                                              'auth/detail_ikatan_dinas',
                                              'auth/table/table_course',
+                                             'auth/table/table_education',
+                                             'auth/table/table_experience',
+                                             'auth/table/table_jabatan',
+                                             'auth/table/table_sk',
+                                             'auth/table/table_sti',
+                                             'auth/table/table_award',
                                              'auth/table/table_certificate',
+                                             'auth/table/table_ikatan_dinas',
 
                     )))
                 {

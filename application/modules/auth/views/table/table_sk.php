@@ -1,3 +1,4 @@
+<script src="<?php echo assets_url('js/edit_user.js'); ?>"></script>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -89,6 +90,134 @@ $(function(){
                     }, 'json');
                     return false;
                 });
+            });
+</script>
+<?php } ?>
+
+<!--Edit Modal-->
+<?php foreach($user_sk->result() as $row){?>
+<?= form_open('auth/edit_sk/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
+<div class="modal fade" id="editskModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" id="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_sk', 'edit_sk')?></h4>
+            <p class="txtBold txtRed" class="error_msg" id="MsgBad<?=$row->id?>" style="background: #fff; display: none;"></p>
+        </div>
+            <div class="modal-body">
+                
+                <div class="row form-row">
+
+                    <div class="col-md-3">
+                        <?php echo lang('sk_date', 'sk_date');?>
+                    </div>
+                    <div class="col-md-9">
+                            <div class="input-with-icon right">
+                                <div class="input-append success date no-padding">
+                                    <input type="text" class="form-control" name="sk_date" value="<?php echo $row->sk_date?>">
+                                    <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('sk_no', 'sk_no');?>
+                    </div>
+                    <div class="col-md-9">
+                    <input type="text" class="form-control" name="sk_no" value="<?php echo $row->sk_no?>">
+                    </div>
+
+                    <div class="col-md-3">
+                    <?php echo lang('position', 'position');?>
+                    </div>
+                    <div class="col-md-9">
+                        <select name="position_id" class="select2" id="position_id" style="width:100%">
+                            <?php
+                                foreach ($position->result_array() as $key => $value) {
+                                $selected = ($position_id <> 0 && $position_id == $value['id']) ? 'selected = selected' : '';
+                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                }
+                                ?>
+                            </select>        
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('departement', 'departement');?>
+                    </div>
+                    <div class="col-md-9">
+                        <select name="departement_id" class="select2" id="departement_id" style="width:100%">
+                            <?php
+                                if($q_departement->num_rows() > 0){
+                                foreach ($departement->result_array() as $key => $value) {
+                                $selected = ($departement_id <> 0 && $departement_id == $value['id']) ? 'selected = selected' : '';
+                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                }}else{
+                                    echo '<option value="0">'.'No Data'.'</option>';
+                                }
+                                ?>
+                            </select>        
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('effective_date', 'effective_date');?>
+                    </div>
+                    <div class="col-md-9">
+                            <div class="input-with-icon right">
+                                <div class="input-append success date no-padding">
+                                    <input type="text" class="form-control" name="effective_date" value="<?php echo $row->effective_date?>">
+                                    <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('location', 'location');?>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="location" value="<?php echo $row->location?>">         
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('sign_name', 'sign_name');?>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="sign_name" value="<?php echo $row->sign_name?>">         
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php echo lang('sign_position', 'sign_position');?>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="sign_position" value="<?php echo $row->sign_position?>">         
+                    </div>
+                </div>
+            </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
+                <button type="submit" class="btn btn-primary lnkBlkWhtArw" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button>
+      </div>
+        
+    </div>
+  </div>
+</div>
+<?php echo form_close()?>
+<script type="text/javascript">
+    $(document).ready(function(){
+                $('#formupdate<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad2<?=$row->id?>').html(json.errors).fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad2<?=$row->id?>').hide();
+                            $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+                //$('#sk_status_id').select2();
             });
 </script>
 <?php } ?>
