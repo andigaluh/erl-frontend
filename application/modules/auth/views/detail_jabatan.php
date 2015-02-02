@@ -44,7 +44,6 @@
                     <div class="grid-body no-border">
                         
                         <div class="row">
-                            <div <?php //( ! empty($message)) && print('class="alert alert-info"'); ?> id="infoMessage"><?php //echo $message;?></div>
                                 <div class="col-md-4">
                                     <h4><?php echo lang('employee_information_subheading')?></h4>
                                     <div class="form-group">
@@ -166,7 +165,8 @@
                                     <div class="grid-body no-border">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('jabatan_subheading');?></span></h4>
+                                                <h4><?php echo lang('users_jabatan_subheading');?></h4>  
+  
                                             </div>
                                         </div>
                                         <?php echo form_open('auth/search/'.$user->id, array( 'id'=>'search'))?>
@@ -179,9 +179,8 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="row">
-                                                        <?php echo form_submit('submit',lang('search_button'),'class="btn btn-primary"')?>
-                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addjabatanModal"><?php echo lang('add_button');?></button>
-                                                        <!-- <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('search_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;"> -->
+                                                        <button type="submit" class="btn btn-info"><i class="icon-search"></i>&nbsp;<?php echo lang('search_button')?></button>
+                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addjabatanModal"><i class="icon-plus"></i>&nbsp;<?php echo lang('add_button');?></button>
                                                     </div>
                                                 </div>    
                                             </div>
@@ -192,7 +191,7 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div id="MsgGood" class="msggood text-center" style="display:none;"></div>
+                                                        <div id="MsgGood" class="alert alert-success text-center" style="display:none;"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -343,8 +342,8 @@
             </div>                              
       	</div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close_button')?></button> 
-        <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
+        <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_add" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button>
       </div>
         <?php echo form_close()?>
     </div>
@@ -366,10 +365,10 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_jabatan', 'edit_jabatan')?></h4>
-        <p class="error_msg" id="MsgBad2" style="background: #fff; display: none;"></p>
+        <p class="error_msg" id="MsgBad2<?=$row->id?>" style="background: #fff; display: none;"></p>
       </div>
       <div class="modal-body">
-        <?= form_open('auth/edit_jabatan/'.$row->id, array('id'=>'formupdate'))?> 
+        <?= form_open('auth/edit_jabatan/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
              <div class="row form-row">
 
              	<div class="col-md-3">
@@ -401,7 +400,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <?php echo lang('groups', 'groups');?>
+                    <?php echo lang('employee_group', 'groups');?>
                 </div>
                 <div class="col-md-9">
                     <select name="groups_id" class="select2" id="groups_id" style="width:100%">
@@ -437,7 +436,7 @@
                 <div class="col-md-9">
                         <div class="input-with-icon right">
                             <div class="input-append success date no-padding">
-                                <input type="text" class="form-control" name="start_date">
+                                <input type="text" class="form-control" name="start_date" value="<?php echo $row->start_date?>">
                                 <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
                             </div>
                         </div>
@@ -449,7 +448,7 @@
                 <div class="col-md-9">
                         <div class="input-with-icon right">
                             <div class="input-append success date no-padding">
-                                <input type="text" class="form-control" name="end_date">
+                                <input type="text" class="form-control" name="end_date" value="<?php echo $row->end_date?>">
                                 <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
                             </div>
                         </div>
@@ -461,7 +460,7 @@
                 <div class="col-md-9">
                         <div class="input-with-icon right">
                             <div class="input-append success date no-padding">
-                                <input type="text" class="form-control" name="sk_date">
+                                <input type="text" class="form-control" name="sk_date" value="<?php echo $row->end_date?>">
                                 <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
                             </div>
                         </div>
@@ -470,36 +469,36 @@
                                     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close_button')?></button> 
-        <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
+        <button type="submit" class="btn btn-primary lnkBlkWhtArw" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button>
       </div>
         <?php echo form_close()?>
     </div>
   </div>
 </div>
+
+<script src="<?php echo assets_url('js/jquery.min.js'); ?>"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+                $('#formupdate<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad2<?=$row->id?>').html(json.errors).fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad2<?=$row->id?>').hide();
+                            $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+                $('#course_status_id').select2();
+            });
+</script>
 <?php } ?>
 <!-- End Edit Modal-->
 
-
-<!--Delete Modal-->
-<?php foreach($user_jabatan->result() as $row){?>
-<div class="modal fade" id="deletejabatanModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <?php echo form_open('auth/delete_jabatan/'.$row->id, array("id"=>"formdelete"))?>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-body">
-      <p>Are You Sure ?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('cancel_button')?></button> 
-        <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-default" value="<?php echo lang('delete_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
-      </div>
-        <?php echo form_close()?>
-    </div>
-  </div>
-</div>
-<?php } ?>
 
 <script type="text/javascript">
     window.onload = function(){getTable();};

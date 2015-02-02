@@ -7,16 +7,20 @@
                     <label for="checkbox10"></label>
                 </div>
             </th>
-            <!-- <th width="10%"><?php //echo anchor('auth/detail/'.$user->id.'/'.$ctitle_param.'/course_title/'.(($sort_order == 'asc' && $sort_by == 'course_title') ? 'desc' : 'asc'), lang('course_description'));?></th> -->
-            <th width="10%"><?php echo 'Description'//anchor('auth/index/'.$fname_param.'/'.$email_param.'/last_name/'.(($sort_order == 'asc' && $sort_by == 'last_name') ? 'desc' : 'asc'), lang('index_lname_th'));?></th>
-            <th width="10%"><?php echo 'Registration Date'//anchor('auth/index/'.$fname_param.'/'.$email_param.'/email/'.(($sort_order == 'asc' && $sort_by == 'email') ? 'desc' : 'asc'), lang('index_email_th'));?></th>
-            <th width="10%"><?php echo 'Status';?></th>
+            <!-- <th width="10%"><?php //echo anchor('auth/detail/'.$user->id.'/'.$ctitle_param.'/award_title/'.(($sort_order == 'asc' && $sort_by == 'award_title') ? 'desc' : 'asc'), lang('award_description'));?></th> -->
+            <th width="10%"><?php echo lang('award_warning_type');?></th>
+            <th width="10%"><?php echo lang('title');?></th>
+            <th width="10%"><?php echo lang('description');?></th>
+            <th width="10%"><?php echo lang('app_date');?></th>
+            <th width="10%"><?php echo lang('sk_number');?></th>
+            <th width="10%"><?php echo lang('start_date');?></th>
+            <th width="10%"><?php echo lang('end_date');?></th>
             <th width="10%"><?php echo lang('index_action_th');?></th>                                  
         </tr>
     </thead>
     <tbody id="tabel">
-    <?php if ($user_course->num_rows() > 0){
-                foreach($user_course->result() as $row){?>
+    <?php if ($user_award->num_rows() > 0){
+                foreach($user_award->result() as $row){?>
         <tr>
             <td valign="middle">
                  <div class="checkbox check-default">
@@ -27,12 +31,16 @@
 
 
             <!-- <td valign="middle"><?php echo $row->id;?></td> -->
+            <td valign="middle"><span class="muted"><?php echo $row->type;?></span></td>
+            <td valign="middle"><span class="muted"><?php echo $row->title;?></span></td>
             <td valign="middle"><span class="muted"><?php echo $row->description;?></span></td>
-            <td valign="middle"><span class="muted"><?php echo $row->registration_date;?></span></td>
-            <td valign="middle"><span class="muted"><?php echo $row->status;?></span></td>
+            <td valign="middle"><span class="muted"><?php echo $row->app_date;?></span></td>
+            <td valign="middle"><span class="muted"><?php echo $row->sk_number;?></span></td>
+            <td valign="middle"><span class="muted"><?php echo $row->start_date;?></span></td>
+            <td valign="middle"><span class="muted"><?php echo $row->end_date;?></span></td>
             <td valign="middle">
-                <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editCourseModal<?php echo $row->id?>"><i class="icon-paste"></i>&nbsp;<?php echo lang('edit_button')?></button>
-                <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteCourseModal<?php echo $row->id?>"><i class="icon-warning-sign"></i>&nbsp;<?php echo lang('delete_button')?></button>
+                <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editawardModal<?php echo $row->id?>"><i class="icon-paste"></i>&nbsp;<?php echo lang('edit_button')?></button>
+                <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteawardModal<?php echo $row->id?>"><i class="icon-warning-sign"></i>&nbsp;<?php echo lang('delete_button')?></button>
             </td>
 
         </tr>
@@ -48,16 +56,16 @@
     </tbody>
 </table>
 
-<?php foreach($user_course->result() as $row){?>
+<?php foreach($user_award->result() as $row){?>
 <!--Delete Modal-->
-<div class="modal fade" id="deleteCourseModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteawardModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel"><?php echo lang('delete_confirmation').' for '.$row->description; ?></h4>
         </div>
-      <?php echo form_open('auth/delete_course/'.$row->id, array("id"=>"formdelete".$row->id))?>
+      <?php echo form_open('auth/delete_award/'.$row->id, array("id"=>"formdelete".$row->id))?>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
       <div class="modal-body">
         <p><?php echo lang('delete_this_data').$row->description.' ?'; ?></p>
@@ -90,7 +98,7 @@ $(function(){
 <?php } ?>
 <!-- <div class="row">
     <div class="col-md-6">
-        <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_course;?>&nbsp;<?php echo lang('course_subheading');?></span></h4>  
+        <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_award;?>&nbsp;<?php echo lang('award_subheading');?></span></h4>  
     </div>
     
 </div> -->

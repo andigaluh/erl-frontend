@@ -78,7 +78,7 @@ class Person_model extends CI_Model
         return $query;
     }
 
-    function getUserExperience($id){
+    function getUserExperience($id, $filter=null){
         $this->db->select('users_experience.id, users_experience.user_id, users_experience.company, users_experience.start_date, users_experience.end_date, users_experience.position, users_experience.address, users_experience.line_business, users_experience.last_salary, resign_reason.title as resign_reason');
         $this->db->from('users_experience');
         /*$this->db->join('exp_field', 'users_experience.exp_field_id = exp_field.id');
@@ -89,13 +89,18 @@ class Person_model extends CI_Model
         $this->db->join('resign_reason', 'users_experience.resign_reason_id = resign_reason.id');
 
         $this->db->where('users_experience.user_id', $id);
+        $this->db->order_by('users_experience.id','asc');
         $this->db->where('users_experience.is_deleted', 0);
+
+        if($filter){
+            $this->db->like('users_experience.company', $filter);
+        }
 
         $query = $this->db->get();
         return $query;
     }
 
-    function getUserSk($id){
+    function getUserSk($id, $filter=null){
         $this->db->select('users_sk.id,users_sk.user_id, users_sk.sk_date, users_sk.sk_no, users_sk.effective_date, users_sk.location, users_sk.sign_position, users_sk.sign_name, departement.title as departement, position.title as position');
         $this->db->from('users_sk');
         $this->db->join('departement', 'users_sk.departement_id = departement.id', 'left');
@@ -105,11 +110,15 @@ class Person_model extends CI_Model
         $this->db->order_by('users_sk.id','asc');
         $this->db->where('users_sk.is_deleted', 0);
 
+        if($filter){
+            $this->db->like('users_sk.sk_no', $filter);
+        }
+
         $query = $this->db->get();
         return $query;
     }
 
-    function getUserSti($id){
+    function getUserSti($id, $filter=null){
         $this->db->select('users_sti.*, users.username, departement.title as departement, position.title as position, acknowledge.username as acknowledgeby, received.username as receivedby');
         $this->db->from('users_sti');
         $this->db->join('users', 'users_sti.user_id = users.id');
@@ -122,11 +131,15 @@ class Person_model extends CI_Model
         $this->db->order_by('users_sti.id','asc');
         $this->db->where('users_sti.is_deleted', 0);
 
+        if($filter){
+            $this->db->like('users_sti.ijazah_name', $filter);
+        }
+
         $query = $this->db->get();
         return $query;
     }
 
-    function getUserJabatan($id){
+    function getUserJabatan($id, $filter=null){
         $this->db->select('users_jabatan.*, users.username, organization.title as organization,groups.description as groups, position.title as position, grade.title as grade');
         
         $this->db->from('users_jabatan');
@@ -139,29 +152,41 @@ class Person_model extends CI_Model
         $this->db->where('user_id', $id);
         $this->db->where('users_jabatan.is_deleted', 0);
 
+        if($filter){
+            $this->db->like('organization.title', $filter);
+        }
+
         $query = $this->db->get();
         return $query;
     }
 
-    function getUserAward($id){
+    function getUserAward($id, $filter=null){
         $this->db->select('users_awardwarning.id, users_awardwarning.app_date, users_awardwarning.award_warning_type_id, users_awardwarning.description, users_awardwarning.end_date, users_awardwarning.sk_number, users_awardwarning.start_date, users_awardwarning.title, award_warning_type.title as type');
         $this->db->from('users_awardwarning');
-        $this->db->join('award_warning_type', 'users_awardwarning.award_warning_type_id = award_warning_type.id');
+        $this->db->join('award_warning_type', 'users_awardwarning.award_warning_type_id = award_warning_type.id', 'left');
 
         $this->db->where('user_id', $id);
         $this->db->where('users_awardwarning.is_deleted', 0);
+
+        if($filter){
+            $this->db->like('award_warning_type.title', $filter);
+        }
 
         $query = $this->db->get();
         return $query;
     }
    
-    function getUserIkatanDinas($id){
+    function getUserIkatanDinas($id, $filter=null){
         $this->db->select('users_ikatan_dinas.id, ikatan_dinas_type.title as type, users.username, users_ikatan_dinas.title, users_ikatan_dinas.start_date, users_ikatan_dinas.end_date, users_ikatan_dinas.amount');
         $this->db->from('users_ikatan_dinas');
         $this->db->join('users', 'users_ikatan_dinas.user_id = users.id');
         $this->db->join('ikatan_dinas_type', 'users_ikatan_dinas.ikatan_dinas_type = ikatan_dinas_type.id');
         
         $this->db->where('users_ikatan_dinas.is_deleted', 0);
+
+        if($filter){
+            $this->db->like('ikatan_dinas_type.title', $filter);
+        }
 
         $query = $this->db->get();
         return $query;

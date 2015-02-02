@@ -19,7 +19,7 @@
         </ul> -->
         <div class="page-title">
             <a href="<?php echo site_url('auth')?>"><i class="icon-custom-left"></i></a>
-            <h3><?php echo lang('detail_user_heading');?></h3> 
+            <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('users_sk_subheading');?></span></h3> 
         </div>
         <!-- <div class="row">
             <div class="col-md-12">
@@ -154,7 +154,7 @@
                                     </div>
                                 </div>
                         </div>
-                        <?php include 'auth_detail_navbar.php';?>
+                        <?php echo $this->load->view('auth_detail_navbar');?>
                         <hr />
 
                         <!--start sk Row -->
@@ -163,13 +163,12 @@
                             
                                 <div class="grid simple ">                            
                                     <div class="grid-body no-border">
-                                        <br/>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('sk_subheading');?></span></h4>
+                                            <div class="col-md-12">
+                                                <h4><?php echo lang('users_sk_subheading');?></h4>  
+  
                                             </div>
                                         </div>
-
                                         <?php echo form_open('auth/search/'.$user->id, array( 'id'=>'search'))?>
                                             <div class="row">
                                                 <div class="col-md-8">
@@ -180,9 +179,8 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="row">
-                                                        <?php echo form_submit('submit',lang('search_button'),'class="btn btn-primary"')?>
-                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addskModal"><?php echo lang('add_button');?></button>
-                                                        <!-- <input type="submit" name="btn_add" id="btnRetPass" class="btn btn-default" value="<?php echo lang('search_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;"> -->
+                                                        <button type="submit" class="btn btn-info"><i class="icon-search"></i>&nbsp;<?php echo lang('search_button')?></button>
+                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addskModal"><i class="icon-plus"></i>&nbsp;<?php echo lang('add_button');?></button>
                                                     </div>
                                                 </div>    
                                             </div>
@@ -193,7 +191,7 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div id="MsgGood" class="msggood text-center" style="display:none;"></div>
+                                                        <div id="MsgGood" class="alert alert-success text-center" style="display:none;"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -336,8 +334,8 @@
                                     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close_button')?></button> 
-        <input type="submit" name="btn_submit" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
+        <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_add" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button>
       </div>
         <?php echo form_close()?>
     </div>
@@ -346,23 +344,18 @@
 
 <!--end add modal-->
 
-
-
-
-
-
 <!--Edit Modal-->
 <?php foreach($user_sk->result() as $row){?>
 <div class="modal fade" id="editskModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" id="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_sk', 'edit_sk')?></h4>
-            <p class="txtBold txtRed" class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
+            <p class="txtBold txtRed" class="error_msg" id="MsgBad<?=$row->id?>" style="background: #fff; display: none;"></p>
         </div>
             <div class="modal-body">
-                <?= form_open('auth/edit_sk/'.$user->id, array('id'=>'formupdate'))?> 
+                <?= form_open('auth/edit_sk/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
                 <div class="row form-row">
 
                     <div class="col-md-3">
@@ -450,40 +443,37 @@
                 </div>
             </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close_button')?></button> 
-        <input type="submit" name="btn_submit" id="btnRetPass" class="btn btn-default" value="<?php echo lang('save_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
+                <button type="submit" class="btn btn-primary lnkBlkWhtArw" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button>
       </div>
         <?php echo form_close()?>
     </div>
   </div>
 </div>
+
+<script src="<?php echo assets_url('js/jquery.min.js'); ?>"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+                $('#formupdate<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad2<?=$row->id?>').html(json.errors).fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad2<?=$row->id?>').hide();
+                            $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+                $('#sk_status_id').select2();
+            });
+</script>
 <?php } ?>
-
-
-
-<!--Delete Modal Window-->
-<?php foreach($user_sk->result() as $row){?>
-<div class="modal fade" id="deleteskModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <?php echo form_open('auth/delete_sk/'.$row->id, array("id"=>"formdelete"))?>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
-                <div class="modal-body">
-                    <p>Are You Sure ?</p>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('cancel_button')?></button> 
-                <input type="submit" name="btn_update" id="btnRetPass" class="btn btn-danger" value="<?php echo lang('delete_button')?>" class="lnkBlkWhtArw" style="margin-top: 3px;">
-                </div>
-            <?php echo form_close()?>
-        </div>
-    </div>
-</div>
-<?php }?>
 
 <script type="text/javascript">
     window.onload = function(){getTable();};
-
     function getTable() 
     {
         $('#tabel').load('<?php echo site_url('auth/get_sk/'.$user->id); ?>');

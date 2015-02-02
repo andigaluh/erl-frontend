@@ -279,19 +279,23 @@ $lang['published_place'] = 'Published Place';
 $lang['activation_date'] = 'Activation Date';
 $lang['receivedby'] = 'Received By';
 $lang['acknowledgeby'] = 'Acknowledge By';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
+
+//Users Position history
+$lang['add_jabatan'] = 'Add Position History';
+$lang['edit_jabatan'] = 'Edit Position History';
+$lang['organization'] = 'Organization';
+$lang['employee_group'] = 'Employee Group';
+$lang['branch'] = 'branch';
+$lang['grade'] = 'grade';
+$lang['personel_action'] = 'Personel Action';
+
+//Users Award Warning
+$lang['add_award'] = 'Add Award Warning';
+$lang['edit_award'] = 'Edit Award Warning';
+$lang['award_warning_type'] = 'Award Warning Type';
+$lang['app_date'] = 'App Date';
+$lang['title'] = 'Title';
+$lang['sk_number'] = 'SK Number';
 $lang[''] = '';
 $lang[''] = '';
 $lang[''] = '';

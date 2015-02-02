@@ -1,10 +1,4 @@
-<div id="tabel" class="row">
-    <div class="col-md-6">
-        <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_sk;?>&nbsp;<?php echo lang('sk_subheading');?></span></h4>  
-    </div>
-    <div class="bs-example"  data-example-id="labels-in-headings" style="z-index:-10;"></div>
-</div>
-<table class="table no-more-tables">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th width="1%">
@@ -45,9 +39,8 @@
             <td valign="middle"><span class="muted"><?php echo $row->sign_name;?></span></td>
             <td valign="middle"><span class="muted"><?php echo $row->sign_position;?></span></td>
             <td valign="middle">
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editskModal<?= $row->id?>"><?php echo lang('edit_button')?></button>
-                &nbsp;|&nbsp;
-                <button class='btn btn-danger btn-xs' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteskModal<?php echo $row->id?>">Delete</button>
+                <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editskModal<?= $row->id?>"><i class="icon-paste"></i>&nbsp;<?php echo lang('edit_button')?></button>
+                <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteskModal<?php echo $row->id?>"><i class="icon-warning-sign"></i>&nbsp;<?php echo lang('delete_button')?></button>
             </td>
         </tr>
         <?php }}else{?>
@@ -55,20 +48,47 @@
             <td valign="middle" colspan="5">
                 <p class="text-center">No Data</p>
             </td>
-           <!--  <td valign="middle">
-                 <div class="checkbox check-default">
-                    <input id="checkbox11" type="checkbox" value="1">
-                    <label for="checkbox11"></label>
-                </div>
-            </td>
-            <td valign="middle">No Data</td>
-            <td valign="middle"><span class="muted">No Data</span></td>
-            <td valign="middle"><span class="muted">No Data</span></td>
-            <td valign="middle"><span class="muted">No Data</span></td>
-            <td valign="middle">
-                No Data
-            </td> -->
         </tr>
         <?php } ?>
     </tbody>
 </table>
+
+<!--Delete Modal Window-->
+<?php foreach($user_sk->result() as $row){?>
+<div class="modal fade" id="deleteskModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"><?php echo lang('delete_confirmation').' for '.$row->sk_no; ?></h4>
+        </div>
+      <?php echo form_open('auth/delete_sk/'.$row->id, array("id"=>"formdelete".$row->id))?>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <p><?php echo lang('delete_this_data').$row->sk_no.' ?'; ?></p>
+      </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="icon-ban-circle"></i>&nbsp;<?php echo lang('cancel_button')?></button> 
+            <button type="submit" class="btn btn-danger lnkBlkWhtArw" style="margin-top: 3px;"><i class="icon-warning-sign"></i>&nbsp;<?php echo lang('delete_button')?></button>
+        </div>
+        <?php echo form_close()?>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(function(){
+ $('#formdelete<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formdelete<?php echo $row->id?>').attr('action'), $('#formdelete<?php echo $row->id?>').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad').text('Delete Failed').fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgGood').text('Data Deleted').fadeIn().delay(4000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+            });
+</script>
+<?php } ?>

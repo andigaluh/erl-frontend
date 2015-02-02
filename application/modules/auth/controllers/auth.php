@@ -1120,7 +1120,7 @@ class Auth extends MX_Controller {
         $this->data['course_status'] = ($q_course_status->num_rows() > 0 ) ? $q_course_status : array();
        
 
-        $this->load->view('table/table_course', $this->data);
+        $this->load->view('auth/table/table_course', $this->data);
     }
 
     public function add_course($id)
@@ -1265,7 +1265,11 @@ class Auth extends MX_Controller {
 
         $user_certificate = $this->person_model->getUsercertificate($id, $filter);
         $this->data['user_certificate'] = $user_certificate;
-        $this->data['num_rows_certificate'] = $user_certificate->num_rows();    
+        $this->data['num_rows_certificate'] = $user_certificate->num_rows();  
+
+        $f_certification_type = array("is_deleted" => 0);
+        $q_certification_type = GetAll('certification_type', $f_certification_type);
+        $this->data['certification_type'] = ($q_certification_type->num_rows() > 0 ) ? $q_certification_type : array();  
 
         $this->load->view('table/table_certificate', $this->data);
     }
@@ -1417,6 +1421,21 @@ class Auth extends MX_Controller {
         $user_education = $this->person_model->getUsereducation($id, $filter);
         $this->data['user_education'] = $user_education;
         $this->data['num_rows_education'] = $user_education->num_rows();
+
+        $f_education_group = array("is_deleted" => 0);
+        $q_education_group = GetAll('education_group', $f_education_group);
+        $this->data['q_education_group'] = $q_education_group;
+        $this->data['education_group'] = ($q_education_group->num_rows() > 0 ) ? $q_education_group : array();
+
+        $f_education_degree = array("is_deleted" => 0);
+        $q_education_degree = GetAll('education_degree', $f_education_degree);
+        $this->data['q_education_degree'] = $q_education_degree;
+        $this->data['education_degree'] = ($q_education_degree->num_rows() > 0 ) ? $q_education_degree : array();
+
+        $f_education_center = array("is_deleted" => 0);
+        $q_education_center = GetAll('education_center', $f_education_center);
+        $this->data['q_education_center'] = $q_education_center;
+        $this->data['education_center'] = ($q_education_center->num_rows() > 0 ) ? $q_education_center : array();
        
 
         $this->load->view('table/table_education', $this->data);
@@ -1945,7 +1964,7 @@ class Auth extends MX_Controller {
                     'created_by'        => $this->session->userdata('user_id'),
                     );
 
-            $this->auth_model->addSk($data);
+            $this->auth_model->addsk($data);
 
             echo json_encode(array('st'=>1));     
         }
@@ -1982,7 +2001,7 @@ class Auth extends MX_Controller {
                     'edited_by'        => $this->session->userdata('user_id'),
                     );
 
-            $this->auth_model->addSk($data);
+            $this->auth_model->editsk($id, $data);
 
             echo json_encode(array('st'=>1));
         }
@@ -1997,7 +2016,7 @@ class Auth extends MX_Controller {
                 'deleted_by'    =>$this->session->userdata('user_id'),
                 );
 
-        $this->auth_model->deleteSk($id, $data);
+        $this->auth_model->deletesk($id, $data);
 
         echo json_encode(array('st'=>1));
     }
@@ -2104,7 +2123,7 @@ class Auth extends MX_Controller {
                     'ijazah_number'=> $this->input->post('ijazah_no'),
                     'ijazah_name'=> $this->input->post('ijazah_name'),
                     'ijazah_history'=> $this->input->post('ijazah_history'),
-                    'activation_date'=> $this->input->post('activation_date'),
+                    'activation_date'=> date('Y-m-d',strtotime($this->input->post('activation_date'))),
                     'institution'=> $this->input->post('institution'),
                     'published_place'=> $this->input->post('published_place'),
                     'departement_id'=> $this->input->post('departement_id'),
@@ -2116,7 +2135,7 @@ class Auth extends MX_Controller {
                     'created_by'        => $this->session->userdata('user_id'),
                     );
 
-            $this->auth_model->addSti($data);
+            $this->auth_model->addsti($data);
 
             echo json_encode(array('st'=>1));     
         }
@@ -2147,7 +2166,7 @@ class Auth extends MX_Controller {
                     'ijazah_number'=> $this->input->post('ijazah_no'),
                     'ijazah_name'=> $this->input->post('ijazah_name'),
                     'ijazah_history'=> $this->input->post('ijazah_history'),
-                    'activation_date'=> $this->input->post('activation_date'),
+                    'activation_date'=> date('Y-m-d',strtotime($this->input->post('activation_date'))),
                     'institution'=> $this->input->post('institution'),
                     'published_place'=> $this->input->post('published_place'),
                     'departement_id'=> $this->input->post('departement_id'),
@@ -2254,8 +2273,8 @@ class Auth extends MX_Controller {
 
     }
 
-    public function get_jabatan($id){
-        $user_jabatan = $this->person_model->getUserjabatan($id);
+    public function get_jabatan($id, $filter=null){
+        $user_jabatan = $this->person_model->getUserjabatan($id, $filter);
         $this->data['user_jabatan'] = $user_jabatan;
         $this->data['num_rows_jabatan'] = $user_jabatan->num_rows();
        
@@ -2263,32 +2282,220 @@ class Auth extends MX_Controller {
         $this->load->view('table/table_jabatan', $this->data);
     }
 
-    public function add_jabatan(){
+    public function add_jabatan($id){
+        $this->form_validation->set_rules('organization_id','Organization','trim|required');
+        $this->form_validation->set_rules('position_id','Position','trim|required');
+        $this->form_validation->set_rules('groups_id','Employee Group','trim|required');
+        $this->form_validation->set_rules('grade_id','Grade','trim|required');
+        $this->form_validation->set_rules('start_date','Start Date','trim|required');
+        $this->form_validation->set_rules('end_date','End Date','trim|required');
+        $this->form_validation->set_rules('sk_date','SK Date','trim|required');
 
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors('<div class="alert alert-danger" role="alert">', '</div>')));
+        }
+        else
+        {
+           
+            $data = array(
+                    'organization_id'   =>$this->input->post('organization_id'),
+                    'position_id'       =>$this->input->post('position_id'),
+                    'employee_group_id' =>$this->input->post('groups_id'),
+                    'grade_id'          =>$this->input->post('grade_id'),
+                    'start_date'        => date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'          => date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'sk_date'           => date('Y-m-d',strtotime($this->input->post('sk_date'))),
+                    'user_id'           => $id,
+                    'created_on'        => date('Y-m-d',strtotime('now')),
+                    'created_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->addjabatan($data);
+
+            echo json_encode(array('st'=>1)); 
+        }
     }
 
-    public function edit_jabatan(){
+    public function edit_jabatan($id){
+        $this->form_validation->set_rules('organization_id','Organization','trim|required');
+        $this->form_validation->set_rules('position_id','Position','trim|required');
+        $this->form_validation->set_rules('groups_id','Employee Group','trim|required');
+        $this->form_validation->set_rules('grade_id','Grade','trim|required');
+        $this->form_validation->set_rules('start_date','Start Date','trim|required');
+        $this->form_validation->set_rules('end_date','End Date','trim|required');
+        $this->form_validation->set_rules('sk_date','SK Date','trim|required');
 
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors('<div class="alert alert-danger" role="alert">', '</div>')));
+        }
+        else
+        {
+           
+            $data = array(
+                    'organization_id'   =>$this->input->post('organization_id'),
+                    'position_id'       =>$this->input->post('position_id'),
+                    'employee_group_id' =>$this->input->post('groups_id'),
+                    'grade_id'          =>$this->input->post('grade_id'),
+                    'start_date'        => date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'          => date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'sk_date'           => date('Y-m-d',strtotime($this->input->post('sk_date'))),
+                    'edited_on'        => date('Y-m-d',strtotime('now')),
+                    'edited_by'        => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->editjabatan($id, $data);
+
+            echo json_encode(array('st'=>1)); 
+        }
     }
 
-    public function delete_jabatan(){
+    public function delete_jabatan($id){
+        $data = array(
+                'is_deleted'    => 1,
+                'deleted_on'    =>date('Y-m-d',strtotime('now')),
+                'deleted_by'    =>$this->session->userdata('user_id'),
+                );
 
+        $this->auth_model->deletejabatan($id, $data);
+
+        echo json_encode(array('st'=>1));
     }
 
-    public function detail_award(){
+    public function detail_award($id){
+        $this->data['title'] = "Detail User";
 
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->person_model->getUsers($id)->row();
+        $user_award = $this->person_model->getUserAward($id);
+
+        $this->data['csrf'] = $this->_get_csrf_nonce();
+
+        //pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : '';
+
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', (!empty($user->photo)) ? $user->photo : '');
+        
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+        $this->data['user_award'] = $user_award;
+
+        $f_award_warning_type = array("is_deleted" => 0);
+        $q_award_warning_type = GetAll('award_warning_type', $f_award_warning_type);
+        $this->data['q_award_warning_type'] = $q_award_warning_type;
+        $this->data['award_warning_type'] = ($q_award_warning_type->num_rows() > 0 ) ? $q_award_warning_type : array();
+       
+
+        $this->_render_page('auth/detail_award', $this->data);
     }
 
-    public function add_award(){
+    public function get_award($id, $filter=null){
+        $user_award = $this->person_model->getUseraward($id, $filter);
+        $this->data['user_award'] = $user_award;
+        $this->data['num_rows_award'] = $user_award->num_rows();
+       
 
+        $this->load->view('table/table_award', $this->data);
     }
 
-    public function edit_award(){
+    public function add_award($id){
+        $this->form_validation->set_rules('award_warning_type_id','Award Warning Type','trim|required');
+        $this->form_validation->set_rules('title','Title','trim|required');
+        $this->form_validation->set_rules('description','Description','trim|required');
+        $this->form_validation->set_rules('app_date','App Date','trim|required');
+        $this->form_validation->set_rules('sk_number','SK Number','trim|required');
+        $this->form_validation->set_rules('start_date','Start Date','trim|required');
+        $this->form_validation->set_rules('end_date','End Date','trim|required');
 
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors('<div class="alert alert-danger" role="alert">', '</div>')));
+        }
+        else
+        {
+           
+            $data = array(
+                    'award_warning_type_id' =>$this->input->post('award_warning_type_id'),
+                    'title'                 =>$this->input->post('title'),
+                    'description'           =>$this->input->post('description'),
+                    'app_date'              =>date('Y-m-d',strtotime($this->input->post('app_date'))),
+                    'sk_number'             =>$this->input->post('sk_number'),
+                    'start_date'            => date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'              => date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'user_id'               => $id,
+                    'created_on'            => date('Y-m-d',strtotime('now')),
+                    'created_by'            => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->addaward($data);
+
+            echo json_encode(array('st'=>1)); 
+        }
     }
 
-    public function delete_award(){
+    public function edit_award($id){
+        $this->form_validation->set_rules('award_warning_type_id','Award Warning Type','trim|required');
+        $this->form_validation->set_rules('title','Title','trim|required');
+        $this->form_validation->set_rules('description','Description','trim|required');
+        $this->form_validation->set_rules('app_date','App Date','trim|required');
+        $this->form_validation->set_rules('sk_number','SK Number','trim|required');
+        $this->form_validation->set_rules('start_date','Start Date','trim|required');
+        $this->form_validation->set_rules('end_date','End Date','trim|required');
 
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors('<div class="alert alert-danger" role="alert">', '</div>')));
+        }
+        else
+        {
+           
+            $data = array(
+                    'award_warning_type_id' =>$this->input->post('award_warning_type_id'),
+                    'title'                 =>$this->input->post('title'),
+                    'description'           =>$this->input->post('description'),
+                    'app_date'              =>date('Y-m-d',strtotime($this->input->post('app_date'))),
+                    'sk_number'             =>$this->input->post('sk_number'),
+                    'start_date'            => date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'              => date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'created_on'            => date('Y-m-d',strtotime('now')),
+                    'created_by'            => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->editaward($id, $data);
+
+            echo json_encode(array('st'=>1)); 
+        }
+    }
+
+    public function delete_award($id){
+        $data = array(
+                'is_deleted'    => 1,
+                'deleted_on'    =>date('Y-m-d',strtotime('now')),
+                'deleted_by'    =>$this->session->userdata('user_id'),
+                );
+
+        $this->auth_model->deleteaward($id, $data);
+
+        echo json_encode(array('st'=>1));
     }
 
 

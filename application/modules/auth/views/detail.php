@@ -286,100 +286,63 @@
     </div>
   </div>
 </div>
-
 <!--end add modal-->
-
-
-
-
 
 <!--Edit Modal-->
 <?php foreach($user_course->result() as $row){?>
-<div class="modal fade" id="editCourseModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_course', 'edit_course')?></h4>
-      </div>
-      <p class="error_msg" id="MsgBad2<?=$row->id?>" style="background: #fff; display: none;"></p>
-      <div class="modal-body">
-        <?= form_open('auth/edit_course/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
-             <div class="row form-row">
-                <div class="col-md-3">
-                    <?php echo lang('course_description', 'course_title');?>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" id="description" name="description" value="<?php echo $row->description?>">         
-                </div>
-                <div class="col-md-3">
-                    <?php echo lang('course_registration_date', 'course_registration_date');?>
-                </div>
-                <div class="col-md-9">
+<div class="modal fade" id="editCourseModal<?php echo $row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_course', 'edit_course')?></h4>
+            </div>
+                <p class="error_msg" id="MsgBad2<?=$row->id?>" style="background: #fff; display: none;"></p>
+            <div class="modal-body">
+               <?= form_open('auth/edit_course/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
+                <div class="row form-row">
+                    <div class="col-md-3">
+                        <?php echo lang('course_description', 'course_title');?>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="description" name="description" value="<?php echo $row->description?>">         
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo lang('course_registration_date', 'course_registration_date');?>
+                    </div>
+                    <div class="col-md-9">
                         <div class="input-with-icon right">
                             <div class="input-append success date no-padding">
                                 <input type="text" class="form-control" id="registration_date" name="registration_date" value="<?php echo $row->registration_date?>">
                                 <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
                             </div>
                         </div>
-                </div>
-                <div class="col-md-3">
-                    <?php echo lang('course_status', 'course_status');?>
-                </div>
-                <div class="col-md-9">
-                    <select name="course_status_id" class="select2" id="course_status_id" style="width:100%">
-                        <?php
-                            foreach ($course_status->result_array() as $key => $value) {
-                            $selected = ($row->status_id <> 0 && $row->status_id == $value['id']) ? 'selected = selected' : '';
-                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                            }
-                            ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo lang('course_status', 'course_status');?>
+                    </div>
+                    <div class="col-md-9">
+                        <select name="course_status_id" class="select2" id="course_status_id" style="width:100%">
+                            <?php
+                                foreach ($course_status->result_array() as $key => $value) {
+                                $selected = ($row->status_id <> 0 && $row->status_id == $value['id']) ? 'selected = selected' : '';
+                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                }
+                                ?>
                         </select>
+                    </div>
                 </div>
             </div>
-                                    
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
-        <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_update" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button> 
-      </div>
-        <?php echo form_close()?>
-    </div>
-  </div>
-</div>
-<?php } ?>
-<!-- End Edit Modal-->
-
-
-<!--Delete Modal-->
-<?php foreach($user_course->result() as $row){?>
-<div class="modal fade" id="deleteCourseModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel"><?php echo lang('delete_confirmation').' for '.$row->description; ?></h4>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
+                <button type="submit" class="btn btn-primary lnkBlkWhtArw" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button> 
+            </div>
+         <?php echo form_close()?>        
         </div>
-      <?php echo form_open('auth/delete_course/'.$row->id, array("id"=>"formdelete".$row->id))?>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-body">
-        <p><?php echo lang('delete_this_data').$row->description.' ?'; ?></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="icon-ban-circle"></i>&nbsp;<?php echo lang('cancel_button')?></button> 
-        <button type="submit" class="btn btn-danger lnkBlkWhtArw" name="btn_update" id="btnRetPass" style="margin-top: 3px;"><i class="icon-warning-sign"></i>&nbsp;<?php echo lang('delete_button')?></button>
-      </div>
-        <?php echo form_close()?>
     </div>
-  </div>
 </div>
-<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.min.js'?>"></script>
+<script src="<?php echo assets_url('js/jquery.min.js'); ?>"></script>
 <script type="text/javascript">
-    window.onload = function(){getTable();};  
-    function getTable() 
-    {
-        $('#tabel').load('<?php echo site_url('auth/get_course/'.$user->id); ?>');
-    }
     $(document).ready(function(){
                 $('#formupdate<?php echo $row->id?>').submit(function(response){
                     $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
@@ -398,20 +361,14 @@
                 });
                 $('#course_status_id').select2();
             });
-
-$(function(){
- $('#formdelete<?php echo $row->id?>').submit(function(response){
-                    $.post($('#formdelete<?php echo $row->id?>').attr('action'), $('#formdelete<?php echo $row->id?>').serialize(),function(json){
-                        if(json.st == 0){
-                            $('#MsgBad').text('Delete Failed').fadeIn();
-                        }else{
-                            getTable();
-                            $("[data-dismiss=modal]").trigger({ type: "click" });
-                            $('#MsgGood').text('Data Deleted').fadeIn().delay(4000).fadeOut("slow");
-                        }
-                    }, 'json');
-                    return false;
-                });
-            });
 </script>
 <?php } ?>
+<!-- End Edit Modal-->
+
+<script type="text/javascript">
+    window.onload = function(){getTable();};  
+    function getTable() 
+    {
+        $('#tabel').load('<?php echo site_url('auth/get_course/'.$user->id); ?>');
+    }
+</script>

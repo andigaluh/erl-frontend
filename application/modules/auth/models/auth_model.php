@@ -81,12 +81,12 @@ class Auth_model extends CI_Model
         $this->db->update('users_experience', $data);
     }
 
-    function addSk($data)
+    function addsk($data)
     {
         $this->db->insert('users_sk', $data);
     }
 
-    function editSk($id, $data){
+    function editsk($id, $data){
         $this->db->where('id', $id);
         $this->db->update('users_sk', $data);
     }
@@ -128,17 +128,17 @@ class Auth_model extends CI_Model
 
     function addaward($data)
     {
-        $this->db->insert('users_award', $data);
+        $this->db->insert('users_awardwarning', $data);
     }
 
     function editaward($id, $data){
         $this->db->where('id', $id);
-        $this->db->update('users_award', $data);
+        $this->db->update('users_awardwarning', $data);
     }
 
     function deleteaward($id, $data){
         $this->db->where('id', $id);
-        $this->db->update('users_award', $data);
+        $this->db->update('users_awardwarning', $data);
     }
 
     function addikatan($data)
