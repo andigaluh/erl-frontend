@@ -180,7 +180,7 @@ class Person_model extends CI_Model
         $this->db->select('users_ikatan_dinas.id, ikatan_dinas_type.title as type, users.username, users_ikatan_dinas.title, users_ikatan_dinas.start_date, users_ikatan_dinas.end_date, users_ikatan_dinas.amount');
         $this->db->from('users_ikatan_dinas');
         $this->db->join('users', 'users_ikatan_dinas.user_id = users.id');
-        $this->db->join('ikatan_dinas_type', 'users_ikatan_dinas.ikatan_dinas_type = ikatan_dinas_type.id');
+        $this->db->join('ikatan_dinas_type', 'users_ikatan_dinas.ikatan_dinas_type = ikatan_dinas_type.id', 'left');
         
         $this->db->where('users_ikatan_dinas.is_deleted', 0);
 

@@ -1120,7 +1120,7 @@ class Auth extends MX_Controller {
         $this->data['course_status'] = ($q_course_status->num_rows() > 0 ) ? $q_course_status : array();
        
 
-        $this->load->view('auth/table/table_course', $this->data);
+        $this->_render_page('auth/table/table_course', $this->data);
     }
 
     public function add_course($id)
@@ -1271,7 +1271,7 @@ class Auth extends MX_Controller {
         $q_certification_type = GetAll('certification_type', $f_certification_type);
         $this->data['certification_type'] = ($q_certification_type->num_rows() > 0 ) ? $q_certification_type : array();  
 
-        $this->load->view('table/table_certificate', $this->data);
+        $this->_render_page('table/table_certificate', $this->data);
     }
 
     public function add_certificate($id){
@@ -2498,6 +2498,131 @@ class Auth extends MX_Controller {
         echo json_encode(array('st'=>1));
     }
 
+    public function detail_ikatan_dinas($id){
+         $this->data['title'] = "Detail User";
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->person_model->getUsers($id)->row();
+        $user_ikatan_dinas = $this->person_model->getUserIkatanDinas($id);
+
+        $this->data['csrf'] = $this->_get_csrf_nonce();
+
+        //pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : '';
+
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', (!empty($user->photo)) ? $user->photo : '');
+        
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+        $this->data['user_ikatan_dinas'] = $user_ikatan_dinas;
+
+        $f_ikatan_dinas_type = array("is_deleted" => 0);
+        $q_ikatan_dinas_type = GetAll('ikatan_dinas_type', $f_ikatan_dinas_type);
+        $this->data['q_ikatan_dinas_type'] = $q_ikatan_dinas_type;
+        $this->data['ikatan_dinas_type'] = ($q_ikatan_dinas_type->num_rows() > 0 ) ? $q_ikatan_dinas_type : array();
+       
+
+        $this->_render_page('auth/detail_ikatan_dinas', $this->data);
+    }
+
+    public function get_ikatan_dinas($id, $filter=null){
+        $user_ikatan_dinas = $this->person_model->getUserIkatanDinas($id, $filter);
+        $this->data['user_ikatan_dinas'] = $user_ikatan_dinas;
+        $this->data['num_rows_ikatan_dinas'] = $user_ikatan_dinas->num_rows();
+
+        $this->load->view('table/table_ikatan_dinas', $this->data);
+    }
+
+    public function add_ikatan_dinas($id){
+        $this->form_validation->set_rules('ikatan_dinas_type_id','Ikatan Dinas Type','trim|required');
+        $this->form_validation->set_rules('title','Title','trim|required');
+        $this->form_validation->set_rules('start_date','Start Date','trim|required');
+        $this->form_validation->set_rules('end_date','End Date','trim|required');
+        $this->form_validation->set_rules('amount','Amount','trim|required|numeric');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors('<div class="alert alert-danger" role="alert">', '</div>')));
+        }
+        else
+        {
+           
+            $data = array(
+                    'ikatan_dinas_type'  =>$this->input->post('ikatan_dinas_type_id'),
+                    'title'                 =>$this->input->post('title'),
+                    'amount'                =>$this->input->post('amount'),
+                    'start_date'            => date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'              => date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'user_id'               => $id,
+                    'created_on'            => date('Y-m-d',strtotime('now')),
+                    'created_by'            => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->addikatan($data);
+
+            echo json_encode(array('st'=>1)); 
+        }
+    }
+
+    public function edit_ikatan_dinas($id){
+        $this->form_validation->set_rules('ikatan_dinas_type_id','Ikatan Dinas Type','trim|required');
+        $this->form_validation->set_rules('title','Title','trim|required');
+        $this->form_validation->set_rules('start_date','Start Date','trim|required');
+        $this->form_validation->set_rules('end_date','End Date','trim|required');
+        $this->form_validation->set_rules('amount','Amount','trim|required|numeric');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            echo json_encode(array('st'=>0, 'errors'=>validation_errors('<div class="alert alert-danger" role="alert">', '</div>')));
+        }
+        else
+        {
+           
+            $data = array(
+                    'ikatan_dinas_type'  =>$this->input->post('ikatan_dinas_type_id'),
+                    'title'                 =>$this->input->post('title'),
+                    'amount'                =>$this->input->post('amount'),
+                    'start_date'            => date('Y-m-d',strtotime($this->input->post('start_date'))),
+                    'end_date'              => date('Y-m-d',strtotime($this->input->post('end_date'))),
+                    'edited_on'            => date('Y-m-d',strtotime('now')),
+                    'edited_by'            => $this->session->userdata('user_id'),
+                    );
+
+            $this->auth_model->editikatan($id, $data);
+
+            echo json_encode(array('st'=>1)); 
+        }
+    }
+
+    public function delete_ikatan_dinas($id){
+        $data = array(
+                'is_deleted'    => 1,
+                'deleted_on'    =>date('Y-m-d',strtotime('now')),
+                'deleted_by'    =>$this->session->userdata('user_id'),
+                );
+
+        $this->auth_model->deleteikatan($id, $data);
+
+        echo json_encode(array('st'=>1));
+    }
 
 
 
@@ -2727,7 +2852,10 @@ class Auth extends MX_Controller {
                                              'auth/detail_sti',
                                              'auth/detail_jabatan',
                                              'auth/detail_award',
-                                             'auth/detail_ikatan',
+                                             'auth/detail_ikatan_dinas',
+                                             'auth/table/table_course',
+                                             'auth/table/table_certificate',
+
                     )))
                 {
                     $this->template->set_layout('default');

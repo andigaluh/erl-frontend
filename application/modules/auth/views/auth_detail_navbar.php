@@ -26,7 +26,7 @@
                  case 'detail_award':
                     $active8 = "class='active'";
                     break;
-                case 'detail_ikatan':
+                case 'detail_ikatan_dinas':
                     $active9 = "class='active'";
                     break;
                  
@@ -46,7 +46,7 @@
                                     <li role="presentation"<?php echo $active6?>><a href="<?php echo base_url('auth/detail_sti/'.$user->id)?>"><?php echo lang('person_sti_label')?></a></li>
                                     <li role="presentation"<?php echo $active7?>><a href="<?php echo base_url('auth/detail_jabatan/'.$user->id)?>"><?php echo lang('person_jabatan_label')?></a></li>
                                     <li role="presentation"<?php echo $active8?>><a href="<?php echo base_url('auth/detail_award/'.$user->id)?>"><?php echo lang('person_award_label')?></a></li>
-                                    <li role="presentation"<?php echo $active9?>><a href="<?php echo base_url('auth/detail_ikatan/'.$user->id)?>"><?php echo lang('person_ikatan_label')?></a></li>
+                                    <li role="presentation"<?php echo $active9?>><a href="<?php echo base_url('auth/detail_ikatan_dinas/'.$user->id)?>"><?php echo lang('person_ikatan_label')?></a></li>
                                 </ul>
                             </div>
                         </div>

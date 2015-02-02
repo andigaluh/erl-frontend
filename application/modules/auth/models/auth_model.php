@@ -143,17 +143,17 @@ class Auth_model extends CI_Model
 
     function addikatan($data)
     {
-        $this->db->insert('users_ikatan', $data);
+        $this->db->insert('users_ikatan_dinas', $data);
     }
 
     function editikatan($id, $data){
         $this->db->where('id', $id);
-        $this->db->update('users_ikatan', $data);
+        $this->db->update('users_ikatan_dinas', $data);
     }
 
     function deleteikatan($id, $data){
         $this->db->where('id', $id);
-        $this->db->update('users_ikatan', $data);
+        $this->db->update('users_ikatan_dinas', $data);
     }
 
 }

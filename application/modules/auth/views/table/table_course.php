@@ -1,3 +1,4 @@
+<script src="<?php echo assets_url('js/edit_user.js'); ?>"></script>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -49,6 +50,61 @@
 </table>
 
 <?php foreach($user_course->result() as $row){?>
+<!--Edit Modal-->
+<?= form_open('auth/edit_course/'.$row->id, array('id'=>'formupdate'.$row->id))?>
+<div class="modal fade" id="editCourseModal<?php echo $row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_course', 'edit_course')?></h4>
+            </div>
+                <p class="error_msg" id="MsgBad2<?=$row->id?>" style="background: #fff; display: none;"></p>
+            <div class="modal-body">
+                
+                <div class="row form-row">
+                    <div class="col-md-3">
+                        <?php echo lang('course_description', 'course_title');?>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="description" name="description" value="<?php echo $row->description?>">         
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo lang('course_registration_date', 'course_registration_date');?>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-with-icon right">
+                            <div class="input-append success date no-padding">
+                                <input type="text" class="form-control" id="registration_date" name="registration_date" value="<?php echo $row->registration_date?>">
+                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo lang('course_status', 'course_status');?>
+                    </div>
+                    <div class="col-md-9">
+                        <select name="course_status_id" class="select2" id="course_status_id" style="width:100%">
+                            <?php
+                                foreach ($course_status->result_array() as $key => $value) {
+                                $selected = ($row->status_id <> 0 && $row->status_id == $value['id']) ? 'selected = selected' : '';
+                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                }
+                                ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
+                <button type="submit" class="btn btn-primary lnkBlkWhtArw" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button> 
+            </div>             
+        </div>
+    </div>
+</div>
+<?php echo form_close()?>  
+<!-- End Edit Modal-->
+
 <!--Delete Modal-->
 <div class="modal fade" id="deleteCourseModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -72,6 +128,22 @@
 </div>
 
 <script type="text/javascript">
+$(document).ready(function(){
+                $('#formupdate<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad2<?=$row->id?>').html(json.errors).fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad2<?=$row->id?>').hide();
+                            $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
+                        }
+                    }, 'json');
+                    return false;
+                });
+            });
+
 $(function(){
  $('#formdelete<?php echo $row->id?>').submit(function(response){
                     $.post($('#formdelete<?php echo $row->id?>').attr('action'), $('#formdelete<?php echo $row->id?>').serialize(),function(json){
@@ -94,5 +166,6 @@ $(function(){
     </div>
     
 </div> -->
+
 
 

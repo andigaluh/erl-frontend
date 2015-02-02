@@ -296,8 +296,10 @@ $lang['award_warning_type'] = 'Award Warning Type';
 $lang['app_date'] = 'App Date';
 $lang['title'] = 'Title';
 $lang['sk_number'] = 'SK Number';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
+
+//Users Ikatan Dinas
+$lang['ikatan_dinas_type'] = 'Ikatan Dinas Type';
+$lang['amount'] = 'Amount';
+$lang['add_ikatan_dinas'] = 'Add Ikatan Dinas';
+$lang['edit_ikatan_dinas'] = 'Edit Ikatan Dinas';
 $lang[''] = '';
