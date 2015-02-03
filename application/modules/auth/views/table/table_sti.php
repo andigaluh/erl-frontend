@@ -75,12 +75,12 @@
             <div class="modal-body">
                 
                 <div class="row form-row">
-                      <!--<div class="col-md-3">
+                      <div class="col-md-3">
                         <?php echo lang('identity_no', 'identity_no');?>
                         </div>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="identity_no" value="<?php echo $row->identity_no?>">         
-                        </div>-->
+                        </div>
 
                         <div class="col-md-3">
                             <?php echo lang('ijazah_name', 'ijazah_name');?>
@@ -89,19 +89,19 @@
                             <input type="text" class="form-control" name="ijazah_name" value="<?php echo $row->ijazah_name?>">         
                         </div>
 
-                        <!--<div class="col-md-3">
+                        <div class="col-md-3">
                             <?php echo lang('ijazah_number', 'ijazah_no');?>
                         </div>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="ijazah_no" value="<?php echo $row->ijazah_number?>">         
-                        </div>-->
+                        </div>
 
-                        <!--<div class="col-md-3">
+                        <div class="col-md-3">
                             <?php echo lang('ijazah_history', 'ijazah_history');?>
                         </div>
                          <div class="col-md-9">
                             <input type="text" class="form-control" name="ijazah_history" value="<?php echo $row->ijazah_history?>">         
-                        </div>-->
+                        </div>
 
                         <div class="col-md-3">
                             <?php echo lang('institution', 'institution');?>
@@ -110,12 +110,12 @@
                             <input type="text" class="form-control" name="institution" value="<?php echo $row->institution?>">         
                         </div>
 
-                        <!--<div class="col-md-3">
+                        <div class="col-md-3">
                             <?php echo lang('published_place', 'published_place');?>
                         </div>
                          <div class="col-md-9">
                             <input type="text" class="form-control" name="published_place" value="<?php echo $row->published_place?>">         
-                        </div>-->
+                        </div>
 
                         <div class="col-md-3">
                             <?php echo lang('activation_date', 'activation_date');?>
@@ -157,33 +157,33 @@
                             </select>
                         </div>
 
-                        <!--<div class="col-md-3">
+                        <div class="col-md-3">
                             <?php echo lang('receivedby', 'received_by');?>
                         </div>
                         <div class="col-md-9">
                             <select name="receivedby_id" class="select2" id="receivedby_id" style="width:100%">
                                 <?php
                                     foreach ($receivedby->result_array() as $key => $value) {
-                                    $selected = ($receivedby_id <> 0 && $receivedby_id == $value['id']) ? 'selected = selected' : '';
+                                    $selected = ($row->receivedby_id <> 0 && $row->receivedby_id == $value['id']) ? 'selected = selected' : '';
                                     echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['first_name'].'</option>';
                                     }
                                     ?>
                                 </select>        
-                        </div>-->
+                        </div>
 
-                        <!--<div class="col-md-3">
+                        <div class="col-md-3">
                             <?php echo lang('acknowledgeby', 'acknowledgeby');?>
                         </div>
                         <div class="col-md-9">
                             <select name="acknowledgeby_id" class="select2" id="acknowledgeby_id" style="width:100%">
                                 <?php
-                                    foreach ($receivedby->result_array() as $key => $value) {
-                                    $selected = ($receivedby_id <> 0 && $receivedby_id == $value['id']) ? 'selected = selected' : '';
+                                    foreach ($acknowledgeby->result_array() as $key => $value) {
+                                    $selected = ($row->acknowledgeby_id <> 0 && $row->acknowledgeby_id == $value['id']) ? 'selected = selected' : '';
                                     echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['first_name'].'</option>';
                                     }
                                     ?>
                                 </select>        
-                        </div>-->
+                        </div>
                     </div>
             </div>
             <div class="modal-footer">

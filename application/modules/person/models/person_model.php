@@ -173,7 +173,7 @@ class Person_model extends CI_Model
         $this->db->where('users_awardwarning.is_deleted', 0);
 
         if($filter){
-            $this->db->like('award_warning_type.title', $filter);
+            $this->db->like('users_awardwarning.title', $filter);
         }
 
         $query = $this->db->get();
@@ -189,7 +189,7 @@ class Person_model extends CI_Model
         $this->db->where('users_ikatan_dinas.is_deleted', 0);
 
         if($filter){
-            $this->db->like('ikatan_dinas_type.title', $filter);
+            $this->db->like('users_ikatan_dinas.title', $filter);
         }
 
         $query = $this->db->get();

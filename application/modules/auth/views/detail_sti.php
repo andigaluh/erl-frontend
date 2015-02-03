@@ -245,12 +245,12 @@
 	        	<?= form_open('auth/add_sti/'.$user->id, array('id'=>'formadd'))?> 
 	             <div class="row form-row">
 
-	             	<!--<div class="col-md-3">
+	             	<div class="col-md-3">
 	                    <?php echo lang('identity_no', 'identity_no');?>
 	                </div>
 	                 <div class="col-md-9">
 	                    <input type="text" class="form-control" name="identity_no">         
-	                </div>-->
+	                </div>
 
 	                <div class="col-md-3">
 	                    <?php echo lang('ijazah_name', 'ijazah_name');?>
@@ -259,19 +259,19 @@
 	                    <input type="text" class="form-control" name="ijazah_name">         
 	                </div>
 
-	                 <!--<div class="col-md-3">
+	                 <div class="col-md-3">
 	                    <?php echo lang('ijazah_number', 'ijazah_no');?>
 	                </div>
 	                 <div class="col-md-9">
 	                    <input type="text" class="form-control" name="ijazah_no">         
-	                </div>-->
+	                </div>
 
-	                <!--<div class="col-md-3">
+	                <div class="col-md-3">
 	                    <?php echo lang('ijazah_history', 'ijazah_history');?>
 	                </div>
 	                 <div class="col-md-9">
 	                    <input type="text" class="form-control" name="ijazah_history">         
-	                </div>-->
+	                </div>
 
 	                <div class="col-md-3">
 	                    <?php echo lang('institution', 'institution');?>
@@ -280,12 +280,12 @@
 	                    <input type="text" class="form-control" name="institution">         
 	                </div>
 
-	                <!--<div class="col-md-3">
+	                <div class="col-md-3">
 	                    <?php echo lang('published_place', 'published_place');?>
 	                </div>
 	                 <div class="col-md-9">
 	                    <input type="text" class="form-control" name="published_place">         
-	                </div>-->
+	                </div>
 
 	                <div class="col-md-3">
 	                    <?php echo lang('activation_date', 'activation_date');?>
@@ -330,7 +330,7 @@
 	                        </select>        
 	                </div>
 
-	                <!--<div class="col-md-3">
+	                <div class="col-md-3">
 	                    <?php echo lang('receivedby', 'receivedby');?>
 	                </div>
 	                <div class="col-md-9">
@@ -342,9 +342,9 @@
 	                            }
 	                            ?>
 	                        </select>        
-	                </div>-->
+	                </div>
 
-	                <!--<div class="col-md-3">
+	                <div class="col-md-3">
 	                    <?php echo lang('acknowledgeby', 'acknowledgeby');?>
 	                </div>
 	                <div class="col-md-9">
@@ -356,7 +356,7 @@
 	                            }
 	                            ?>
 	                        </select>        
-	                </div>-->
+	                </div>
 	            </div>
 	        </div>
 		    <div class="modal-footer">
