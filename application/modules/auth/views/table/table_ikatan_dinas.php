@@ -115,7 +115,7 @@ $(function(){
                     <select name="ikatan_dinas_type_id" class="select2" id="ikatan_dinas_type_id" style="width:100%">
                         <?php if($q_ikatan_dinas_type->num_rows()>0){
                             foreach ($ikatan_dinas_type->result_array() as $key => $value) {
-                            $selected = ($ikatan_dinas_type_id <> 0 && $ikatan_dinas_type_id == $value['id']) ? 'selected = selected' : '';
+                            $selected = ($row->ikatan_dinas_type <> 0 && $row->ikatan_dinas_type == $value['id']) ? 'selected = selected' : '';
                             echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }}else{
                             echo '<option value="0">No Data</option>';

@@ -1109,9 +1109,9 @@ class Auth extends MX_Controller {
         }
     }
 
-    public function get_course($id, $filter=null)
+    public function get_course($id, $filter=null, $sort=null)
     {
-        $user_course = $this->person_model->getUserCourse($id, $filter);
+        $user_course = $this->person_model->getUserCourse($id, $filter, $sort);
         $this->data['user_course'] = $user_course;
         $this->data['num_rows_course'] = $user_course->num_rows();
 
@@ -1937,9 +1937,9 @@ class Auth extends MX_Controller {
         $this->_render_page('auth/detail_sk', $this->data);
     }
 
-    public function get_sk($id){
+    public function get_sk($id, $filter=null){
 
-        $user_sk = $this->person_model->getUsersk($id);
+        $user_sk = $this->person_model->getUsersk($id, $filter);
         $this->data['user_sk'] = $user_sk;
         $this->data['num_rows_sk'] = $user_sk->num_rows();
 
@@ -2114,8 +2114,8 @@ class Auth extends MX_Controller {
         $this->_render_page('auth/detail_sti', $this->data);
     }
 
-    public function get_sti($id){
-        $user_sti = $this->person_model->getUsersti($id);
+    public function get_sti($id, $filter=null){
+        $user_sti = $this->person_model->getUsersti($id, $filter);
         $this->data['user_sti'] = $user_sti;
         $this->data['num_rows_sti'] = $user_sti->num_rows();
 
@@ -2138,17 +2138,17 @@ class Auth extends MX_Controller {
     }
 
     public function add_sti($id){
-        $this->form_validation->set_rules('identity_no','Identity No','trim|required');
-        $this->form_validation->set_rules('ijazah_no','Ijazah No','trim|required');
+        //$this->form_validation->set_rules('identity_no','Identity No','trim|required');
+        //$this->form_validation->set_rules('ijazah_no','Ijazah No','trim|required');
         $this->form_validation->set_rules('ijazah_name','Ijazah Name','trim|required');
-        $this->form_validation->set_rules('ijazah_history','Ijazah History','trim|required');
+        //$this->form_validation->set_rules('ijazah_history','Ijazah History','trim|required');
         $this->form_validation->set_rules('activation_date','Activation Date','trim|required');
         $this->form_validation->set_rules('position_id','Position','trim|required');
         $this->form_validation->set_rules('departement_id','Departement','trim|required');
-        $this->form_validation->set_rules('receivedby_id','Received By','trim|required');
-        $this->form_validation->set_rules('acknowledgeby_id','Acknowledge By','trim|required');
+        //$this->form_validation->set_rules('receivedby_id','Received By','trim|required');
+        //$this->form_validation->set_rules('acknowledgeby_id','Acknowledge By','trim|required');
         $this->form_validation->set_rules('institution','Institution','trim|required');
-        $this->form_validation->set_rules('published_place','Published Place','trim|required');
+        //$this->form_validation->set_rules('published_place','Published Place','trim|required');
 
         if($this->form_validation->run() == FALSE)
         {
@@ -2158,17 +2158,17 @@ class Auth extends MX_Controller {
         {
            
             $data = array(
-                    'identity_no' => $this->input->post('identity_no'),
-                    'ijazah_number'=> $this->input->post('ijazah_no'),
+                    //'identity_no' => $this->input->post('identity_no'),
+                    //'ijazah_number'=> $this->input->post('ijazah_no'),
                     'ijazah_name'=> $this->input->post('ijazah_name'),
-                    'ijazah_history'=> $this->input->post('ijazah_history'),
+                    //'ijazah_history'=> $this->input->post('ijazah_history'),
                     'activation_date'=> date('Y-m-d',strtotime($this->input->post('activation_date'))),
                     'institution'=> $this->input->post('institution'),
-                    'published_place'=> $this->input->post('published_place'),
+                    //'published_place'=> $this->input->post('published_place'),
                     'departement_id'=> $this->input->post('departement_id'),
                     'position_id'=> $this->input->post('position_id'),
-                    'receivedby_id'=> $this->input->post('receivedby_id'),
-                    'acknowledgeby_id'=> $this->input->post('acknowledgeby_id'),
+                    //'receivedby_id'=> $this->input->post('receivedby_id'),
+                    //'acknowledgeby_id'=> $this->input->post('acknowledgeby_id'),
                     'user_id'           => $id,
                     'created_on'        => date('Y-m-d',strtotime('now')),
                     'created_by'        => $this->session->userdata('user_id'),
@@ -2181,17 +2181,17 @@ class Auth extends MX_Controller {
     }
 
     public function edit_sti($id){
-        $this->form_validation->set_rules('identity_no','Identity No','trim|required');
-        $this->form_validation->set_rules('ijazah_no','Ijazah No','trim|required');
+        //$this->form_validation->set_rules('identity_no','Identity No','trim|required');
+        //$this->form_validation->set_rules('ijazah_no','Ijazah No','trim|required');
         $this->form_validation->set_rules('ijazah_name','Ijazah Name','trim|required');
-        $this->form_validation->set_rules('ijazah_history','Ijazah History','trim|required');
+        //$this->form_validation->set_rules('ijazah_history','Ijazah History','trim|required');
         $this->form_validation->set_rules('activation_date','Activation Date','trim|required');
         $this->form_validation->set_rules('position_id','Position','trim|required');
         $this->form_validation->set_rules('departement_id','Departement','trim|required');
-        $this->form_validation->set_rules('receivedby_id','Received By','trim|required');
-        $this->form_validation->set_rules('acknowledgeby_id','Acknowledge By','trim|required');
+        //$this->form_validation->set_rules('receivedby_id','Received By','trim|required');
+        //$this->form_validation->set_rules('acknowledgeby_id','Acknowledge By','trim|required');
         $this->form_validation->set_rules('institution','Institution','trim|required');
-        $this->form_validation->set_rules('published_place','Published Place','trim|required');
+        //$this->form_validation->set_rules('published_place','Published Place','trim|required');
 
         if($this->form_validation->run() == FALSE)
         {
@@ -2201,17 +2201,17 @@ class Auth extends MX_Controller {
         {
            
             $data = array(
-                    'identity_no' => $this->input->post('identity_no'),
-                    'ijazah_number'=> $this->input->post('ijazah_no'),
+                    //'identity_no' => $this->input->post('identity_no'),
+                    //'ijazah_number'=> $this->input->post('ijazah_no'),
                     'ijazah_name'=> $this->input->post('ijazah_name'),
-                    'ijazah_history'=> $this->input->post('ijazah_history'),
+                    //'ijazah_history'=> $this->input->post('ijazah_history'),
                     'activation_date'=> date('Y-m-d',strtotime($this->input->post('activation_date'))),
                     'institution'=> $this->input->post('institution'),
-                    'published_place'=> $this->input->post('published_place'),
+                    //'published_place'=> $this->input->post('published_place'),
                     'departement_id'=> $this->input->post('departement_id'),
                     'position_id'=> $this->input->post('position_id'),
-                    'receivedby_id'=> $this->input->post('receivedby_id'),
-                    'acknowledgeby_id'=> $this->input->post('acknowledgeby_id'),
+                    //'receivedby_id'=> $this->input->post('receivedby_id'),
+                    //'acknowledgeby_id'=> $this->input->post('acknowledgeby_id'),
                     'edited_on'        => date('Y-m-d',strtotime('now')),
                     'edited_by'        => $this->session->userdata('user_id'),
                     );

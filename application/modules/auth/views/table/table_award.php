@@ -120,7 +120,7 @@ $(function(){
                     <select name="award_warning_type_id" class="select2" id="award_warning_type_id" style="width:100%">
                         <?php if($q_award_warning_type->num_rows()>0){
                             foreach ($award_warning_type->result_array() as $key => $value) {
-                            $selected = ($award_warning_type_id <> 0 && $award_warning_type_id == $value['id']) ? 'selected = selected' : '';
+                            $selected = ($row->award_warning_type_id <> 0 && $row->award_warning_type_id == $value['id']) ? 'selected = selected' : '';
                             echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }}else{
                             echo '<option value="0">No Data</option>';

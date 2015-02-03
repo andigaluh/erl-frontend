@@ -113,7 +113,7 @@
                             <?php
                                 if($q_education_group->num_rows() > 0){
                                 foreach ($education_group->result_array() as $key => $value) {
-                                $selected = ($education_group_id <> 0 && $education_group_id == $value['id']) ? 'selected = selected' : '';
+                                $selected = ($row->education_group_id <> 0 && $row->education_group_id == $value['id']) ? 'selected = selected' : '';
                                 echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                                 }}else{
                                     echo '<option value="0">'.'No Data'.'</option>';
@@ -129,7 +129,7 @@
                         <select name="education_degree_id" class="select2" id="education_degree_id" style="width:100%">
                              <?php  if($q_education_degree->num_rows() > 0){
                                 foreach ($education_degree->result_array() as $key => $value) {
-                                $selected = ($education_degree_id <> 0 && $education_degree_id == $value['id']) ? 'selected = selected' : '';
+                                $selected = ($row->education_degree_id <> 0 && $row->education_degree_id == $value['id']) ? 'selected = selected' : '';
                                 echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                                 }}else{
                                     echo '<option value="0">'.'No Data'.'</option>';
@@ -147,7 +147,7 @@
                             <?php
                                 if($q_education_center->num_rows() > 0){
                                 foreach ($education_center->result_array() as $key => $value) {
-                                $selected = ($education_center_id <> 0 && $education_center_id == $value['id']) ? 'selected = selected' : '';
+                                $selected = ($row->education_center_id <> 0 && $row->education_center_id == $value['id']) ? 'selected = selected' : '';
                                 echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                                 }}else{ echo '<option value="0">'.'No Data'.'</option>';
                                 }

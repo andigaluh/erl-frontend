@@ -125,7 +125,7 @@ $(function(){
                     <select name="organization_id" class="select2" id="organization_id" style="width:100%">
                         <?php
                             foreach ($organization->result_array() as $key => $value) {
-                            $selected = ($organization_id <> 0 && $organization_id == $value['id']) ? 'selected = selected' : '';
+                            $selected = ($row->organization_id <> 0 && $row->organization_id == $value['id']) ? 'selected = selected' : '';
                             echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }
                             ?>
@@ -139,7 +139,7 @@ $(function(){
                     <select name="position_id" class="select2" id="position_id" style="width:100%">
                         <?php
                             foreach ($position->result_array() as $key => $value) {
-                            $selected = ($position_id <> 0 && $position_id == $value['id']) ? 'selected = selected' : '';
+                            $selected = ($row->position_id <> 0 && $row->position_id == $value['id']) ? 'selected = selected' : '';
                             echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }
                             ?>
@@ -153,7 +153,7 @@ $(function(){
                     <select name="groups_id" class="select2" id="groups_id" style="width:100%">
                          <?php  if($q_groups->num_rows() > 0){
                             foreach ($groups->result_array() as $key => $value) {
-                            $selected = ($groups_id <> 0 && $groups_id == $value['id']) ? 'selected = selected' : '';
+                            $selected = ($row->employee_group_id <> 0 && $row->employee_group_id == $value['id']) ? 'selected = selected' : '';
                             echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['name'].'</option>';
                             }}else{
                                 echo '<option value="0">'.'No Data'.'</option>';
@@ -170,7 +170,7 @@ $(function(){
                     <select name="grade_id" class="select2" id="grade_id" style="width:100%">
                         <?php
                             foreach ($grade->result_array() as $key => $value) {
-                            $selected = ($grade_id <> 0 && $grade_id == $value['id']) ? 'selected = selected' : '';
+                            $selected = ($row->grade_id <> 0 && $row->grade_id == $value['id']) ? 'selected = selected' : '';
                             echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }
                             ?>

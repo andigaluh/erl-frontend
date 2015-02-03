@@ -168,7 +168,7 @@ $(function(){
                     <select name="resign_reason_id" class="select2" id="resign_reason_id" style="width:100%">
                         <?php
                             foreach ($resign_reason->result_array() as $key => $value) {
-                            $selected = ($resign_reason_id <> 0 && $resign_reason_id == $value['id']) ? 'selected = selected' : '';
+                            $selected = ($row->resign_reason_id <> 0 && $row->resign_reason_id == $value['id']) ? 'selected = selected' : '';
                             echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }
                             ?>

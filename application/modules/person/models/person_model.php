@@ -27,7 +27,7 @@ class Person_model extends CI_Model
         return $query;
     }
 
-    function getUserCourse($id, $filter=null){
+    function getUserCourse($id, $filter=null, $sort=null){
         $this->db->select('users_course.id, users_course.course_status_id as status_id, users_course.title as description, users_course.registration_date, course_status.title as status');
         $this->db->from('users_course');
         $this->db->join('course_status', 'users_course.course_status_id = course_status.id');
@@ -36,6 +36,10 @@ class Person_model extends CI_Model
         $this->db->where('users_course.is_deleted', 0);
         if($filter){
             $this->db->like('users_course.title', $filter);
+        }
+
+        if($sort){
+            $this->db->order_by('users_course.title', $sort);
         }
 
         $query = $this->db->get();
@@ -79,7 +83,7 @@ class Person_model extends CI_Model
     }
 
     function getUserExperience($id, $filter=null){
-        $this->db->select('users_experience.id, users_experience.user_id, users_experience.company, users_experience.start_date, users_experience.end_date, users_experience.position, users_experience.address, users_experience.line_business, users_experience.last_salary, resign_reason.title as resign_reason');
+        $this->db->select('users_experience.*, resign_reason.title as resign_reason');
         $this->db->from('users_experience');
         /*$this->db->join('exp_field', 'users_experience.exp_field_id = exp_field.id');
         $this->db->join('exp_level', 'users_experience.exp_level_id = exp_level.id');
@@ -101,7 +105,7 @@ class Person_model extends CI_Model
     }
 
     function getUserSk($id, $filter=null){
-        $this->db->select('users_sk.id,users_sk.user_id, users_sk.sk_date, users_sk.sk_no, users_sk.effective_date, users_sk.location, users_sk.sign_position, users_sk.sign_name, departement.title as departement, position.title as position');
+        $this->db->select('users_sk.*, departement.title as departement, position.title as position');
         $this->db->from('users_sk');
         $this->db->join('departement', 'users_sk.departement_id = departement.id', 'left');
         $this->db->join('position', 'users_sk.position_id = position.id');
@@ -124,8 +128,8 @@ class Person_model extends CI_Model
         $this->db->join('users', 'users_sti.user_id = users.id');
         $this->db->join('departement', 'users_sti.departement_id = departement.id', 'left');
         $this->db->join('position', 'users_sti.position_id = position.id');
-        $this->db->join('users as acknowledge', 'users_sti.acknowledgeby_id = acknowledge.id');
-        $this->db->join('users as received', 'users_sti.receivedby_id = received.id');
+        $this->db->join('users as acknowledge', 'users_sti.acknowledgeby_id = acknowledge.id', 'left');
+        $this->db->join('users as received', 'users_sti.receivedby_id = received.id', 'left');
 
         $this->db->where('user_id', $id);
         $this->db->order_by('users_sti.id','asc');

@@ -9,7 +9,7 @@
                 </div>
             </th>
             <!-- <th width="10%"><?php //echo anchor('auth/detail/'.$user->id.'/'.$ctitle_param.'/course_title/'.(($sort_order == 'asc' && $sort_by == 'course_title') ? 'desc' : 'asc'), lang('course_description'));?></th> -->
-            <th width="10%"><?php echo 'Description'//anchor('auth/index/'.$fname_param.'/'.$email_param.'/last_name/'.(($sort_order == 'asc' && $sort_by == 'last_name') ? 'desc' : 'asc'), lang('index_lname_th'));?></th>
+            <th width="10%"><span id="order"><?php echo 'Description'//anchor('auth/index/'.$fname_param.'/'.$email_param.'/last_name/'.(($sort_order == 'asc' && $sort_by == 'last_name') ? 'desc' : 'asc'), lang('index_lname_th'));?></span></th>
             <th width="10%"><?php echo 'Registration Date'//anchor('auth/index/'.$fname_param.'/'.$email_param.'/email/'.(($sort_order == 'asc' && $sort_by == 'email') ? 'desc' : 'asc'), lang('index_email_th'));?></th>
             <th width="10%"><?php echo 'Status';?></th>
             <th width="10%"><?php echo lang('index_action_th');?></th>                                  
@@ -160,6 +160,13 @@ $(function(){
             });
 </script>
 <?php } ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+    $("#order").click(function(){
+      $('#tabel').load('<?php echo base_url()?>'+'auth/get_course/'+1+'/'+0+'/desc');
+    });
+});
+</script>
 <!-- <div class="row">
     <div class="col-md-6">
         <h4><?php echo lang('found_subheading')?>&nbsp;<span class="semi-bold"><?php echo $num_rows_course;?>&nbsp;<?php echo lang('course_subheading');?></span></h4>  

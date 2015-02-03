@@ -129,35 +129,32 @@ $(function(){
                     </div>
 
                     <div class="col-md-3">
-                    <?php echo lang('position', 'position');?>
-                    </div>
-                    <div class="col-md-9">
-                        <select name="position_id" class="select2" id="position_id" style="width:100%">
-                            <?php
-                                foreach ($position->result_array() as $key => $value) {
-                                $selected = ($position_id <> 0 && $position_id == $value['id']) ? 'selected = selected' : '';
-                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                                }
-                                ?>
+                            <?php echo lang('position', 'position');?>
+                        </div>
+                        <div class="col-md-9">
+                            <select name="position_id" class="select2" id="position_id" style="width:100%">
+                                <?php
+                                    foreach ($position->result_array() as $key => $value) {
+                                    $selected = ($row->position_id <> 0 && $row->position_id == $value['id']) ? 'selected = selected' : '';
+                                    echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                    }
+                                    ?>
                             </select>        
-                    </div>
+                        </div>
 
-                    <div class="col-md-3">
-                        <?php echo lang('departement', 'departement');?>
-                    </div>
-                    <div class="col-md-9">
-                        <select name="departement_id" class="select2" id="departement_id" style="width:100%">
-                            <?php
-                                if($q_departement->num_rows() > 0){
-                                foreach ($departement->result_array() as $key => $value) {
-                                $selected = ($departement_id <> 0 && $departement_id == $value['id']) ? 'selected = selected' : '';
-                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                                }}else{
-                                    echo '<option value="0">'.'No Data'.'</option>';
-                                }
-                                ?>
-                            </select>        
-                    </div>
+                        <div class="col-md-3">
+                            <?php echo lang('departement', 'departement');?>
+                        </div>
+                        <div class="col-md-9">
+                            <select name="departement_id" class="select2" id="departement_id" style="width:100%">
+                                <?php
+                                    foreach ($departement->result_array() as $key => $value) {
+                                    $selected = ($row->departement_id <> 0 && $row->departement_id == $value['id']) ? 'selected = selected' : '';
+                                    echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                    }
+                                    ?>
+                            </select>
+                        </div>
 
                     <div class="col-md-3">
                         <?php echo lang('effective_date', 'effective_date');?>

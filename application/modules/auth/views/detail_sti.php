@@ -196,14 +196,12 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div id="tabel">
-
+                                        <div id="tabel" class="row">
+                                        </div>
                                         <div class="row">
-                                            
-                                            <div class="col-md-2 page_limit">
-                                                <!--<?php echo form_open(uri_string());?>
-                                                <?php/* 
+                                            <!--<div class="col-md-2 page_limit">
+                                                <?php echo form_open(uri_string());?>
+                                                <?php 
                                                     $selectComponentData = array(
                                                         10  => '10',
                                                         25 => '25',
@@ -212,20 +210,20 @@
                                                         100 => '100',);
                                                     $selectComponentJs = 'class="select2" onChange="this.form.submit()" id="limit"';
                                                     echo "Per page: ".form_dropdown('limit', $selectComponentData, $limit, $selectComponentJs);
-                                                */?> -->
+                                                ?>
                                                 <?php echo form_close();?>
                                             </div>
                                             <div class="col-md-10">
                                                 <ul class="pagination">
-                                                    <?php// echo $halaman;?>
+                                                    <?php ////echo $halaman;?>
                                                 </ul>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
                            
                         </div>
-             </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -247,12 +245,12 @@
 	        	<?= form_open('auth/add_sti/'.$user->id, array('id'=>'formadd'))?> 
 	             <div class="row form-row">
 
-	             	<div class="col-md-3">
+	             	<!--<div class="col-md-3">
 	                    <?php echo lang('identity_no', 'identity_no');?>
 	                </div>
 	                 <div class="col-md-9">
 	                    <input type="text" class="form-control" name="identity_no">         
-	                </div>
+	                </div>-->
 
 	                <div class="col-md-3">
 	                    <?php echo lang('ijazah_name', 'ijazah_name');?>
@@ -261,19 +259,19 @@
 	                    <input type="text" class="form-control" name="ijazah_name">         
 	                </div>
 
-	                 <div class="col-md-3">
+	                 <!--<div class="col-md-3">
 	                    <?php echo lang('ijazah_number', 'ijazah_no');?>
 	                </div>
 	                 <div class="col-md-9">
 	                    <input type="text" class="form-control" name="ijazah_no">         
-	                </div>
+	                </div>-->
 
-	                <div class="col-md-3">
+	                <!--<div class="col-md-3">
 	                    <?php echo lang('ijazah_history', 'ijazah_history');?>
 	                </div>
 	                 <div class="col-md-9">
 	                    <input type="text" class="form-control" name="ijazah_history">         
-	                </div>
+	                </div>-->
 
 	                <div class="col-md-3">
 	                    <?php echo lang('institution', 'institution');?>
@@ -282,12 +280,12 @@
 	                    <input type="text" class="form-control" name="institution">         
 	                </div>
 
-	                <div class="col-md-3">
+	                <!--<div class="col-md-3">
 	                    <?php echo lang('published_place', 'published_place');?>
 	                </div>
 	                 <div class="col-md-9">
 	                    <input type="text" class="form-control" name="published_place">         
-	                </div>
+	                </div>-->
 
 	                <div class="col-md-3">
 	                    <?php echo lang('activation_date', 'activation_date');?>
@@ -332,7 +330,7 @@
 	                        </select>        
 	                </div>
 
-	                <div class="col-md-3">
+	                <!--<div class="col-md-3">
 	                    <?php echo lang('receivedby', 'receivedby');?>
 	                </div>
 	                <div class="col-md-9">
@@ -344,9 +342,9 @@
 	                            }
 	                            ?>
 	                        </select>        
-	                </div>
+	                </div>-->
 
-	                <div class="col-md-3">
+	                <!--<div class="col-md-3">
 	                    <?php echo lang('acknowledgeby', 'acknowledgeby');?>
 	                </div>
 	                <div class="col-md-9">
@@ -358,12 +356,12 @@
 	                            }
 	                            ?>
 	                        </select>        
-	                </div>
+	                </div>-->
 	            </div>
 	        </div>
 		    <div class="modal-footer">
 		        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
-        <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_add" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button>
+                <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_add" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button>
 		    </div>
 	        <?php echo form_close()?>
       	</div>

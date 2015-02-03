@@ -65,7 +65,7 @@
                     <select name="certification_type_id" class="select2" id="certification_type_id" style="width:100%">
                         <?php
                             foreach ($certification_type->result_array() as $key => $value) {
-                            $selected = ($certification_type_id <> 0 && $certification_type_id == $value['id']) ? 'selected = selected' : '';
+                            $selected = ($row->certification_type_id <> 0 && $row->certification_type_id == $value['id']) ? 'selected = selected' : '';
                             echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }
                             ?>

@@ -274,7 +274,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <?php echo lang('groups', 'groups');?>
+                    <?php echo lang('employee_group', 'groups');?>
                 </div>
                 <div class="col-md-9">
                     <select name="groups_id" class="select2" id="groups_id" style="width:100%">
