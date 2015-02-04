@@ -547,7 +547,7 @@ CREATE TABLE IF NOT EXISTS `position` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(254) NOT NULL,
   `abbr` varchar(254) NOT NULL,
-  `position_class_id` int(3) NOT NULL,
+  `position_group_id` int(3) NOT NULL,
   `parent_position_id` int(3) NOT NULL DEFAULT '0',
   `organization_id` int(3) NOT NULL,
   `description` text NOT NULL,
@@ -565,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `position` (
 -- Dumping data for table `position`
 --
 
-INSERT INTO `position` (`id`, `title`, `abbr`, `position_class_id`, `parent_position_id`, `organization_id`, `description`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+INSERT INTO `position` (`id`, `title`, `abbr`, `position_group_id`, `parent_position_id`, `organization_id`, `description`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
 (1, 'ka. cabang pusat', '', 0, 0, 0, '', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (2, 'ka. cabang bandung', '', 0, 0, 0, '', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
