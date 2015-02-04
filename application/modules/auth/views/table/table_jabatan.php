@@ -44,14 +44,14 @@
             <!--<td valign="middle"><span class="muted"><?php //echo $row->personnel_action;?></span></td>-->
             <td valign="middle"><span class="muted"><?php echo $row->sk_date;?></span></td>
             <td valign="middle">
-               <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editjabatanModal<?php echo $row->id?>"><i class="icon-paste"></i>&nbsp;<?php echo lang('edit_button')?></button>
-               <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deletejabatanModal<?php echo $row->id?>"><i class="icon-warning-sign"></i>&nbsp;<?php echo lang('delete_button')?></button>
+               <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editjabatanModal<?php echo $row->id?>" title="<?php echo lang('edit_button')?>"><i class="icon-paste"></i></button>
+               <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deletejabatanModal<?php echo $row->id?>" title="<?php echo lang('edit_button')?>"><i class="icon-warning-sign"></i></button>
             </td>
 
         </tr>
     <?php }}else{?>
         <tr>
-            <td valign="middle" colspan="10">
+            <td valign="middle" colspan="9">
                 <p class="text-center">No Data</p>
             </td>
         </tr>

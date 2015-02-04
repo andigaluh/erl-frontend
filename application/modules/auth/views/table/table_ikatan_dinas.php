@@ -36,14 +36,14 @@
             <td valign="middle"><span class="muted"><?php echo $row->end_date;?></span></td>
             <td valign="middle"><span class="muted"><?php echo $row->amount;?></span></td>
             <td valign="middle">
-                <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editikatan_dinasModal<?php echo $row->id?>"><i class="icon-paste"></i>&nbsp;<?php echo lang('edit_button')?></button>
-                <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteikatan_dinasModal<?php echo $row->id?>"><i class="icon-warning-sign"></i>&nbsp;<?php echo lang('delete_button')?></button>
+                <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editikatan_dinasModal<?php echo $row->id?>" title="<?php echo lang('edit_button')?>"><i class="icon-paste"></i></button>
+                <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteikatan_dinasModal<?php echo $row->id?>" title="<?php echo lang('delete_button')?>"><i class="icon-warning-sign"></i></button>
             </td>
 
         </tr>
     <?php }}else{?>
         <tr>
-            <td valign="middle" colspan="5">
+            <td valign="middle" colspan="7">
                 <p class="text-center">No Data</p>
             </td>
         </tr>

@@ -48,6 +48,7 @@ $lang['index_education_title_th'] 		= 'Education Title';
 $lang['index_experience_title_th'] 	 	= 'Experience Title';
 $lang['index_sk_title_th']		 = 'SK Title';
 $lang['index_sti_title_th']		 = 'STI Title';
+$lang['index_ikatan_dinas_title_th']		 = 'Ikatan Dinas Title';
 
 // Deactivate User
 $lang['deactivate_heading']                  = 'Deactivate User';

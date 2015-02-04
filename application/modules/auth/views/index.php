@@ -136,10 +136,10 @@
                                     <td valign="middle">
                                         <?php //echo anchor("auth/edit_user/".$user->id, 'Edit') ;?>
                                         <a href="<?php echo site_url('auth/edit_user/'.$user->id)?>">
-                                            <button type="button" class="btn btn-info btn-small"><i class="icon-paste"></i>&nbsp;<?php echo lang('edit_button')?></button>
+                                            <button type="button" class="btn btn-info btn-small" title="<?php echo lang('edit_button')?>"><i class="icon-paste"></i></button>
                                         </a>
                                         <a href="<?php echo site_url('auth/detail/'.$user->id)?>">
-                                            <button class='btn btn-primary btn-small' type="button"><i class="icon-male"></i>&nbsp;<?php echo lang('personal_label')?></button>
+                                            <button class='btn btn-primary btn-small' type="button" title="<?php echo lang('personal_label')?>"><i class="icon-male"></i></button>
                                         </a>
                                         <!-- <span class="muted"><?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?></span>
                                         &nbsp;|&nbsp; 
