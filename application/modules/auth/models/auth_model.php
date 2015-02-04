@@ -8,6 +8,22 @@ class Auth_model extends CI_Model
         $this->load->database();
     }
 
+    function getUserid($id)
+    {
+        $query = $this->db->where('user_id', $id)->get('users_employement');
+        return $query;
+    }
+
+    function addEmp($id, $data)
+    {
+        $this->db->insert('users_employement', $data);
+    }
+
+    function updateEmp($id, $data){
+        $this->db->where('user_id', $id);
+        $this->db->update('users_employement', $data);
+    }
+
     function getCourse($id,$title_post){
         $this->db->select('users_course.id, users_course.course_status_id as status_id, users_course.title as description, users_course.registration_date, course_status.title as status');
         $this->db->from('users_course');

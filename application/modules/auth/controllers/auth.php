@@ -1014,6 +1014,163 @@ class Auth extends MX_Controller {
         }
 
         $user = $this->person_model->getUsers($id)->row();
+        $user_employement = $this->person_model->getUserEmp($id);
+        $user_id = $this->auth_model->getUserid($id);
+
+        $this->data['csrf'] = $this->_get_csrf_nonce();
+
+        //pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['nik'] = (!empty($user->nik)) ? $user->nik : '-';
+        $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
+        $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
+        $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
+        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+        $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
+        $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
+        $this->data['email'] = (!empty($user->email)) ? $user->email : '';
+        $this->data['previous_email'] = (!empty($user->previous_email)) ? $user->previous_email : '';
+        $this->data['bb_pin'] = (!empty($user->bb_pin)) ? $user->bb_pin : '';
+        $this->data['s_photo'] = $this->form_validation->set_value('photo', (!empty($user->photo)) ? $user->photo : '');       
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+
+        $this->data['user_employement'] = $user_employement;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        
+        $this->data['user_id'] = $user_id;
+
+
+        $f_position = array("is_deleted" => 0);
+        $q_position = GetAll('position', $f_position);
+        $this->data['q_position'] = $q_position;
+        $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
+
+        $f_organization = array("is_deleted" => 0);
+        $q_organization = GetAll('organization', $f_organization);
+        $this->data['q_organization'] = $q_organization;
+        $this->data['organization'] = ($q_organization->num_rows() > 0 ) ? $q_organization : array();
+
+        $f_empl_status = array("is_deleted" => 0);
+        $q_empl_status = GetAll('empl_status', $f_empl_status);
+        $this->data['q_empl_status'] = $q_empl_status;
+        $this->data['empl_status'] = ($q_empl_status->num_rows() > 0 ) ? $q_empl_status : array();
+
+        $f_employee_status = array("is_deleted" => 0);
+        $q_employee_status = GetAll('employee_status', $f_employee_status);
+        $this->data['q_employee_status'] = $q_employee_status;
+        $this->data['employee_status'] = ($q_employee_status->num_rows() > 0 ) ? $q_employee_status : array();
+        
+        $f_position_group = array("is_deleted" => 0);
+        $q_position_group = GetAll('position_group', $f_position_group);
+        $this->data['q_position_group'] = $q_position_group;
+        $this->data['position_group'] = ($q_position_group->num_rows() > 0 ) ? $q_position_group : array();
+
+        $f_grade = array("is_deleted" => 0);
+        $q_grade = GetAll('grade', $f_grade);
+        $this->data['q_grade'] = $q_grade;
+        $this->data['grade'] = ($q_grade->num_rows() > 0 ) ? $q_grade : array();
+
+        $f_resign_reason = array("is_deleted" => 0);
+        $q_resign_reason = GetAll('resign_reason', $f_resign_reason);
+        $this->data['q_resign_reason'] = $q_resign_reason;
+        $this->data['resign_reason'] = ($q_resign_reason->num_rows() > 0 ) ? $q_resign_reason : array();
+
+        $f_active_inactive = array("is_deleted" => 0);
+        $q_active_inactive = GetAll('active_inactive', $f_active_inactive);
+        $this->data['q_active_inactive'] = $q_active_inactive;
+        $this->data['active_inactive'] = ($q_active_inactive->num_rows() > 0 ) ? $q_active_inactive : array();
+
+        $this->_render_page('auth/detail', $this->data);
+    }
+
+    function add_empl($id)
+    {
+        $this->form_validation->set_rules('seniority_date', 'Seniority Date', 'required|xss_clean');
+        $this->form_validation->set_rules('position_id', 'Position', 'required|xss_clean');
+        $this->form_validation->set_rules('organization_id', 'Organization', 'required|xss_clean');
+        $this->form_validation->set_rules('empl_status_id', 'Employee Status', 'required|xss_clean');
+        $this->form_validation->set_rules('employee_status_id', 'Status', 'required|xss_clean');
+        $this->form_validation->set_rules('cost_center', 'Cost Center', 'required|xss_clean');
+        $this->form_validation->set_rules('position_group_id', 'Position', 'required|xss_clean');
+        $this->form_validation->set_rules('grade_id', 'Grade', 'required|xss_clean');
+        $this->form_validation->set_rules('resign_reason_id', 'Resign Reason', 'required|xss_clean');
+        $this->form_validation->set_rules('active_inactive_id', 'Active Inactive', 'required|xss_clean');
+
+        if ($this->form_validation->run() === TRUE)
+            { 
+                $data = array(
+                'user_id'               => $id,
+                'seniority_date'        => date('Y-m-d',strtotime($this->input->post('seniority_date'))),
+                'position_id'           => $this->input->post('position_id'),
+                'organization_id'       => $this->input->post('organization_id'),
+                'empl_status_id'        => $this->input->post('empl_status_id'),
+                'employee_status_id'    => $this->input->post('employee_status_id'),
+                'cost_center'           => $this->input->post('cost_center'),
+                'position_group_id'     => $this->input->post('position_group_id'),
+                'grade_id'              => $this->input->post('grade_id'),
+                'resign_reason_id'      => $this->input->post('resign_reason_id'),
+                'active_inactive_id'    => $this->input->post('active_inactive_id'),
+                'created_by'            => $this->session->userdata('user_id'),
+                'created_on'            => date('Y-m-d',strtotime('now'))
+            );
+                $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">'.'User Saved'.'</div>');
+                $this->auth_model->addEmp($id, $data);
+                redirect(base_url()."auth/detail/".$id);
+            }else{
+                $this->session->set_flashdata('message', validation_errors('<div class="alert alert-danger" role="alert">','</div>'));
+                redirect('/auth/detail/'.$id, 'refresh');                
+            }
+    }
+    function update_empl($id)
+    {
+        $this->form_validation->set_rules('seniority_date', 'Seniority Date', 'required|xss_clean');
+        $this->form_validation->set_rules('position_id', 'Position', 'required|xss_clean');
+        $this->form_validation->set_rules('organization_id', 'Organization', 'required|xss_clean');
+        $this->form_validation->set_rules('empl_status_id', 'Employee Status', 'required|xss_clean');
+        $this->form_validation->set_rules('employee_status_id', 'Status', 'required|xss_clean');
+        $this->form_validation->set_rules('cost_center', 'Cost Center', 'required|xss_clean');
+        $this->form_validation->set_rules('position_group_id', 'Position', 'required|xss_clean');
+        $this->form_validation->set_rules('grade_id', 'Grade', 'required|xss_clean');
+        $this->form_validation->set_rules('resign_reason_id', 'Resign Reason', 'required|xss_clean');
+        $this->form_validation->set_rules('active_inactive_id', 'Active Inactive', 'required|xss_clean');
+
+        if ($this->form_validation->run() === TRUE)
+            { 
+                $data = array(
+                'seniority_date'        => date('Y-m-d',strtotime($this->input->post('seniority_date'))),
+                'position_id'           => $this->input->post('position_id'),
+                'empl_status_id'        => $this->input->post('empl_status_id'),
+                'organization_id'       => $this->input->post('organization_id'),
+                'employee_status_id'    => $this->input->post('employee_status_id'),
+                'cost_center'           => $this->input->post('cost_center'),
+                'position_group_id'     => $this->input->post('position_group_id'),
+                'grade_id'              => $this->input->post('grade_id'),
+                'resign_reason_id'      => $this->input->post('resign_reason_id'),
+                'active_inactive_id'    => $this->input->post('active_inactive_id'),
+                'edited_by'             => $this->session->userdata('user_id'),
+                'edited_on'             => date('Y-m-d',strtotime('now'))
+            );
+                $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">'.'User Saved'.'</div>');
+                $this->auth_model->updateEmp($id, $data);
+                redirect(base_url()."auth/detail/".$id);
+            }else{
+                $this->session->set_flashdata('message', validation_errors('<div class="alert alert-danger" role="alert">','</div>'));
+                redirect('/auth/detail/'.$id, 'refresh');                
+            }
+    }
+
+    function detail_course($id, $sort_by = "id", $sort_order = "asc", $offset = 0)
+    {
+        $this->data['title'] = "Detail Course";
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('auth', 'refresh');
+        }
+
+        $user = $this->person_model->getUsers($id)->row();
         $user_course = $this->person_model->getUserCourse($id);
 
         $this->data['csrf'] = $this->_get_csrf_nonce();
@@ -1094,7 +1251,7 @@ class Auth extends MX_Controller {
         $this->data['course_status'] = ($q_course_status->num_rows() > 0 ) ? $q_course_status : array();
        
 
-        $this->_render_page('auth/detail', $this->data);
+        $this->_render_page('auth/detail_course', $this->data);
     }
 
     public function search($id){
@@ -2916,6 +3073,7 @@ class Auth extends MX_Controller {
                     $this->template->add_css('datepicker.css');
                 }
                 elseif(in_array($view, array('auth/detail',
+                                             'auth/detail_course',
                                              'auth/detail_certificate',
                                              'auth/detail_education',
                                              'auth/detail_experience',

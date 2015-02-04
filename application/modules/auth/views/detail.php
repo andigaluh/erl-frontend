@@ -19,7 +19,7 @@
         </ul> -->
         <div class="page-title">
             <a href="<?php echo site_url('auth')?>"><i class="icon-custom-left"></i></a>
-            <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('users_course_subheading');?></span></h3> 
+            <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('users_employement_subheading');?></span></h3> 
         </div>
         <!-- <div class="row">
             <div class="col-md-12">
@@ -44,7 +44,6 @@
                     <div class="grid-body no-border">
                         
                         <div class="row">
-                            <div <?php ( ! empty($message)) && print('class="alert alert-info"'); ?> id="infoMessage"><?php echo $message;?></div>
                                 <div class="col-md-4">
                                     <h4><?php echo lang('employee_information_subheading')?></h4>
                                     <div class="form-group">
@@ -158,140 +157,366 @@
                         <?php echo $this->load->view('auth_detail_navbar');?>
                         <hr />
 
-                        <!--start Course Row -->
+                        <!--start employement Row -->
 
                         <div class="row">
-                            
-                                <div class="grid simple ">                            
-                                    <div class="grid-body no-border">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h4><?php echo lang('users_course_subheading');?></h4>  
-  
-                                            </div>
-                                        </div>
-                                        <?php echo form_open('auth/search/'.$user->id, array( 'id'=>'search'))?>
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <div class="row">
-                                                        <div class="col-md-2 search_label"><?php echo form_label(lang('index_course_title_th'),'course_title_search')?></div>
-                                                        <div class="col-md-10"><?php echo bs_form_input(array('id'=>'title', 'name'=>'title'));?></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="row">
-                                                        <button type="submit" class="btn btn-info"><i class="icon-search"></i>&nbsp;<?php echo lang('search_button')?></button>
-                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addCourseModal"><i class="icon-plus"></i>&nbsp;<?php echo lang('add_button');?></button>
-                                                    </div>
-                                                </div>    
-                                            </div>
-                                        <?php echo form_close()?>
-                                        
-                                        <br/>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div id="MsgGood" class="alert alert-success text-center" style="display:none;"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="tabel" class="row">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2 page_limit">
-                                                <?php echo form_open(uri_string());?>
-                                                <?php 
-                                                    $selectComponentData = array(
-                                                        10  => '10',
-                                                        25 => '25',
-                                                        50 =>'50',
-                                                        75 => '75',
-                                                        100 => '100',);
-                                                    $selectComponentJs = 'class="select2" onChange="this.form.submit()" id="limit"';
-                                                    echo "Per page: ".form_dropdown('limit', $selectComponentData, $limit, $selectComponentJs);
-                                                ?>
-                                                <?php echo form_close();?>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <ul class="pagination">
-                                                    <?php ////echo $halaman;?>
-                                                </ul>
-                                            </div>
+                            <div class="grid simple ">                            
+                                <div class="grid-body no-border">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4><?php echo lang('users_employement_subheading');?></h4>
                                         </div>
                                     </div>
+                                        
+                                         <?php 
+                                            if ($user_employement->num_rows()>0){
+                                            foreach($user_employement->result() as $row){
+                                    
+                                            ($user_id->num_rows()>0) ? $param = 'update' : $param = 'add';
+                                            echo form_open('auth/'.$param.'_empl/'.$user->id)?> 
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="text-center" id="infoMessage"><?php echo $message;?></div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-row">
+
+                                             <div class="col-md-3">
+                                                <?php echo lang('seniority_date', 'seniority_date');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                    <div class="input-with-icon right">
+                                                        <div class="input-append success date no-padding">
+                                                            <input type="text" class="form-control" id="seniority_date" name="seniority_date" value="<?php echo $row->seniority_date?>">
+                                                            <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                                                        </div>
+                                                    </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('position', 'position');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="position_id" class="select2" id="position_id" style="width:100%">
+                                                    <?php
+                                                        if($q_position->num_rows() > 0){
+                                                        foreach ($position->result_array() as $key => $value) {
+                                                        $selected = ($row->position_id <> 0 && $row->position_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                            echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                    </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('organization', 'organization');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="organization_id" class="select2" id="organization_id" style="width:100%">
+                                                    <?php
+                                                        if($q_organization->num_rows() > 0){
+                                                        foreach ($organization->result_array() as $key => $value) {
+                                                        $selected = ($row->organization_id <> 0 && $row->organization_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                         }}else{
+                                                            echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                    </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('empl_status', 'empl_status');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="empl_status_id" class="select2" id="empl_status_id" style="width:100%">
+                                                    <?php
+                                                        if($q_empl_status->num_rows() > 0){
+                                                        foreach ($empl_status->result_array() as $key => $value) {
+                                                        $selected = ($row->empl_status_id <> 0 && $row->empl_status_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                          echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                    </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('employee_status', 'employee_status');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="employee_status_id" class="select2" id="employee_status_id" style="width:100%">
+                                                    <?php
+                                                        if($q_employee_status->num_rows() > 0){
+                                                        foreach ($employee_status->result_array() as $key => $value) {
+                                                        $selected = ($row->employee_status_id <> 0 && $row->employee_status_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                          }}else{
+                                                            echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                    </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('cost_center', 'cost_center');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="cost_center" name="cost_center" value="<?php echo $row->cost_center?>">         
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?php echo lang('position_group', 'position_group');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="position_group_id" class="select2" id="position_group_id" style="width:100%">
+                                                    <?php
+                                                        if($q_position_group->num_rows() > 0){
+                                                        foreach ($position_group->result_array() as $key => $value) {
+                                                        $selected = ($row->position_group_id <> 0 && $row->position_group_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                        echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                    </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('grade', 'grade');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="grade_id" class="select2" id="grade_id" style="width:100%">
+                                                    <?php
+                                                        if($q_grade->num_rows() > 0){
+                                                        foreach ($grade->result_array() as $key => $value) {
+                                                        $selected = ($row->grade_id <> 0 && $row->grade_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                            }}else{
+                                                               echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('resign_reason', 'resign_reason');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="resign_reason_id" class="select2" id="resign_reason_id" style="width:100%">
+                                                    <?php
+                                                        if($q_resign_reason->num_rows() > 0){
+                                                        foreach ($resign_reason->result_array() as $key => $value) {
+                                                        $selected = ($row->resign_reason_id <> 0 && $row->resign_reason_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                        echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('active_inactive', 'active_inactive');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="active_inactive_id" class="select2" id="active_inactive_id" style="width:100%">
+                                                    <?php
+                                                        if($q_active_inactive->num_rows() > 0){
+                                                        foreach ($active_inactive->result_array() as $key => $value) {
+                                                        $selected = ($row->active_inactive_id <> 0 && $row->active_inactive_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                            echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                </select>        
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_add" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button>
+                                      
+                                        <?php echo form_close()?>
                                 </div>
-                           
-                        </div>
-             </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END PAGE -->
-</div>
-
-
-<!-- Add Course Modal -->
-<div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" id="modaldialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_course', 'add_course')?></h4>
-      </div>
-      <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
-      <div class="modal-body">
-        <?= form_open('auth/add_course/'.$user->id, array('id'=>'formadd'))?> 
-             <div class="row form-row">
-                <div class="col-md-3">
-                    <?php echo lang('course_description', 'course_title');?>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" id="description" name="description">         
-                </div>
-                <div class="col-md-3">
-                    <?php echo lang('course_registration_date', 'course_registration_date');?>
-                </div>
-                <div class="col-md-9">
-                        <div class="input-with-icon right">
-                            <div class="input-append success date no-padding">
-                                <input type="text" class="form-control" id="registration_date" name="registration_date">
-                                <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
                             </div>
                         </div>
-                </div>
-                <div class="col-md-3">
-                    <?php echo lang('course_status', 'course_status');?>
-                </div>
-                <div class="col-md-9">
-                    <select name="course_status_id" class="select2" id="course_status_id" style="width:100%">
-                        <?php
-                            foreach ($course_status->result_array() as $key => $value) {
-                            $selected = ($course_status_id <> 0 && $course_status_id == $value['id']) ? 'selected = selected' : '';
-                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                            }
-                            ?>
-                        </select>
-                </div>
-            </div>
-                                    
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
-        <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_add" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button> 
-      </div>
-        <?php echo form_close()?>
-    </div>
-  </div>
-</div>
-<!--end add modal-->
+                        <?php }}else{
+                                       ($user_id->num_rows()>0) ? $param = 'update' : $param = 'add';
+                                        echo form_open('auth/'.$param.'_empl/'.$user->id)?> 
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="text-center" id="infoMessage"><?php echo $message;?></div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-row">
 
-<script type="text/javascript">
-    window.onload = function(){getTable();};  
-    function getTable() 
-    {
-        $('#tabel').load('<?php echo site_url('auth/get_course/'.$user->id); ?>');
-    }
-</script>
+                                             <div class="col-md-3">
+                                                <?php echo lang('seniority_date', 'seniority_date');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                    <div class="input-with-icon right">
+                                                        <div class="input-append success date no-padding">
+                                                            <input type="text" class="form-control" id="seniority_date" name="seniority_date" value="-">
+                                                            <span class="add-on"><span class="arrow"></span><i class="icon-th"></i></span> 
+                                                        </div>
+                                                    </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('position', 'position');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="position_id" class="select2" id="position_id" style="width:100%">
+                                                    <?php
+                                                        if($q_position->num_rows() > 0){
+                                                        foreach ($position->result_array() as $key => $value) {
+                                                        $selected = ($row->position_id <> 0 && $row->position_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                            echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                    </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('organization', 'organization');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="organization_id" class="select2" id="organization_id" style="width:100%">
+                                                    <?php
+                                                        if($q_organization->num_rows() > 0){
+                                                        foreach ($organization->result_array() as $key => $value) {
+                                                        $selected = ($row->organization_id <> 0 && $row->organization_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                         }}else{
+                                                            echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                    </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('empl_status', 'empl_status');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="empl_status_id" class="select2" id="empl_status_id" style="width:100%">
+                                                    <?php
+                                                        if($q_empl_status->num_rows() > 0){
+                                                        foreach ($empl_status->result_array() as $key => $value) {
+                                                        $selected = ($row->empl_status_id <> 0 && $row->empl_status_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                          echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                    </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('employee_status', 'employee_status');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="employee_status_id" class="select2" id="employee_status_id" style="width:100%">
+                                                    <?php
+                                                        if($q_employee_status->num_rows() > 0){
+                                                        foreach ($employee_status->result_array() as $key => $value) {
+                                                        $selected = ($row->employee_status_id <> 0 && $row->employee_status_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                          }}else{
+                                                            echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                    </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('cost_center', 'cost_center');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="cost_center" name="cost_center" value="-">         
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?php echo lang('position_group', 'position_group');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="position_group_id" class="select2" id="position_group_id" style="width:100%">
+                                                    <?php
+                                                        if($q_position_group->num_rows() > 0){
+                                                        foreach ($position_group->result_array() as $key => $value) {
+                                                        $selected = ($row->position_group_id <> 0 && $row->position_group_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                        echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                    </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('grade', 'grade');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="grade_id" class="select2" id="grade_id" style="width:100%">
+                                                    <?php
+                                                        if($q_grade->num_rows() > 0){
+                                                        foreach ($grade->result_array() as $key => $value) {
+                                                        $selected = ($row->grade_id <> 0 && $row->grade_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                            }}else{
+                                                               echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('resign_reason', 'resign_reason');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="resign_reason_id" class="select2" id="resign_reason_id" style="width:100%">
+                                                    <?php
+                                                        if($q_resign_reason->num_rows() > 0){
+                                                        foreach ($resign_reason->result_array() as $key => $value) {
+                                                        $selected = ($row->resign_reason_id <> 0 && $row->resign_reason_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                        echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                </select>        
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <?php echo lang('active_inactive', 'active_inactive');?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="active_inactive_id" class="select2" id="active_inactive_id" style="width:100%">
+                                                    <?php
+                                                        if($q_active_inactive->num_rows() > 0){
+                                                        foreach ($active_inactive->result_array() as $key => $value) {
+                                                        $selected = ($row->active_inactive_id <> 0 && $row->active_inactive_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                            echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
+                                                </select>        
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_add" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button>
+                                      
+                                        <?php echo form_close()?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php } ?>
+                    
+            </div>
+        </div>
+    <!-- END PAGE -->
+</div>

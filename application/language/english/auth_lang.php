@@ -189,6 +189,7 @@ $lang['education_subheading'] = 'Educations';
 $lang['experience_subheading'] = 'Experiences';
 $lang['found_subheading'] = 'Found';
 $lang['search_name_email'] = 'Name or Email';
+$lang['users_employement_subheading'] = "User's Employement";
 $lang['users_course_subheading'] = "User's Course";
 $lang['users_certificate_subheading'] = "User's Certificate";
 $lang['users_education_subheading'] = "User's Education";
@@ -213,6 +214,7 @@ $lang['cancel_button'] = 'Cancel';
 $lang['search_button'] = 'Search';
 
 //person label
+$lang['person_employement_label'] = 'Employement';
 $lang['person_course_label'] = 'Company Course';
 $lang['person_certificate_label'] = 'Certificate';
 $lang['person_education_label'] = 'Education';
@@ -222,6 +224,15 @@ $lang['person_sti_label'] = 'Surat Terima Ijazah';
 $lang['person_jabatan_label'] = 'Position History';
 $lang['person_award_label'] = 'Award Warning';
 $lang['person_ikatan_label'] = 'Ikatan Dinas';
+
+//users employement
+$lang['seniority_date']='Seniority Date';
+$lang['empl_status']='Employee Status';
+$lang['employee_status']='Status';
+$lang['cost_center']='Cost Center';
+$lang['position_group']='Position Group';
+$lang['active_inactive']='Active Inactive';
+
 
 //Users Course
 

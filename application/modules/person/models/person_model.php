@@ -10,16 +10,16 @@ class Person_model extends CI_Model
 
     function getUserEmp($id)
     {
-        $this->db->select('users_employement.seniority_date, position.title as position , employee_status.title as employee_status, empl_status.title as empl_status,users_employement.cost_center, position_group.title as position_group, grade.title as grade, resign_reason.title as resign_reason, active_inactive.title as active_inactive');
+        $this->db->select('users_employement.*, position.title as position , employee_status.title as employee_status, empl_status.title as empl_status, position_group.title as position_group, grade.title as grade, resign_reason.title as resign_reason, active_inactive.title as active_inactive');
         $this->db->from('users_employement');
-        $this->db->join('position', 'users_employement.position_id = position.id');
-        $this->db->join('organization', 'users_employement.organization_id = organization.id');
-        $this->db->join('empl_status', 'users_employement.empl_status_id = empl_status.id');
-        $this->db->join('employee_status', 'users_employement.employee_status_id = employee_status.id');
-        $this->db->join('position_group', 'users_employement.position_group_id = position_group.id');
-        $this->db->join('grade', 'users_employement.grade_id = grade.id');
-        $this->db->join('resign_reason', 'users_employement.resign_reason_id = resign_reason.id');
-        $this->db->join('active_inactive', 'users_employement.active_inactive_id = active_inactive.id');
+        $this->db->join('position', 'users_employement.position_id = position.id', 'left');
+        $this->db->join('organization', 'users_employement.organization_id = organization.id', 'left');
+        $this->db->join('empl_status', 'users_employement.empl_status_id = empl_status.id', 'left');
+        $this->db->join('employee_status', 'users_employement.employee_status_id = employee_status.id', 'left');
+        $this->db->join('position_group', 'users_employement.position_group_id = position_group.id', 'left');
+        $this->db->join('grade', 'users_employement.grade_id = grade.id', 'left');
+        $this->db->join('resign_reason', 'users_employement.resign_reason_id = resign_reason.id', 'left');
+        $this->db->join('active_inactive', 'users_employement.active_inactive_id = active_inactive.id', 'left');
 
         $this->db->where('users_employement.user_id', $id);
 
