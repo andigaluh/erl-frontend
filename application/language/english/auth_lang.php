@@ -33,6 +33,7 @@ $lang['login_forgot_password'] = 'Forgot your password?';
 $lang['index_heading']           = 'Users';
 $lang['index_subheading']        = 'Below is a list of the users.';
 $lang['index_fname_th']          = 'First Name';
+$lang['index_ftitle_th']          = 'Title';
 $lang['index_lname_th']          = 'Last Name';
 $lang['index_email_th']          = 'Email';
 $lang['index_groups_th']         = 'Groups';
@@ -102,6 +103,7 @@ $lang['edit_user_validation_company_label']          = 'Company Name';
 $lang['edit_user_validation_groups_label']           = 'Groups';
 $lang['edit_user_validation_password_label']         = 'Password';
 $lang['edit_user_validation_password_confirm_label'] = 'Password Confirmation';
+
 
 // Create Group
 $lang['create_group_title']                  = 'Create Group';
@@ -174,6 +176,7 @@ $lang['user_information_subheading']						= 'User Information';
 $lang['back_button_label']						= 'Back';
 $lang['list_of_subheading']						= 'List of -';
 $lang['users_subheading']						= 'Users';
+$lang['org_class_subheading']						= 'Organization Class';
 $lang['edit_user_validation_bod_label']            = 'Date of Birth';
 $lang['edit_user_validation_business_unit_id_label']            = 'Business Unit';
 $lang['edit_user_validation_marital_label']            = 'Marital Status';
@@ -310,3 +313,7 @@ $lang['amount'] = 'Amount';
 $lang['add_ikatan_dinas'] = 'Add Ikatan Dinas';
 $lang['edit_ikatan_dinas'] = 'Edit Ikatan Dinas';
 $lang[''] = '';
+
+
+//organization_class
+$lang['edit_validation_ftitle_label'] = 'Title';
