@@ -117,7 +117,6 @@ class Organization_class_model extends CI_Model
         $this->lang->load('ion_auth');
 
         //initialize db tables data
-        //$config['tables']['users']           = 'users';
         $this->tables  = $this->config->item('tables', 'ion_auth');
 
         //initialize messages and error
@@ -155,22 +154,6 @@ class Organization_class_model extends CI_Model
 
         //initialize our hooks object
         $this->_ion_hooks = new stdClass;
-
-        //load the bcrypt class if needed
-        /*if ($this->hash_method == 'bcrypt') {
-            if ($this->random_rounds)
-            {
-                $rand = rand($this->min_rounds,$this->max_rounds);
-                $params = array('rounds' => $rand);
-            }
-            else
-            {
-                $params = array('rounds' => $this->default_rounds);
-            }
-
-            $params['salt_prefix'] = $this->config->item('salt_prefix', 'ion_auth');
-            $this->load->library('bcrypt',$params);
-        }*/
 
         $this->trigger_events('model_constructor');
     }
@@ -369,6 +352,101 @@ class Organization_class_model extends CI_Model
         $this->response = $this->db->get($this->tables['organization_class']);
 
         return $this;
+    }
+
+    public function delete($id)
+    {
+        $this->trigger_events('pre_delete_org_class');
+
+        $this->db->trans_begin();
+
+        // delete organization from organization_class table
+        $this->db->delete($this->tables['organization_class'], array('id' => $id));
+
+        // if user does not exist in database then it returns FALSE else removes the user from groups
+        if ($this->db->affected_rows() == 0)
+        {
+            return FALSE;
+        }
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            $this->trigger_events(array('post_delete_org_class', 'post_delete_org_class_unsuccessful'));
+            $this->set_error('delete_unsuccessful');
+            return FALSE;
+        }
+
+        $this->db->trans_commit();
+
+        $this->trigger_events(array('post_delete_org_class', 'post_delete_org_class_successful'));
+        $this->set_message('delete_successful');
+        return TRUE;
+    }
+
+    public function create_($title = FALSE, $additional_data = array())
+    {
+        // bail if the group name was not passed
+        if(!$title)
+        {
+            $this->set_error('title_required');
+            return FALSE;
+        }
+
+        // bail if the group name already exists
+        $existing_org_class = $this->db->get_where($this->tables['organization_class'], array('title' => $title))->num_rows();
+        if($existing_org_class !== 0)
+        {
+            $this->set_error('org_class_already_exists');
+            return FALSE;
+        }
+
+        $data = array('title'=>$title);
+
+        //filter out any data passed that doesnt have a matching column in the organization_class table
+        //and merge the set group data and the additional data
+        if (!empty($additional_data)) $data = array_merge($this->_filter_data($this->tables['organization_class'], $additional_data), $data);
+
+        $this->trigger_events('extra_group_set');
+
+        // insert the new organization_class
+        $this->db->insert($this->tables['organization_class'], $data);
+        $id = $this->db->insert_id();
+
+        // report success
+        $this->set_message('org_class_creation_successful');
+        // return the brand new id
+        return $id;
+    }
+
+    public function update($id, array $data)
+    {
+        $this->trigger_events('pre_update_org_class');
+
+        $org_class = $this->org_class($id)->row();
+
+        $this->db->trans_begin();
+
+        // Filter the data passed
+        $data = $this->_filter_data($this->tables['organization_class'], $data);
+
+        $this->trigger_events('extra_where');
+        $this->db->update($this->tables['organization_class'], $data, array('id' => $org_class->id));
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+
+            $this->trigger_events(array('post_update_org_class', 'post_update_org_class_unsuccessful'));
+            $this->set_error('update_unsuccessful');
+            return FALSE;
+        }
+
+        $this->db->trans_commit();
+
+        $this->trigger_events(array('post_update_org_class', 'post_update_org_class_unsuccessful'));
+        $this->set_message('update_successful');
+        return TRUE;
     }
 
     public function trigger_events($events)
@@ -575,40 +653,6 @@ class Organization_class_model extends CI_Model
         return $this;
     }
 
-    /**
-     * update
-     *
-     * @return bool
-     * @author Phil Sturgeon
-     **/
-    public function update($id, array $data)
-    {
-        $this->trigger_events('pre_update_org_class');
-
-        $org_class = $this->org_class($id)->row();
-
-        $this->db->trans_begin();
-
-        // Filter the data passed
-        $data = $this->_filter_data($this->tables['organization_class'], $data);
-
-        $this->trigger_events('extra_where');
-        $this->db->update($this->tables['organization_class'], $data, array('id' => $org_class->id));
-
-        if ($this->db->trans_status() === FALSE)
-        {
-            $this->db->trans_rollback();
-
-            $this->trigger_events(array('post_update_org_class', 'post_update_org_class_unsuccessful'));
-            $this->set_error('update_unsuccessful');
-            return FALSE;
-        }
-
-        $this->db->trans_commit();
-
-        $this->trigger_events(array('post_update_org_class', 'post_update_org_class_unsuccessful'));
-        $this->set_message('update_successful');
-        return TRUE;
-    }
+    
     
 }
