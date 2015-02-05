@@ -257,6 +257,7 @@ $(function(){
 
 $(function(){
  $('#search').submit(function(response){
+
                     $.post($('#search').attr('action'), $('#search').serialize(),function(json){
                         var url = $.url();
                         var uri = url.segment(3);
@@ -277,7 +278,26 @@ $(function(){
                     }, 'json');
                     return false;
                 });
-            });
+
+ $('#search_org_class').on("submit",function(response){
+        $.post($('#search_org_class').attr('action'), $('#search_org_class').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'organization_class/get_table/fn:'+json.title);
+            }
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+});
 
 /*custom web-HRIS 
 $(document).ready(function() {      

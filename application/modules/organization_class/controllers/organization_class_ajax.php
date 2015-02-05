@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Auth_ajax extends Ajax_Controller {
+class Organization_class_ajax extends Ajax_Controller {
 
     /**
      * Launch dialog that contains a specific Ion auth page content
@@ -14,13 +14,24 @@ class Auth_ajax extends Ajax_Controller {
     function ion_auth_dialog($page)
     {
         if (in_array($page, array(
-            'login',
-            'change_password',
-            'forgot_password'
+            'edit'
         )))
         {
             $this->response->dialog(array(
-                'body' => Modules::run('auth/' . $page)
+                'body' => Modules::run('organization_class/' . $page)
+            ));
+        }
+        $this->response->send();
+    }
+
+    function _dialog($page)
+    {
+        if (in_array($page, array(
+            'edit'
+        )))
+        {
+            $this->response->dialog(array(
+                'body' => Modules::run('organization_class/' . $page)
             ));
         }
         $this->response->send();
