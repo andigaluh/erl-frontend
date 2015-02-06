@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Organization_class extends MX_Controller {
+class Position_group extends MX_Controller {
 
     public $data;
 
@@ -12,7 +12,7 @@ class Organization_class extends MX_Controller {
         $this->load->helper('url');
         
         $this->load->database();
-        $this->load->model('organization_class/organization_class_model','organization_class_model');
+        $this->load->model('position_group/position_group_model','position_group_model');
         
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -50,25 +50,25 @@ class Organization_class extends MX_Controller {
             $this->data['ftitle_param'] = $ftitle; 
             $exp_ftitle = explode(":",$ftitle);
             $ftitle_re = str_replace("_", " ", $exp_ftitle[1]);
-            $ftitle_post = (strlen($ftitle_re) > 0) ? array('organization_class.title'=>$ftitle_re) : array() ;
+            $ftitle_post = (strlen($ftitle_re) > 0) ? array('position_group.title'=>$ftitle_re) : array() ;
             
             //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
             $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : 10 ;
 
             $this->data['offset'] = $offset = $this->uri->segment(6);
 
-            //list of filterize all organization_class  
-            $this->data['organization_class_all'] = $this->organization_class_model->like($ftitle_post)->where('is_deleted',0)->organization_class()->result();
+            //list of filterize all position_group  
+            $this->data['position_group_all'] = $this->position_group_model->like($ftitle_post)->where('is_deleted',0)->position_group()->result();
             
-            $this->data['num_rows_all'] = $this->organization_class_model->like($ftitle_post)->where('is_deleted',0)->organization_class()->num_rows();
+            $this->data['num_rows_all'] = $this->position_group_model->like($ftitle_post)->where('is_deleted',0)->position_group()->num_rows();
 
-            //list of filterize limit organization_class for pagination  
-            $this->data['organization_class'] = $this->organization_class_model->like($ftitle_post)->where('is_deleted',0)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->organization_class()->result();
+            //list of filterize limit position_group for pagination  
+            $this->data['position_group'] = $this->position_group_model->like($ftitle_post)->where('is_deleted',0)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->position_group()->result();
 
-            $this->data['_num_rows'] = $this->organization_class_model->like($ftitle_post)->where('is_deleted',0)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->organization_class()->num_rows();
+            $this->data['_num_rows'] = $this->position_group_model->like($ftitle_post)->where('is_deleted',0)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->position_group()->num_rows();
 
              //config pagination
-             $config['base_url'] = base_url().'organization_class/index/fn:'.$exp_ftitle[1].'/'.$sort_by.'/'.$sort_order.'/';
+             $config['base_url'] = base_url().'position_group/index/fn:'.$exp_ftitle[1].'/'.$sort_by.'/'.$sort_order.'/';
              $config['total_rows'] = $this->data['num_rows_all'];
              $config['per_page'] = $limit;
              $config['uri_segment'] = $offset = $this->uri->segment(6);
@@ -86,11 +86,15 @@ class Organization_class extends MX_Controller {
                 'value' => $this->form_validation->set_value('title'),
             );
 
-            $this->_render_page('organization_class/index', $this->data);
+             $f_parent_status = array("is_deleted" => 0);
+            $q_parent_status = GetAll('position_group', $f_parent_status);
+            $this->data['parent'] = ($q_parent_status->num_rows() > 0 ) ? $q_parent_status : array();
+
+            $this->_render_page('position_group/index', $this->data);
         }
     }
 
-    function get_table($ftitle = "fn:",$sort_by = "order_no", $sort_order = "asc", $offset = 0)
+    function get_table($ftitle = "fn:",$sort_by = "id", $sort_order = "asc", $offset = 0)
     {
 
         if (!$this->ion_auth->logged_in())
@@ -119,25 +123,25 @@ class Organization_class extends MX_Controller {
             $this->data['ftitle_param'] = $ftitle; 
             $exp_ftitle = explode(":",$ftitle);
             $ftitle_re = str_replace("_", " ", $exp_ftitle[1]);
-            $ftitle_post = (strlen($ftitle_re) > 0) ? array('organization_class.title'=>$ftitle_re) : array() ;
+            $ftitle_post = (strlen($ftitle_re) > 0) ? array('position_group.title'=>$ftitle_re) : array() ;
             
             //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
             $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : 10 ;
 
             $this->data['offset'] = $offset = $this->uri->segment(6);
 
-            //list of filterize all organization_class  
-            $this->data['organization_class_all'] = $this->organization_class_model->like($ftitle_post)->where('is_deleted',0)->organization_class()->result();
+            //list of filterize all position_group  
+            $this->data['position_group_all'] = $this->position_group_model->like($ftitle_post)->where('is_deleted',0)->position_group()->result();
 
-            $this->data['num_rows_all'] = $this->organization_class_model->like($ftitle_post)->where('is_deleted',0)->organization_class()->num_rows();
+            $this->data['num_rows_all'] = $this->position_group_model->like($ftitle_post)->where('is_deleted',0)->position_group()->num_rows();
 
-            //list of filterize limit organization_class for pagination  
-            $this->data['organization_class'] = $this->organization_class_model->like($ftitle_post)->where('is_deleted',0)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->organization_class()->result();
+            //list of filterize limit position_group for pagination  
+            $this->data['position_group'] = $this->position_group_model->like($ftitle_post)->where('is_deleted',0)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->position_group()->result();
 
-            $this->data['_num_rows'] = $this->organization_class_model->like($ftitle_post)->where('is_deleted',0)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->organization_class()->num_rows();
+            $this->data['_num_rows'] = $this->position_group_model->like($ftitle_post)->where('is_deleted',0)->limit($limit)->offset($offset)->order_by($sort_by, $sort_order)->position_group()->num_rows();
 
              //config pagination
-             $config['base_url'] = base_url().'organization_class/index/fn:'.$exp_ftitle[1].'/'.$sort_by.'/'.$sort_order.'/';
+             $config['base_url'] = base_url().'position_group/index/fn:'.$exp_ftitle[1].'/'.$sort_by.'/'.$sort_order.'/';
              $config['total_rows'] = $this->data['num_rows_all'];
              $config['per_page'] = $limit;
              $config['uri_segment'] = $offset = $this->uri->segment(6);
@@ -155,7 +159,11 @@ class Organization_class extends MX_Controller {
                 'value' => $this->form_validation->set_value('title'),
             );
 
-            $this->_render_page('organization_class/table/index', $this->data);
+            $f_parent_status = array("is_deleted" => 0);
+            $q_parent_status = GetAll('position_group', $f_parent_status);
+            $this->data['parent'] = ($q_parent_status->num_rows() > 0 ) ? $q_parent_status : array();
+
+            $this->_render_page('position_group/table/index', $this->data);
         }
     }
 
@@ -187,7 +195,7 @@ class Organization_class extends MX_Controller {
     public function update($id)
     {
         $this->form_validation->set_rules('title', lang('title'), 'trim|required');
-        $this->form_validation->set_rules('order_no', lang('order_no'), 'trim|required');
+        $this->form_validation->set_rules('level_order', lang('level_order'), 'trim|required');
         
         if($this->form_validation->run() == FALSE)
         {
@@ -197,12 +205,15 @@ class Organization_class extends MX_Controller {
         {         
             $data = array(
                     'title'             => $this->input->post('title'),
-                    'order_no'          => $this->input->post('order_no'),
+                    'abbr'             => $this->input->post('abbr'),
+                    'level_order'      => $this->input->post('level_order'),
+                    'parent_position_group_id'      => $this->input->post('parent_id'),
+                    'description'             => $this->input->post('description'),
                     'edited_on'         => date('Y-m-d',strtotime('now')),
                     'edited_by'         => $this->session->userdata('user_id'),
                     );
 
-            $this->organization_class_model->update($id, $data);
+            $this->position_group_model->update($id, $data);
 
             echo json_encode(array('st'=>1));
             
@@ -214,19 +225,19 @@ class Organization_class extends MX_Controller {
     {
         $data = array(
                 'is_deleted'    => 1,
-                'deleted_on'    =>date('Y-m-d',strtotime('now')),
+                'deleted_on'    =>date('Y-m-d H:i:s',strtotime('now')),
                 'deleted_by'    =>$this->session->userdata('user_id'),
                 );
 
-        $this->organization_class_model->update($id, $data);
+        $this->position_group_model->update($id, $data);
 
         echo json_encode(array('st'=>1));
     }
 
     public function add()
     {
-
-        $this->form_validation->set_rules('title', 'Title', 'trim|required');
+        $this->form_validation->set_rules('title', lang('title'), 'trim|required');
+        $this->form_validation->set_rules('level_order', lang('level_order'), 'trim|required');
         
         if($this->form_validation->run() == FALSE)
         {
@@ -238,12 +249,15 @@ class Organization_class extends MX_Controller {
             $title    = $this->input->post('title');
 
             $additional_data = array(
-                'order_no'        => $this->input->post('order_no'),
-                'created_on'        => date('Y-m-d',strtotime('now')),
+                'abbr'             => $this->input->post('abbr'),
+                'level_order'      => $this->input->post('level_order'),
+                'parent_position_group_id'      => $this->input->post('parent_id'),
+                'description'             => $this->input->post('description'),
+                'created_on'        => date('Y-m-d H:i:s',strtotime('now')),
                 'created_by'        => $this->session->userdata('user_id'),
             );
 
-            if ($this->form_validation->run() == true && $this->organization_class_model->create_($title, $additional_data))
+            if ($this->form_validation->run() == true && $this->position_group_model->create_($title, $additional_data))
             {
                 echo json_encode(array('st'=>1));   
             }else{
@@ -283,7 +297,7 @@ class Organization_class extends MX_Controller {
         {
             $this->load->library('template');
 
-                if(in_array($view, array('organization_class/index')))
+                if(in_array($view, array('position_group/index')))
                 {
                     $this->template->set_layout('default');
 
@@ -301,12 +315,11 @@ class Organization_class extends MX_Controller {
                     $this->template->add_js('main.js');
                     $this->template->add_js('respond.min.js');
 
-                    
                     $this->template->add_css('jquery-ui-1.10.1.custom.min.css');
                     $this->template->add_css('plugins/select2/select2.css');
                     
                 }
-                elseif(in_array($view, array('organization_class/edit')))
+                elseif(in_array($view, array('position_group/edit')))
                 {
 
                     $this->template->set_layout('default');

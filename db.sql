@@ -516,6 +516,7 @@ INSERT INTO `organization` (`id`, `parent_organization_id`, `organization_class_
 CREATE TABLE IF NOT EXISTS `organization_class` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(254) NOT NULL,
+  `order_no` tinyint(3) NOT NULL DEFAULT '0',
   `created_on` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `edited_on` datetime NOT NULL,
@@ -524,20 +525,60 @@ CREATE TABLE IF NOT EXISTS `organization_class` (
   `deleted_on` datetime NOT NULL,
   `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `organization_class`
 --
 
-INSERT INTO `organization_class` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
-(1, 'Company', '2015-01-23 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(2, 'Departement', '2015-01-23 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(3, 'Division', '2015-01-23 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(4, 'Section', '2015-01-23 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(5, 'Unit', '2015-01-23 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
+INSERT INTO `organization_class` (`id`, `title`, `order_no`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'Company', 1, '2015-01-23 00:00:00', 1, '2015-02-06 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
+(2, 'Departement', 2, '2015-01-23 00:00:00', 1, '2015-02-06 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
+(3, 'Division', 3, '2015-01-23 00:00:00', 1, '2015-02-06 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
+(4, 'Section', 4, '2015-01-23 00:00:00', 1, '2015-02-06 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
+(5, 'Unit', 5, '2015-01-23 00:00:00', 1, '2015-02-06 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
+(6, 'test', 0, '2015-02-05 00:00:00', 1, '2015-02-05 00:00:00', 1, 1, '2015-02-05 00:00:00', 1),
+(7, 'ddd', 0, '2015-02-05 00:00:00', 1, '0000-00-00 00:00:00', 0, 1, '2015-02-05 00:00:00', 1),
+(8, 'sdaf', 0, '2015-02-05 00:00:00', 1, '0000-00-00 00:00:00', 0, 1, '2015-02-05 00:00:00', 1),
+(9, 'num num', 0, '2015-02-05 00:00:00', 1, '2015-02-05 00:00:00', 1, 1, '2015-02-06 00:00:00', 1),
+(10, 'num num', 0, '2015-02-05 00:00:00', 1, '0000-00-00 00:00:00', 0, 1, '2015-02-06 00:00:00', 1);
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `position_group`
+--
+
+CREATE TABLE IF NOT EXISTS `position_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `abbr` varchar(254) NOT NULL,
+  `level_order` int(3) NOT NULL,
+  `level` set('Director','Management','Non Management') NOT NULL,
+  `parent_position_group_id` int(11) NOT NULL DEFAULT '0',
+  `description` text NOT NULL,
+  `gradeval_bottom` int(11) NOT NULL,
+  `gradeval_top` int(11) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `position_group`
+--
+
+INSERT INTO `position_group` (`id`, `title`, `abbr`, `level_order`, `level`, `parent_position_group_id`, `description`, `gradeval_bottom`, `gradeval_top`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'staff', '', 0, '', 0, '', 0, 0, '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'kacab', '', 0, '', 0, '', 0, 0, '2015-01-14 00:00:00', 1, '2015-02-06 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
+(3, 'test', '', 0, '', 0, '', 0, 0, '2015-02-06 00:00:00', 1, '2015-02-06 00:00:00', 1, 1, '2015-02-06 00:00:00', 1),
+(4, 'President Director', 'Presdir', 10, '', 0, 'President Director', 0, 0, '2015-02-06 04:54:37', 1, '2015-02-06 00:00:00', 1, 0, '0000-00-00 00:00:00', 0);
+
 
 --
 -- Table structure for table `position`
@@ -568,40 +609,6 @@ CREATE TABLE IF NOT EXISTS `position` (
 INSERT INTO `position` (`id`, `title`, `abbr`, `position_group_id`, `parent_position_id`, `organization_id`, `description`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
 (1, 'ka. cabang pusat', '', 0, 0, 0, '', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (2, 'ka. cabang bandung', '', 0, 0, 0, '', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `position_group`
---
-
-CREATE TABLE IF NOT EXISTS `position_group` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(254) NOT NULL,
-  `abbr` varchar(254) NOT NULL,
-  `level_order` int(3) NOT NULL,
-  `level` set('Director','Management','Non Management') NOT NULL,
-  `parent_position_group` int(3) NOT NULL DEFAULT '0',
-  `description` text NOT NULL,
-  `gradeval_bottom` int(11) NOT NULL,
-  `gradeval_top` int(11) NOT NULL,
-  `created_on` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `edited_on` datetime NOT NULL,
-  `edited_by` int(11) NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `deleted_on` datetime NOT NULL,
-  `deleted_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `position_group`
---
-
-INSERT INTO `position_group` (`id`, `title`, `abbr`, `level_order`, `level`, `parent_position_group`, `description`, `gradeval_bottom`, `gradeval_top`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
-(1, 'staff', '', 0, '', 0, '', 0, 0, '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(2, 'kacab', '', 0, '', 0, '', 0, 0, '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 

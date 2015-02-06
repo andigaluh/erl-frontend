@@ -206,6 +206,14 @@ $lang['users_ikatan_dinas_subheading'] = "User's Ikatan Dinas";
 $lang['delete_confirmation'] = "Delete Confirmation";
 $lang['delete_this_data'] = "Are you sure want to delete ";
 $lang['personal_label'] = "Personal";
+$lang['order_no'] = "Order No";
+$lang['add_org_class'] = "Add Organization Class";
+$lang['add_pos_group'] = "Add Position Group";
+$lang['edit_pos_group'] = "Edit Position Group";
+$lang['pos_group_subheading'] = "Position Group";
+$lang['abbr'] = "Abbreviation";
+$lang['level_order'] = "Level Order";
+$lang['parent_pos_group_id'] = "Parent Position Group";
 
 //button
 $lang['add_button'] = 'Add';
@@ -235,7 +243,6 @@ $lang['employee_status']='Status';
 $lang['cost_center']='Cost Center';
 $lang['position_group']='Position Group';
 $lang['active_inactive']='Active Inactive';
-
 
 //Users Course
 

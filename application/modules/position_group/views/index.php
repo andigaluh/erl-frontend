@@ -10,7 +10,7 @@
     <div class="content">
         <div class="page-title">
             <i class="icon-custom-left"></i>
-            <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('org_class_subheading');?></span></h3> 
+            <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('pos_group_subheading');?></span></h3> 
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -19,10 +19,10 @@
                         <br/>
                         <div class="row">
                             <div class="col-md-6">
-                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('org_class_subheading');?></span></h4>
+                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('pos_group_subheading');?></span></h4>
                             </div>
                         </div>
-                        <?php echo form_open(site_url('organization_class/keywords'),array( 'id'=>'search_org_class'))?>
+                        <?php echo form_open(site_url('position_group/keywords'),array( 'id'=>'search_pos_group'))?>
 
                             <div class="row">
                                 <div class="col-md-5">
@@ -65,7 +65,7 @@
                                         100 => '100',);
                                     $selectComponentJs = 'class="select2" onChange="this.form.submit()" id="limit"';
                                     echo "Per page: ".form_dropdown('limit', $selectComponentData, $limit, $selectComponentJs);
-                                    echo '&nbsp;'.lang('found_subheading').'&nbsp;'.$num_rows_all.'&nbsp;'.lang('org_class_subheading');
+                                    echo '&nbsp;'.lang('found_subheading').'&nbsp;'.$num_rows_all.'&nbsp;'.lang('pos_group_subheading');
                                 ?>
                                 <?php echo form_close();?>
                             </div>
@@ -89,11 +89,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_org_class', 'add_org_class')?></h4>
+        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_pos_group', 'add_pos_group')?></h4>
       </div>
       <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
       <div class="modal-body">
-        <?php echo form_open('organization_class/add/', array('id'=>'formadd'))?> 
+        <?php echo form_open('position_group/add/', array('id'=>'formadd'))?> 
              <div class="row form-row">
                 <div class="col-md-3">
                     <?php echo lang('title', 'title');?>
@@ -102,15 +102,51 @@
                     <input type="text" class="form-control" id="title" name="title">         
                 </div>
             </div>
+
             <div class="row form-row">
                 <div class="col-md-3">
-                    <?php echo lang('order_no', 'order_no');?>
+                    <?php echo lang('abbr', 'abbr');?>
                 </div>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" id="order_no" name="order_no">         
+                    <input type="text" class="form-control" id="abbr" name="abbr">         
                 </div>
             </div>
-                                    
+
+            <div class="row form-row">
+                <div class="col-md-3">
+                    <?php echo lang('level_order', 'level_order');?>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="level_order" name="level_order">         
+                </div>
+            </div>
+
+            <div class="row form-row">
+                <div class="col-md-3">
+                    <?php echo lang('parent_pos_group_id', 'parent_pos_group_id');?>
+                </div>
+                <div class="col-md-9">
+                    <select name="parent_id" class="select2" id="parent_id" style="width:100%">
+                        <?php
+                            echo '<option value="0">Top Level</option>';
+                            foreach ($parent->result_array() as $key => $value) {
+                                $selected = ($parent_id <> 0 && $parent_id == $value['parent_position_group_id']) ? 'selected = selected' : '';
+                                echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                            }
+                        ?>
+                        </select>
+                </div>
+            </div>
+
+            <div class="row form-row">
+                <div class="col-md-3">
+                    <?php echo lang('description', 'description');?>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="description" name="description">         
+                </div>
+            </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
@@ -123,11 +159,19 @@
 <!--end add modal-->
 
 <script type="text/javascript">
-    window.onload = function(){getTable();};  
+    
+    window.onload = function(){
+        getTable();
+    };  
+
     function getTable() 
     {
-        $('#tabel').load('<?php echo site_url('organization_class/get_table/'); ?>');
+        $('#tabel').load('<?php echo site_url('position_group/get_table/'); ?>');
     }
+
+    $(document).ready(function(){
+        $('#parent_id').select2();
+    });
 
     
 </script>
