@@ -56,7 +56,7 @@
           <li > <a href="<?php echo site_url('organization')?>">Organization</a> </li>
           <li > <a href="<?php echo site_url('organization_class')?>">Organization Class</a> </li>
           <li > <a href="<?php echo site_url('position')?>">Position</a> </li>
-          <li > <a href="<?php echo site_url('position_class')?>">Position Class</a> </li>
+          <li > <a href="<?php echo site_url('position_group')?>">Position Group</a> </li>
         </ul>
       </li>      
     </ul>

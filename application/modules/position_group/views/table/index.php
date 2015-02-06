@@ -8,14 +8,13 @@
                     <label for="checkbox10"></label>
                 </div>
             </th>
-            <th width="10%"><?php echo anchor('organization_class/index/'.$ftitle_param.'/title/'.(($sort_order == 'asc' && $sort_by == 'title') ? 'desc' : 'asc'), lang('index_ftitle_th'));?></th>
-            <th width="10%"><?php echo lang('order_no');?></th>
+            <th width="10%"><?php echo anchor('position_group/index/'.$ftitle_param.'/title/'.(($sort_order == 'asc' && $sort_by == 'title') ? 'desc' : 'asc'), lang('index_ftitle_th'));?></th>
             <th width="10%"><?php echo lang('index_action_th');?></th>                                  
         </tr>
     </thead>
     <tbody>
         <?php if($_num_rows > 0) { ?>
-            <?php foreach ($organization_class as $user):?>
+            <?php foreach ($position_group as $user):?>
                 <tr>
                     <td valign="middle">
                          <div class="checkbox check-default">
@@ -24,7 +23,6 @@
                         </div>
                     </td>
                     <td valign="middle"><?php echo $user->title;?></td>
-                    <td valign="middle"><?php echo $user->order_no;?></td>
                     <td valign="middle">
                         <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editModal<?php echo $user->id?>" title="<?php echo lang('edit_button')?>"><i class="icon-paste"></i></button>
                         
@@ -34,7 +32,7 @@
             <?php endforeach;?>
         <?php }else{ ?>
                 <tr>
-                    <td valign="middle" colspan="4">
+                    <td valign="middle" colspan="3">
                         <p class="text-center">No Data</p>
                     </td>
                 </tr>
@@ -42,18 +40,19 @@
     </tbody>
 </table>
 
-<?php foreach ($organization_class as $user):?>
+<?php foreach ($position_group as $user):?>
 <!--Edit Modal-->
-        <?php echo form_open('organization_class/update/'.$user->id, array('id'=>'formupdate'.$user->id))?>
+        <?php echo form_open('position_group/update/'.$user->id, array('id'=>'formupdate'.$user->id))?>
         <div class="modal fade" id="editModal<?php echo $user->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_course', 'edit_course')?></h4>
+                        <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_pos_group', 'edit_pos_group')?></h4>
                     </div>
                         <p class="error_msg" id="MsgBad2<?php echo $user->id?>" style="background: #fff; display: none;"></p>
                     <div class="modal-body">
+                        
                         <div class="row form-row">
                             <div class="col-md-3">
                                 <?php echo lang('title', 'title');?>
@@ -62,14 +61,52 @@
                                 <input type="text" class="form-control" id="title" name="title" value="<?php echo $user->title?>">         
                             </div>
                         </div>
+
                         <div class="row form-row">
                             <div class="col-md-3">
-                                <?php echo lang('order_no', 'order_no');?>
+                                <?php echo lang('abbr', 'abbr');?>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="order_no" name="order_no" value="<?php echo $user->order_no?>">         
+                                <input type="text" class="form-control" id="abbr" name="abbr" value="<?php echo $user->abbr?>">         
                             </div>
                         </div>
+
+                        <div class="row form-row">
+                            <div class="col-md-3">
+                                <?php echo lang('level_order', 'level_order');?>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="level_order" name="level_order" value="<?php echo $user->level_order?>">         
+                            </div>
+                        </div>
+
+                        <div class="row form-row">
+                            <div class="col-md-3">
+                                <?php echo lang('parent_pos_group_id', 'parent_pos_group_id');?>
+                            </div>
+                            <div class="col-md-9">
+                                <select name="parent_id" class="select2" id="parent_id" style="width:100%">
+                                    <?php
+                                        echo '<option value="0">Top Level</option>';
+                                        foreach ($parent->result_array() as $key => $value) {
+                                        $selected = ($user->parent_position_group_id <> 0 && $user->parent_position_group_id == $value['id']) ? 'selected = selected' : '';
+                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                        }
+                                        ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row form-row">
+                            <div class="col-md-3">
+                                <?php echo lang('description', 'description');?>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="description" name="description" value="<?php echo $user->description?>">         
+                            </div>
+                        </div>
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
@@ -91,7 +128,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel"><?php echo lang('delete_confirmation').' for '.$user->title; ?></h4>
                 </div>
-              <?php echo form_open('organization_class/delete/'.$user->id, array("id"=>"formdelete".$user->id))?>
+              <?php echo form_open('position_group/delete/'.$user->id, array("id"=>"formdelete".$user->id))?>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none"><span aria-hidden="true">&times;</span></button>
               <div class="modal-body">
                 <p><?php echo lang('delete_this_data').$user->title.' ?'; ?></p>
@@ -136,7 +173,7 @@
 
                 function getTable() 
                 {
-                    $('#tabel').load('<?php echo site_url('organization_class/get_table/'); ?>');
+                    $('#tabel').load('<?php echo site_url('position_group/get_table/'); ?>');
                 }
             });
         </script>
