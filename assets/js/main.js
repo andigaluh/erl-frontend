@@ -297,6 +297,24 @@ $(function(){
         }, 'json');
         return false;
     });
+	
+ $('#search_position').submit(function(response){
+
+                    $.post($('#search_position').attr('action'), $('#search_position').serialize(),function(json){
+                      
+                        function getTable2() 
+                        {
+                            $('#tabel').load(json.base_url+'position/get_table/fn:'+json.title);
+                        }
+                        if(json.st == 0){
+                            $('#MsgGood').text('Search Failed').fadeIn();
+                        }else{
+                            getTable2();
+                        }
+                    }, 'json');
+                    return false;
+                });
+				
 });
 
 /*custom web-HRIS 

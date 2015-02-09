@@ -243,7 +243,7 @@
       </div>
       <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
       <div class="modal-body">
-        <?= form_open('auth/add_course/'.$user->id, array('id'=>'formadd'))?> 
+        <?php echo form_open('auth/add_course/'.$user->id, array('id'=>'formadd'))?> 
              <div class="row form-row">
                 <div class="col-md-3">
                     <?php echo lang('course_description', 'course_title');?>

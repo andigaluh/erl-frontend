@@ -211,6 +211,7 @@ $lang['add_org_class'] = "Add Organization Class";
 $lang['add_pos_group'] = "Add Position Group";
 $lang['edit_pos_group'] = "Edit Position Group";
 $lang['pos_group_subheading'] = "Position Group";
+$lang['position_subheading'] = "Position";
 $lang['abbr'] = "Abbreviation";
 $lang['level_order'] = "Level Order";
 $lang['parent_pos_group_id'] = "Parent Position Group";
@@ -330,8 +331,11 @@ $lang['ikatan_dinas_type'] = 'Ikatan Dinas Type';
 $lang['amount'] = 'Amount';
 $lang['add_ikatan_dinas'] = 'Add Ikatan Dinas';
 $lang['edit_ikatan_dinas'] = 'Edit Ikatan Dinas';
-$lang[''] = '';
-
 
 //organization_class
 $lang['edit_validation_ftitle_label'] = 'Title';
+
+//position class
+$lang['abbrevation'] = 'Abbrevation';
+$lang['position_parent'] = 'Position Parent';
+

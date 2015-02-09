@@ -40,7 +40,7 @@
             <td valign="middle"><span class="muted"><?php echo $row->resign_reason;?></span></td>
             <td valign="middle"><span class="muted"><?php echo $row->last_salary;?></span></td>
             <td valign="middle">
-                <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editexperienceModal<?= $row->id?>" title="<?php echo lang('edit_button')?>"><i class="icon-paste"></i></button>
+                <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editexperienceModal<?php echo $row->id?>" title="<?php echo lang('edit_button')?>"><i class="icon-paste"></i></button>
                 <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deleteexperienceModal<?php echo $row->id?>" title="<?php echo lang('delete_button')?>"><i class="icon-warning-sign"></i></button>
             </td>
         </tr>
@@ -56,7 +56,7 @@
 
 <!--Delete Modal Window-->
 <?php foreach($user_experience->result() as $row){?>
-<div class="modal fade" id="deleteexperienceModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteexperienceModal<?php echo $row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -97,17 +97,17 @@ $(function(){
 
 <!--Edit Modal-->
 <?php foreach($user_experience->result() as $row){?>
-<div class="modal fade" id="editexperienceModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<?= form_open('auth/edit_experience/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
+<div class="modal fade" id="editexperienceModal<?php echo $row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<?php echo form_open('auth/edit_experience/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
   <div class="modal-dialog" id="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_experience', 'edit_experience')?></h4>
-        <p class="txtBold txtRed" class="error_msg" id="MsgBad2<?=$row->id?>" style="background: #fff; display: none;"></p>
+        <p class="txtBold txtRed" class="error_msg" id="MsgBad2<?php echo $row->id?>" style="background: #fff; display: none;"></p>
       </div>
       <div class="modal-body">
-        <?= form_open('auth/edit_experience/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
+        <?php echo form_open('auth/edit_experience/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
              <div class="row form-row">
                 <div class="col-md-3">
                     <?php echo lang('company', 'company');?>
@@ -201,11 +201,11 @@ $(function(){
                 $('#formupdate<?php echo $row->id?>').submit(function(response){
                     $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
                         if(json.st == 0){
-                            $('#MsgBad2<?=$row->id?>').html(json.errors).fadeIn();
+                            $('#MsgBad2<?php echo $row->id?>').html(json.errors).fadeIn();
                         }else{
                             getTable();
                             $("[data-dismiss=modal]").trigger({ type: "click" });
-                            $('#MsgBad2<?=$row->id?>').hide();
+                            $('#MsgBad2<?php echo $row->id?>').hide();
                             $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");                           
                         }
                     }, 'json');
