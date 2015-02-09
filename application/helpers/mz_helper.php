@@ -176,7 +176,7 @@ if (!function_exists('GetAll')){
 		if($tbl == "kg_news_subcategory" || $tbl == "contents" || $tbl == "news" || $tbl=="news_category" || $tbl=="kg_view_news")
 		$CI->db->where("id_lang", GetIdLang());
 		
-		$q = $CI->db->get($tbl);
+		$q = $CI->db->where($filter)->get($tbl);
 		
 		return $q;
 	}

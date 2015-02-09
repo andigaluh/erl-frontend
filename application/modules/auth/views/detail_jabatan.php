@@ -242,7 +242,7 @@
 	        <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
 	      </div>
       	<div class="modal-body">
-        	<?= form_open('auth/add_jabatan/'.$user->id, array('id'=>'formadd'))?> 
+        	<?php echo form_open('auth/add_jabatan/'.$user->id, array('id'=>'formadd'))?> 
              <div class="row form-row">
 
              	<div class="col-md-3">

@@ -30,7 +30,7 @@
                 <td valign="middle"><span class="muted"><?php echo $row->start_date;?></span></td>
                 <td valign="middle"><span class="muted"><?php echo $row->end_date;?></span></td>
                 <td valign="middle">
-                    <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editcertificateModal<?= $row->id?>" title="<?php echo lang('edit_button')?>"><i class="icon-paste"></i></button>
+                    <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#editcertificateModal<?php echo $row->id?>" title="<?php echo lang('edit_button')?>"><i class="icon-paste"></i></button>
                     <button class='btn btn-danger btn-small' type="submit" name="remove_levels" value="Delete" data-toggle="modal" data-target="#deletecertificateModal<?php echo $row->id?>" title="<?php echo lang('delete_button')?>"><i class="icon-warning-sign"></i></button>
                 </td>   
             </tr>
@@ -47,7 +47,7 @@
 <?php foreach($user_certificate->result() as $row){?>
 
 <!--Edit Modal-->
-<?= form_open('auth/edit_certificate/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
+<?php echo form_open('auth/edit_certificate/'.$row->id, array('id'=>'formupdate'.$row->id))?> 
 <div class="modal fade" id="editcertificateModal<?php echo $row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -55,7 +55,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel"><?php echo lang('edit_certificate', 'edit_certificate')?></h4>
             </div>
-                <p class="error_msg" id="MsgBad2<?=$row->id?>" style="background: #fff; display: none;"></p>
+                <p class="error_msg" id="MsgBad2<?php echo $row->id?>" style="background: #fff; display: none;"></p>
             <div class="modal-body">
              <div class="row form-row">
                 <div class="col-md-3">
@@ -108,11 +108,11 @@ $(document).ready(function(){
                 $('#formupdate<?php echo $row->id?>').submit(function(response){
                     $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
                         if(json.st == 0){
-                            $('#MsgBad2<?=$row->id?>').html(json.errors).fadeIn();
+                            $('#MsgBad2<?php echo $row->id?>').html(json.errors).fadeIn();
                         }else{
                             getTable();
                             $("[data-dismiss=modal]").trigger({ type: "click" });
-                            $('#MsgBad2<?=$row->id?>').hide();
+                            $('#MsgBad2<?php echo $row->id?>').hide();
                             $('#description').val('');
                             $('#registration_date').val('');
                             $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
@@ -126,7 +126,7 @@ $(document).ready(function(){
 <!-- End Edit Modal-->
 
 <!--Delete Modal-->
-<div class="modal fade" id="deletecertificateModal<?=$row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="deletecertificateModal<?php echo $row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
