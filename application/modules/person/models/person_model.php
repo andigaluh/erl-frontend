@@ -123,10 +123,9 @@ class Person_model extends CI_Model
     }
 
     function getUserSti($id, $filter=null){
-        $this->db->select('users_sti.*, users.username, departement.title as departement, position.title as position, acknowledge.username as acknowledgeby, received.username as receivedby');
+        $this->db->select('users_sti.*, users.username, position.title as position, acknowledge.username as acknowledgeby, received.username as receivedby');
         $this->db->from('users_sti');
         $this->db->join('users', 'users_sti.user_id = users.id');
-        $this->db->join('departement', 'users_sti.departement_id = departement.id', 'left');
         $this->db->join('position', 'users_sti.position_id = position.id');
         $this->db->join('users as acknowledge', 'users_sti.acknowledgeby_id = acknowledge.id', 'left');
         $this->db->join('users as received', 'users_sti.receivedby_id = received.id', 'left');
@@ -197,9 +196,8 @@ class Person_model extends CI_Model
     }
 
     function getUsers($id){
-        $this->db->select('users.*, organization.title as organization_title, marital.title as marital_title');
+        $this->db->select('users.*, marital.title as marital_title');
         $this->db->from('users');
-        $this->db->join('organization', 'users.business_unit_id = organization.id');
         $this->db->join('marital', 'users.marital_id = marital.id');
         $this->db->where('users.id', $id);
 
