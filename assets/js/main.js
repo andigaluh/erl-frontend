@@ -289,6 +289,7 @@ $(function(){
             {
                 $('#tabel').load(json.base_url+'organization_class/get_table/fn:'+json.title);
             }
+
             if(json.st == 0){
                 $('#MsgGood').text('Search Failed').fadeIn();
             }else{
@@ -297,24 +298,43 @@ $(function(){
         }, 'json');
         return false;
     });
-	
- $('#search_position').submit(function(response){
 
-                    $.post($('#search_position').attr('action'), $('#search_position').serialize(),function(json){
-                      
-                        function getTable2() 
-                        {
-                            $('#tabel').load(json.base_url+'position/get_table/fn:'+json.title);
-                        }
-                        if(json.st == 0){
-                            $('#MsgGood').text('Search Failed').fadeIn();
-                        }else{
-                            getTable2();
-                        }
-                    }, 'json');
-                    return false;
-                });
-				
+ $('#search_pos_group').on("submit",function(response){
+        $.post($('#search_pos_group').attr('action'), $('#search_pos_group').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'position_group/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+ $('#parent_id').select2();
+
+ $('#position_id_detail').on("change",function(response){
+    var pos_id = $(this).val();
+    var url_pos_group = $('#pos_group_url').val();
+    $.ajax({
+        type: "GET",
+        url: url_pos_group+'/'+pos_id,             
+        dataType: "json",               
+        success: function(response){
+            $('#position_group_id').val(response.position_group_id);
+            $('#organization_id').val(response.organization_id);
+        }
+    });
+    return false;
+ });
+
 });
 
 /*custom web-HRIS 

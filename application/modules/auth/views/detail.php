@@ -72,15 +72,23 @@
                                                         <div class="col-md-7">
                                                             : <?php echo strtoupper($nik);?>
                                                         </div>                               
-                                                    </div>
+                                                    </div><!-- 
                                                     <div class="row">
                                                         <div class="col-md-5">
-                                                            <?php echo lang('register_bu_label', 'business_unit');?>
+                                                            <?php echo lang('register_organization_label', 'organization');?>
                                                         </div>
                                                         <div class="col-md-7">
-                                                            : <?php echo strtoupper($business_unit_id);?>
+                                                            : <?php echo strtoupper($organization);?>
                                                         </div>                               
-                                                    </div>
+                                                    </div> -->
+                                                    <!-- <div class="row">
+                                                        <div class="col-md-5">
+                                                            <?php echo lang('register_position_label', 'position');?>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            : <?php echo strtoupper($position);?>
+                                                        </div>                               
+                                                    </div> -->
                                                     <div class="row">
                                                         <div class="col-md-5">
                                                             <?php echo lang('register_dob_label', 'dob');?>
@@ -197,7 +205,7 @@
                                                 <?php echo lang('position', 'position');?>
                                             </div>
                                             <div class="col-md-9">
-                                                <select name="position_id" class="select2" id="position_id" style="width:100%">
+                                                <select name="position_id" class="select2" id="position_id_detail" style="width:100%">
                                                     <?php
                                                         if($q_position->num_rows() > 0){
                                                         foreach ($position->result_array() as $key => $value) {
@@ -207,6 +215,28 @@
                                                             echo '<option value="0">'.'No Data'.'</option>';
                                                         }
                                                         ?>
+                                                    </select>
+                                                    <input type="hidden" class="form-control" id="pos_group_url" name="pos_group_url" value="<?php echo site_url('auth/get_pos_group')?>">         
+                                                    <input type="hidden" class="form-control" id="position_group_id" name="position_group_id" value="<?php echo $row->position_group_id?>">         
+                                                    <input type="hidden" class="form-control" id="organization_id" name="organization_id" value="<?php echo $row->organization_id?>">         
+
+                                            </div>
+
+                                            <!-- <div class="col-md-3">
+                                                <?php echo lang('position_group', 'position_group');?>
+                                                <input type="hidden" class="form-control" id="pos_group_url" name="pos_group_url" value="<?php echo site_url('auth/get_pos_group')?>">         
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="position_group_id" class="" id="position_group_id_edit" style="width:100%" readonly>
+                                                    <?php
+                                                        if($q_position_group->num_rows() > 0){
+                                                        foreach ($position_group->result_array() as $key => $value) {
+                                                        $selected = ($row->position_group_id <> 0 && $row->position_group_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                        echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
                                                     </select>        
                                             </div>
 
@@ -214,7 +244,7 @@
                                                 <?php echo lang('organization', 'organization');?>
                                             </div>
                                             <div class="col-md-9">
-                                                <select name="organization_id" class="select2" id="organization_id" style="width:100%">
+                                                <select name="organization_id" class="" id="organization_id_edit" style="width:100%" readonly>
                                                     <?php
                                                         if($q_organization->num_rows() > 0){
                                                         foreach ($organization->result_array() as $key => $value) {
@@ -225,7 +255,7 @@
                                                         }
                                                         ?>
                                                     </select>        
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-md-3">
                                                 <?php echo lang('empl_status', 'empl_status');?>
@@ -267,23 +297,7 @@
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control" id="cost_center" name="cost_center" value="<?php echo $row->cost_center?>">         
                                             </div>
-                                            <div class="col-md-3">
-                                                <?php echo lang('position_group', 'position_group');?>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <select name="position_group_id" class="select2" id="position_group_id" style="width:100%">
-                                                    <?php
-                                                        if($q_position_group->num_rows() > 0){
-                                                        foreach ($position_group->result_array() as $key => $value) {
-                                                        $selected = ($row->position_group_id <> 0 && $row->position_group_id == $value['id']) ? 'selected = selected' : '';
-                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                                                        }}else{
-                                                        echo '<option value="0">'.'No Data'.'</option>';
-                                                        }
-                                                        ?>
-                                                    </select>        
-                                            </div>
-
+                                            
                                             <div class="col-md-3">
                                                 <?php echo lang('grade', 'grade');?>
                                             </div>
@@ -378,6 +392,27 @@
                                                             echo '<option value="0">'.'No Data'.'</option>';
                                                         }
                                                         ?>
+                                                    </select>
+                                                    <input type="hidden" class="form-control" id="pos_group_url" name="pos_group_url" value="<?php echo site_url('auth/get_pos_group')?>">         
+                                                    <input type="hidden" class="form-control" id="position_group_id" name="position_group_id" value="<?php echo $row->position_group_id?>">         
+                                                    <input type="hidden" class="form-control" id="organization_id" name="organization_id" value="<?php echo $row->organization_id?>">       
+                                            </div>
+
+                                            <!-- <div class="col-md-3">
+                                                <?php echo lang('position_group', 'position_group');?>
+                                            </div>
+
+                                            <div class="col-md-9">
+                                                <select name="position_group_id" class="select2" id="position_group_id" style="width:100%">
+                                                    <?php
+                                                        if($q_position_group->num_rows() > 0){
+                                                        foreach ($position_group->result_array() as $key => $value) {
+                                                        $selected = ($row->position_group_id <> 0 && $row->position_group_id == $value['id']) ? 'selected = selected' : '';
+                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
+                                                        }}else{
+                                                        echo '<option value="0">'.'No Data'.'</option>';
+                                                        }
+                                                        ?>
                                                     </select>        
                                             </div>
 
@@ -396,7 +431,7 @@
                                                         }
                                                         ?>
                                                     </select>        
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-md-3">
                                                 <?php echo lang('empl_status', 'empl_status');?>
@@ -438,22 +473,7 @@
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control" id="cost_center" name="cost_center" value="-">         
                                             </div>
-                                            <div class="col-md-3">
-                                                <?php echo lang('position_group', 'position_group');?>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <select name="position_group_id" class="select2" id="position_group_id" style="width:100%">
-                                                    <?php
-                                                        if($q_position_group->num_rows() > 0){
-                                                        foreach ($position_group->result_array() as $key => $value) {
-                                                        $selected = ($row->position_group_id <> 0 && $row->position_group_id == $value['id']) ? 'selected = selected' : '';
-                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                                                        }}else{
-                                                        echo '<option value="0">'.'No Data'.'</option>';
-                                                        }
-                                                        ?>
-                                                    </select>        
-                                            </div>
+                                            
 
                                             <div class="col-md-3">
                                                 <?php echo lang('grade', 'grade');?>

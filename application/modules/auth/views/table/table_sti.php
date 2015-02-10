@@ -16,7 +16,6 @@
             <th width="10%"><?php echo lang('institution')?></th>
             <th width="10%"><?php echo lang('activation_date')?></th>
             <!--<th width="2%"><?php echo lang('published_place')?></th>-->
-            <th width="10%"><?php echo lang('departement');?></th>
             <th width="10%"><?php echo lang('position');?></th>
             <!--<th width="2%"><?php echo lang('receivedby');?></th>-->
             <!--<th width="2%"><?php echo lang('acknowledgeby');?></th>-->
@@ -41,7 +40,6 @@
             <td valign="middle"><span class="muted"><?php echo $row->institution;?></span></td>
             <td valign="middle"><span class="muted"><?php echo $row->activation_date;?></span></td>
            <!-- <td valign="middle"><span class="muted"><?php echo $row->published_place;?></span></td>-->
-            <td valign="middle"><span class="muted"><?php echo $row->departement;?></span></td>
             <td valign="middle"><span class="muted"><?php echo $row->position;?></span></td>
             <!--<td valign="middle"><span class="muted"><?php echo $row->receivedby;?></span></td>-->
             <!--<td valign="middle"><span class="muted"><?php echo $row->acknowledgeby;?></span></td>-->
@@ -141,23 +139,6 @@
                                     }
                                     ?>
                             </select>        
-                        </div>
-
-                        <div class="col-md-3">
-                            <?php echo lang('departement', 'departement');?>
-                        </div>
-                        <div class="col-md-9">
-                            <select name="departement_id" class="select2" id="departement_id" style="width:100%">
-                                <?php
-                                    if($q_departement->num_rows() > 0){ 
-                                    foreach ($departement->result_array() as $key => $value) {
-                                    $selected = ($row->departement_id <> 0 && $row->departement_id == $value['id']) ? 'selected = selected' : '';
-                                    echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                                    }}else{
-                                    echo '<option value="0">'.'No Data'.'</option>';
-                                }
-                                ?>
-                            </select>
                         </div>
 
                         <div class="col-md-3">

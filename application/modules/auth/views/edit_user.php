@@ -69,27 +69,6 @@
                                                 <img alt="" src="<?php echo base_url()?>assets/img/no-image.png" class="img-responsive">
                                                 <?php } ?>
                                             </div>
-                                        
-                                        <!-- </div> -->
-                                       <!--<?php echo lang('register_nik_label', 'nik');?>
-                                        <div class="input-with-icon right">                                       
-                                            <i class=""></i>
-                                            <?php echo bs_form_input($nik);?>                                 
-                                        </div>-->
-                                    </div>
-                                    <div class="form-group">
-                                        <?php echo lang('register_bu_label', 'business_unit');?>
-                                        <div class="input-with-icon right">                                       
-                                            <i class=""></i>
-                                            <select name="business_unit_id" class="select2" id="business_unit_id" style="width:100%">
-                                                <?php
-                                                    foreach ($business_unit->result_array() as $key => $value) {
-                                                        $selected = ($business_unit_id <> 0 && $business_unit_id == $value['id']) ? 'selected = selected' : '';
-                                                        echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-                                                    }
-                                                ?>
-                                            </select>
-                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-with-icon right">

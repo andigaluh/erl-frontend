@@ -35,6 +35,7 @@ $config['tables']['organization_class']  = 'organization_class';
 $config['tables']['position_group']  = 'position_group';
 $config['tables']['position']  = 'position';
 $config['tables']['organization']  = 'organization';
+$config['tables']['users_employement']  = 'users_employement';
 
 /*
  | Users table column and Group table column you want to join WITH.
