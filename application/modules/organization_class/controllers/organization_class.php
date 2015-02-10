@@ -55,7 +55,7 @@ class Organization_class extends MX_Controller {
             //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
             $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : 10 ;
 
-            $this->data['offset'] = $offset = $this->uri->segment(6);
+            $this->data['offset'] = 6;
 
             //list of filterize all organization_class  
             $this->data['organization_class_all'] = $this->organization_class_model->like($ftitle_post)->where('is_deleted',0)->organization_class()->result();
@@ -71,7 +71,7 @@ class Organization_class extends MX_Controller {
              $config['base_url'] = base_url().'organization_class/index/fn:'.$exp_ftitle[1].'/'.$sort_by.'/'.$sort_order.'/';
              $config['total_rows'] = $this->data['num_rows_all'];
              $config['per_page'] = $limit;
-             $config['uri_segment'] = $offset = $this->uri->segment(6);
+             $config['uri_segment'] = 6;
 
             //inisialisasi config
              $this->pagination->initialize($config);

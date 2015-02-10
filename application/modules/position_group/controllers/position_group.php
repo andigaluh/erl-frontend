@@ -55,7 +55,7 @@ class Position_group extends MX_Controller {
             //set default limit in var $config['list_limit'] at application/config/ion_auth.php 
             $this->data['limit'] = $limit = (strlen($this->input->post('limit')) > 0) ? $this->input->post('limit') : 10 ;
 
-            $this->data['offset'] = $offset = $this->uri->segment(6);
+            $this->data['offset'] = 6;
 
             //list of filterize all position_group  
             $this->data['position_group_all'] = $this->position_group_model->like($ftitle_post)->where('is_deleted',0)->position_group()->result();
@@ -71,7 +71,7 @@ class Position_group extends MX_Controller {
              $config['base_url'] = base_url().'position_group/index/fn:'.$exp_ftitle[1].'/'.$sort_by.'/'.$sort_order.'/';
              $config['total_rows'] = $this->data['num_rows_all'];
              $config['per_page'] = $limit;
-             $config['uri_segment'] = $offset = $this->uri->segment(6);
+             $config['uri_segment'] =6;
 
             //inisialisasi config
              $this->pagination->initialize($config);

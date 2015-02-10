@@ -1,5 +1,4 @@
 <!-- Add Course Modal -->
-<script src="<?php echo assets_url('js/main.js'); ?>"></script>
 <?php echo form_open('position/add/', array('id'=>'formadd'))?> 
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" id="modaldialog">
@@ -260,4 +259,5 @@
                 });
             });
         </script>
-    <?php endforeach;?>
+    <?php endforeach;?>	
+<script src="<?php echo assets_url('js/main.js'); ?>"></script>

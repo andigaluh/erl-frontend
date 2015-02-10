@@ -1,5 +1,5 @@
-
 <!-- Add Course Modal -->
+<?php echo form_open('position_group/add/', array('id'=>'formadd'))?> 
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" id="modaldialog">
     <div class="modal-content">
@@ -9,7 +9,6 @@
       </div>
       <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
       <div class="modal-body">
-        <?php echo form_open('position_group/add/', array('id'=>'formadd'))?> 
              <div class="row form-row">
                 <div class="col-md-3">
                     <?php echo lang('title', 'title');?>
@@ -68,10 +67,11 @@
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>&nbsp;<?php echo lang('close_button')?></button> 
         <button type="submit" class="btn btn-primary lnkBlkWhtArw" name="btn_add" id="btnRetPass" style="margin-top: 3px;"><i class="icon-ok-sign"></i>&nbsp;<?php echo lang('save_button')?></button> 
       </div>
-        <?php echo form_close()?>
+        
     </div>
   </div>
 </div>
+<?php echo form_close()?>
 <!--end add modal-->
 
 
@@ -208,3 +208,4 @@
             });
         </script>
     <?php endforeach;?>
+	<script src="<?php echo assets_url('js/main.js'); ?>"></script>
