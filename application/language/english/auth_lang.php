@@ -335,6 +335,10 @@ $lang['edit_ikatan_dinas'] = 'Edit Ikatan Dinas';
 //organization_class
 $lang['edit_validation_ftitle_label'] = 'Title';
 
+//position Group
+$lang['level_order'] = 'Level Order';
+$lang['parent_position_group'] = 'Parent Position Group';
+
 //position class
 $lang['abbrevation'] = 'Abbrevation';
 $lang['position_parent'] = 'Position Parent';

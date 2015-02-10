@@ -86,10 +86,6 @@ class Position_group extends MX_Controller {
                 'value' => $this->form_validation->set_value('title'),
             );
 
-             $f_parent_status = array("is_deleted" => 0);
-            $q_parent_status = GetAll('position_group', $f_parent_status);
-            $this->data['parent'] = ($q_parent_status->num_rows() > 0 ) ? $q_parent_status : array();
-
             $this->_render_page('position_group/index', $this->data);
         }
     }
@@ -158,14 +154,36 @@ class Position_group extends MX_Controller {
                 'type'  => 'text',
                 'value' => $this->form_validation->set_value('title'),
             );
-
-            $f_parent_status = array("is_deleted" => 0);
-            $q_parent_status = GetAll('position_group', $f_parent_status);
-            $this->data['parent'] = ($q_parent_status->num_rows() > 0 ) ? $q_parent_status : array();
-
+			
             $this->_render_page('position_group/table/index', $this->data);
         }
     }
+	
+	public function get_modal()
+	{
+		if (!$this->ion_auth->logged_in())
+        {
+            //redirect them to the login page
+            redirect('auth/login', 'refresh');
+        }
+        elseif (!$this->ion_auth->is_admin()) //remove this elseif if you want to enable this for non-admins
+        {
+            //redirect them to the home page because they must be an administrator to view this
+            //return show_error('You must be an administrator to view this page.');
+            return show_error('You must be an administrator to view this page.');
+        }
+        else
+        {
+            //list of filterize limit position_group for pagination  
+            $this->data['position_group'] = $this->position_group_model->position_group()->result();
+
+            $f_parent_status = array("is_deleted" => 0);
+            $q_parent_status = GetAll('position_group', $f_parent_status);
+            $this->data['parent_group'] = ($q_parent_status->num_rows() > 0 ) ? $q_parent_status : array();
+
+            $this->_render_page('position_group/modal/index', $this->data);
+        }
+	}
 
     function keywords(){
         if (!$this->ion_auth->logged_in())
@@ -207,7 +225,7 @@ class Position_group extends MX_Controller {
                     'title'             => $this->input->post('title'),
                     'abbr'             => $this->input->post('abbr'),
                     'level_order'      => $this->input->post('level_order'),
-                    'parent_position_group_id'      => $this->input->post('parent_id'),
+                    'parent_position_group_id'      => $this->input->post('parent_position_group_id'),
                     'description'             => $this->input->post('description'),
                     'edited_on'         => date('Y-m-d',strtotime('now')),
                     'edited_by'         => $this->session->userdata('user_id'),
@@ -251,7 +269,7 @@ class Position_group extends MX_Controller {
             $additional_data = array(
                 'abbr'             => $this->input->post('abbr'),
                 'level_order'      => $this->input->post('level_order'),
-                'parent_position_group_id'      => $this->input->post('parent_id'),
+                'parent_position_group_id'      => $this->input->post('parent_position_group_id'),
                 'description'             => $this->input->post('description'),
                 'created_on'        => date('Y-m-d H:i:s',strtotime('now')),
                 'created_by'        => $this->session->userdata('user_id'),

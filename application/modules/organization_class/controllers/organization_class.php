@@ -158,6 +158,28 @@ class Organization_class extends MX_Controller {
             $this->_render_page('organization_class/table/index', $this->data);
         }
     }
+	
+	function get_modal()
+    {
+
+        if (!$this->ion_auth->logged_in())
+        {
+            //redirect them to the login page
+            redirect('auth/login', 'refresh');
+        }
+        elseif (!$this->ion_auth->is_admin()) //remove this elseif if you want to enable this for non-admins
+        {
+            //redirect them to the home page because they must be an administrator to view this
+            //return show_error('You must be an administrator to view this page.');
+            return show_error('You must be an administrator to view this page.');
+        }
+        else
+        {
+			$this->data['organization_class'] = $this->organization_class_model->organization_class()->result();
+
+			$this->load->view('organization_class/modal/index', $this->data);
+		}
+	}
 
     function keywords(){
         if (!$this->ion_auth->logged_in())

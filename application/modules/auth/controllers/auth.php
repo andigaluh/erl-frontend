@@ -3132,7 +3132,4 @@ class Auth extends MX_Controller {
             return $this->load->view($view, $data, TRUE);
         }
     }
-
-    
-
 }

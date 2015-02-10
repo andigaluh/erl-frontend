@@ -299,21 +299,14 @@ class Position_group_model extends CI_Model
             $this->db->select(array(
                 $this->tables['position_group'].'.*',
                 $this->tables['position_group'].'.id as id',
-                $this->tables['position_group'].'.id as position_group_id'
+                $this->tables['position_group'].'.id as position_group_id',
+				
+				'parent_group.title as parent_position_group',
             ));
-        }
-
-        $this->trigger_events('extra_where');
-
-        //run each where that was passed
-        if (isset($this->_ion_where) && !empty($this->_ion_where))
-        {
-            foreach ($this->_ion_where as $where)
-            {
-                $this->db->where($where);
-            }
-
-            $this->_ion_where = array();
+			
+			$this->db->join('position_group parent_group', 'position_group.parent_position_group_id = parent_group.id', 'left');
+			
+			$this->db->where('position_group.is_deleted', 0);
         }
 
         if (isset($this->_ion_like) && !empty($this->_ion_like))
@@ -431,7 +424,7 @@ class Position_group_model extends CI_Model
         $data = $this->_filter_data($this->tables['position_group'], $data);
 
         $this->trigger_events('extra_where');
-        $this->db->update($this->tables['position_group'], $data, array('id' => $pos_group->id));
+        $this->db->update($this->tables['position_group'], $data, array('id' => $id));
 
         if ($this->db->trans_status() === FALSE)
         {

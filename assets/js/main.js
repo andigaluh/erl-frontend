@@ -211,7 +211,7 @@ $(document).ready(function(){
                         if(json.st == 0){
                             $('#MsgBad').html(json.errors).fadeIn();
                         }else{
-                            getTable();
+                            getTable();getModal();;
                             $("[data-dismiss=modal]").trigger({ type: "click" });
                             $('#MsgBad').hide();
                             $('#MsgGood').text('Data Saved').fadeIn().delay(3000).fadeOut("slow");
@@ -229,7 +229,7 @@ $(document).ready(function(){
                         if(json.st == 0){
                             $('#MsgBad2').html(json.errors).fadeIn();
                         }else{
-                            getTable();
+                            getTable();getModal();;
                             $("[data-dismiss=modal]").trigger({ type: "click" });
                             $('#MsgBad2').hide();
                             $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
@@ -246,7 +246,7 @@ $(function(){
                         if(json.st == 0){
                             $('#MsgBad').text('Delete Failed').fadeIn();
                         }else{
-                            getTable();
+                            getTable();getModal();;
                             $("[data-dismiss=modal]").trigger({ type: "click" });
                             $('#MsgGood').text('Data Deleted').fadeIn().delay(4000).fadeOut("slow");
                         }

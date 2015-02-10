@@ -71,8 +71,8 @@ class position extends MX_Controller {
              $config['base_url'] = base_url().'position/index/fn:'.$exp_ftitle[1].'/'.$sort_by.'/'.$sort_order.'/';
              $config['total_rows'] = $this->data['num_rows_all'];
              $config['per_page'] = $limit;
-             $config['uri_segment'] = $offset = $this->uri->segment(6);
-
+             $config['uri_segment'] = $this->uri->segment(6,0);
+	
             //inisialisasi config
              $this->pagination->initialize($config);
 
@@ -154,6 +154,26 @@ class position extends MX_Controller {
                 'type'  => 'text',
                 'value' => $this->form_validation->set_value('title'),
             );
+
+            $this->_render_page('position/table/index', $this->data);
+        }
+    }
+	public function get_modal(){
+			if (!$this->ion_auth->logged_in())
+        {
+            //redirect them to the login page
+            redirect('auth/login', 'refresh');
+        }
+        elseif (!$this->ion_auth->is_admin()) //remove this elseif if you want to enable this for non-admins
+        {
+            //redirect them to the home page because they must be an administrator to view this
+            //return show_error('You must be an administrator to view this page.');
+            return show_error('You must be an administrator to view this page.');
+        }
+        else
+        {      
+            //list of filterize limit position for pagination  
+            $this->data['position'] = $this->position_model->position()->result();
 			
 			$f_position_group = array("is_deleted" => 0);
             $q_position_group = GetAll('position_group', $f_position_group);
@@ -168,9 +188,9 @@ class position extends MX_Controller {
             $q_organization = GetAll('organization', $f_organization);
             $this->data['organization'] = ($q_organization->num_rows() > 0 ) ? $q_organization : array();
 
-            $this->_render_page('position/table/index', $this->data);
-        }
-    }
+            $this->_render_page('position/modal/index', $this->data);
+		}
+	}
 
     function keywords(){
         if (!$this->ion_auth->logged_in())
