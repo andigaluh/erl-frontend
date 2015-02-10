@@ -596,11 +596,10 @@ class Auth extends MX_Controller {
         $tables = $this->config->item('tables','ion_auth');
 
         //validate form input
-        $this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean');
-        $this->form_validation->set_rules('first_name', 'Nama depan', 'required|xss_clean');
-        $this->form_validation->set_rules('last_name', 'Nama belakang', 'required|xss_clean');
-        $this->form_validation->set_rules('bod', 'Tanggal lahir', 'required|xss_clean');
-        $this->form_validation->set_rules('business_unit_id', 'Business unit', 'required|xss_clean');
+        $this->form_validation->set_rules('nik', $this->lang->line('register_nik_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('first_name', $this->lang->line('register_firstname_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('last_name', $this->lang->line('register_lastname_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('bod', $this->lang->line('register_dob_label'), 'required|xss_clean');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
@@ -614,7 +613,6 @@ class Auth extends MX_Controller {
             $additional_data = array(
                 'first_name'            => $this->input->post('first_name'),
                 'last_name'             => $this->input->post('last_name'),
-                'business_unit_id'      => $this->input->post('business_unit_id'),
                 'nik'                   => $this->input->post('nik'),
                 'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
             );
@@ -661,11 +659,6 @@ class Auth extends MX_Controller {
                 'placeholder' => lang('create_user_validation_lname_label'),
                 'value' => $this->form_validation->set_value('last_name'),
             );
-
-
-            $f_business_unit = array("is_deleted" => 0);
-            $q_business_unit = GetAll('organization',$f_business_unit);
-            $this->data['business_unit'] = ($q_business_unit->num_rows() > 0 ) ? $q_business_unit : array();
 
             $this->data['email'] = array(
                 'name'  => 'email',
@@ -721,21 +714,11 @@ class Auth extends MX_Controller {
         $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
         $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
         $this->form_validation->set_rules('bod', $this->lang->line('edit_user_validation_bod_label'), 'required|xss_clean');
-        $this->form_validation->set_rules('business_unit_id', $this->lang->line('edit_user_validation_business_unit_id_label'), 'required|xss_clean');
         $this->form_validation->set_rules('marital_id', $this->lang->line('edit_user_validation_marital_label'), 'required|xss_clean');
         $this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
         $this->form_validation->set_rules('photo', $this->lang->line('edit_user_validation_photo_label'), 'xss_clean');
 
-        /*$this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean');
-        $this->form_validation->set_rules('first_name', 'Nama depan', 'required|xss_clean');
-        $this->form_validation->set_rules('last_name', 'Nama belakang', 'required|xss_clean');
-        $this->form_validation->set_rules('bod', 'Tanggal lahir', 'required|xss_clean');
-        $this->form_validation->set_rules('business_unit_id', 'Business unit', 'required|xss_clean');
-        $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
-        $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-        $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');*/
-
-        if (isset($_POST) && !empty($_POST))
+       if (isset($_POST) && !empty($_POST))
         {
             // do we have a valid request?
             if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
@@ -820,7 +803,6 @@ class Auth extends MX_Controller {
                             $data = array(
                             'first_name' => $this->input->post('first_name'),
                             'last_name'  => $this->input->post('last_name'),
-                            'business_unit_id'      => $this->input->post('business_unit_id'),
                             'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
                             'marital_id'      => $this->input->post('marital_id'),
                             'phone'      => $this->input->post('phone'),
@@ -833,7 +815,6 @@ class Auth extends MX_Controller {
             $data = array(
                             'first_name' => $this->input->post('first_name'),
                             'last_name'  => $this->input->post('last_name'),
-                            'business_unit_id'      => $this->input->post('business_unit_id'),
                             'bod'                   => date('Y-m-d',strtotime($this->input->post('bod'))),
                             'marital_id'      => $this->input->post('marital_id'),
                             'phone'      => $this->input->post('phone'),
@@ -986,12 +967,6 @@ class Auth extends MX_Controller {
             'type' => 'password'
         );
 
-        $this->data['business_unit_id'] = $this->form_validation->set_value('business_unit_id', $user->business_unit_id);
-        $f_business_unit = array("is_deleted" => 0);
-        $q_business_unit = GetAll('organization',$f_business_unit);
-        $this->data['business_unit'] = ($q_business_unit->num_rows() > 0 ) ? $q_business_unit : array();
-
-
         $this->data['marital_id'] = $this->form_validation->set_value('email', $user->marital_id);
         $this->data['s_photo'] = $this->form_validation->set_value('photo', $user->photo);
         $user_folder = $user->id.$user->first_name;
@@ -1025,7 +1000,7 @@ class Auth extends MX_Controller {
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
         $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
-        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
+       
         $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
         $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
         $this->data['email'] = (!empty($user->email)) ? $user->email : '';
@@ -1083,6 +1058,20 @@ class Auth extends MX_Controller {
         $this->data['active_inactive'] = ($q_active_inactive->num_rows() > 0 ) ? $q_active_inactive : array();
 
         $this->_render_page('auth/detail', $this->data);
+    }
+
+    public function get_pos_group($id){
+        $filter = array("id"=>$id,"is_deleted"=>0);
+        $q = GetALL('position',$filter);
+        //die(print_mz($q));
+        if($q->num_rows() > 0)
+        {
+            $value = $q->row_array();
+            echo json_encode(array('position_group_id' =>$value['position_group_id'],'organization_id' =>$value['organization_id']));
+        }else{
+            echo json_encode(array('position_group_id' =>0,'organization_id' =>0));
+        }
+                
     }
 
     function add_empl($id)
@@ -1229,7 +1218,6 @@ class Auth extends MX_Controller {
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
         $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
-        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
         $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
         $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
 
@@ -1392,7 +1380,6 @@ class Auth extends MX_Controller {
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
         $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
-        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
         $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
         $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
 
@@ -1536,7 +1523,6 @@ class Auth extends MX_Controller {
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
         $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
-        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
         $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
         $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
 
@@ -1789,7 +1775,6 @@ class Auth extends MX_Controller {
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
         $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
-        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
         $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
         $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
 
@@ -2062,7 +2047,6 @@ class Auth extends MX_Controller {
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
         $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
-        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
         $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
         $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
 
@@ -2234,7 +2218,6 @@ class Auth extends MX_Controller {
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
         $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
-        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
         $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
         $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
 
@@ -2257,12 +2240,8 @@ class Auth extends MX_Controller {
         $q_position = GetAll('position', $f_position);
         $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
 
-        $f_departement = array("is_deleted" => 0);
-        $q_departement = GetAll('departement', $f_departement);
-        $this->data['q_departement'] = $q_departement;
-        $this->data['departement'] = ($q_departement->num_rows() > 0 ) ? $q_departement : array();
-
-        $f_receivedby = array("is_deleted" => 0);
+        //$f_receivedby = array("is_deleted" => 0);
+        $f_receivedby = array();
         $q_receivedby = GetAll('users', $f_receivedby);
         $this->data['q_receivedby'] = $q_receivedby;
         $this->data['receivedby'] = ($q_receivedby->num_rows() > 0 ) ? $q_receivedby : array();
@@ -2280,17 +2259,14 @@ class Auth extends MX_Controller {
         $q_position = GetAll('position', $f_position);
         $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
 
-        $f_departement = array("is_deleted" => 0);
-        $q_departement = GetAll('departement', $f_departement);
-        $this->data['q_departement'] = $q_departement;
-        $this->data['departement'] = ($q_departement->num_rows() > 0 ) ? $q_departement : array();
-
-        $f_receivedby = array("is_deleted" => 0);
+        $f_receivedby = array();
+        //$f_receivedby = array("is_deleted" => 0);
         $q_receivedby = GetAll('users', $f_receivedby);
         $this->data['q_receivedby'] = $q_receivedby;
         $this->data['receivedby'] = ($q_receivedby->num_rows() > 0 ) ? $q_receivedby : array();
 
-        $f_acknowledgeby = array("is_deleted" => 0);
+        /*$f_acknowledgeby = array("is_deleted" => 0);*/
+        $f_acknowledgeby = array();
         $q_acknowledgeby = GetAll('users', $f_acknowledgeby);
         $this->data['q_acknowledgeby'] = $q_acknowledgeby;
         $this->data['acknowledgeby'] = ($q_acknowledgeby->num_rows() > 0 ) ? $q_acknowledgeby : array();
@@ -2306,7 +2282,6 @@ class Auth extends MX_Controller {
         $this->form_validation->set_rules('ijazah_history','Ijazah History','trim|required');
         $this->form_validation->set_rules('activation_date','Activation Date','trim|required');
         $this->form_validation->set_rules('position_id','Position','trim|required');
-        $this->form_validation->set_rules('departement_id','Departement','trim|required');
         $this->form_validation->set_rules('receivedby_id','Received By','trim|required');
         $this->form_validation->set_rules('acknowledgeby_id','Acknowledge By','trim|required');
         $this->form_validation->set_rules('institution','Institution','trim|required');
@@ -2327,7 +2302,6 @@ class Auth extends MX_Controller {
                     'activation_date'=> date('Y-m-d',strtotime($this->input->post('activation_date'))),
                     'institution'=> $this->input->post('institution'),
                     'published_place'=> $this->input->post('published_place'),
-                    'departement_id'=> $this->input->post('departement_id'),
                     'position_id'=> $this->input->post('position_id'),
                     'receivedby_id'=> $this->input->post('receivedby_id'),
                     'acknowledgeby_id'=> $this->input->post('acknowledgeby_id'),
@@ -2349,7 +2323,6 @@ class Auth extends MX_Controller {
         $this->form_validation->set_rules('ijazah_history','Ijazah History','trim|required');
         $this->form_validation->set_rules('activation_date','Activation Date','trim|required');
         $this->form_validation->set_rules('position_id','Position','trim|required');
-        $this->form_validation->set_rules('departement_id','Departement','trim|required');
         $this->form_validation->set_rules('receivedby_id','Received By','trim|required');
         $this->form_validation->set_rules('acknowledgeby_id','Acknowledge By','trim|required');
         $this->form_validation->set_rules('institution','Institution','trim|required');
@@ -2370,7 +2343,6 @@ class Auth extends MX_Controller {
                     'activation_date'=> date('Y-m-d',strtotime($this->input->post('activation_date'))),
                     'institution'=> $this->input->post('institution'),
                     'published_place'=> $this->input->post('published_place'),
-                    'departement_id'=> $this->input->post('departement_id'),
                     'position_id'=> $this->input->post('position_id'),
                     'receivedby_id'=> $this->input->post('receivedby_id'),
                     'acknowledgeby_id'=> $this->input->post('acknowledgeby_id'),
@@ -2427,7 +2399,6 @@ class Auth extends MX_Controller {
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
         $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
-        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
         $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
         $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
 
@@ -2454,7 +2425,8 @@ class Auth extends MX_Controller {
         $q_position = GetAll('position', $f_position);
         $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
 
-        $f_groups = array("is_deleted" => 0);
+        $f_groups = array();
+        //$f_groups = array("is_deleted" => 0);
         $q_groups = GetAll('groups', $f_groups);
         $this->data['q_groups'] = $q_groups;
         $this->data['groups'] = ($q_groups->num_rows() > 0 ) ? $q_groups : array();
@@ -2487,7 +2459,8 @@ class Auth extends MX_Controller {
         $q_position = GetAll('position', $f_position);
         $this->data['position'] = ($q_position->num_rows() > 0 ) ? $q_position : array();
 
-        $f_groups = array("is_deleted" => 0);
+        $f_groups = array();
+        //$f_groups = array("is_deleted" => 0);
         $q_groups = GetAll('groups', $f_groups);
         $this->data['q_groups'] = $q_groups;
         $this->data['groups'] = ($q_groups->num_rows() > 0 ) ? $q_groups : array();
@@ -2601,7 +2574,6 @@ class Auth extends MX_Controller {
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
         $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
-        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
         $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
         $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
 
@@ -2740,7 +2712,6 @@ class Auth extends MX_Controller {
         $this->data['bod'] = (!empty($user->bod)) ? $user->bod : '-';
         $this->data['first_name'] = (!empty($user->first_name)) ? $user->first_name : '';
         $this->data['last_name'] = (!empty($user->last_name)) ? $user->last_name : '';
-        $this->data['business_unit_id'] = (!empty($user->organization_title)) ? $user->organization_title : '';
         $this->data['marital_id'] = (!empty($user->marital_title)) ? $user->marital_title : '';
         $this->data['phone'] = (!empty($user->phone)) ? $user->phone : '';
 

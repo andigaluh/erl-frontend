@@ -73,14 +73,22 @@
                                                             : <?php echo strtoupper($nik);?>
                                                         </div>                               
                                                     </div>
-                                                    <div class="row">
+                                                    <!-- <div class="row">
                                                         <div class="col-md-5">
-                                                            <?php echo lang('register_bu_label', 'business_unit');?>
+                                                            <?php echo lang('register_organization_label', 'organization');?>
                                                         </div>
                                                         <div class="col-md-7">
-                                                            : <?php echo strtoupper($business_unit_id);?>
+                                                            : <?php echo strtoupper($organization);?>
                                                         </div>                               
-                                                    </div>
+                                                    </div> -->
+                                                    <!-- <div class="row">
+                                                        <div class="col-md-5">
+                                                            <?php echo lang('register_position_label', 'position');?>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            : <?php echo strtoupper($position);?>
+                                                        </div>                               
+                                                    </div> -->
                                                     <div class="row">
                                                         <div class="col-md-5">
                                                             <?php echo lang('register_dob_label', 'dob');?>

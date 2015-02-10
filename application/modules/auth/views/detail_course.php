@@ -76,14 +76,6 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-5">
-                                                            <?php echo lang('register_bu_label', 'business_unit');?>
-                                                        </div>
-                                                        <div class="col-md-7">
-                                                            : <?php echo strtoupper($business_unit_id);?>
-                                                        </div>                               
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-5">
                                                             <?php echo lang('register_dob_label', 'dob');?>
                                                         </div>
                                                         <div class="col-md-7">

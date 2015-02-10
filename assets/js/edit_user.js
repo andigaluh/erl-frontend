@@ -9,7 +9,7 @@ $(document).ready(function() {
 			todayHighlight: true
 	   });
 
-	  $("#business_unit_id").select2();
+	  $(".select2").select2();
 	  
 	  $("#marital_id").select2();
 

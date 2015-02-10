@@ -73,14 +73,22 @@
                                                             : <?php echo strtoupper($nik);?>
                                                         </div>                               
                                                     </div>
-                                                    <div class="row">
+                                                    <!-- <div class="row">
                                                         <div class="col-md-5">
-                                                            <?php echo lang('register_bu_label', 'business_unit');?>
+                                                            <?php echo lang('register_organization_label', 'organization');?>
                                                         </div>
                                                         <div class="col-md-7">
-                                                            : <?php echo strtoupper($business_unit_id);?>
+                                                            : <?php echo strtoupper($organization);?>
                                                         </div>                               
-                                                    </div>
+                                                    </div> 
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <?php echo lang('register_position_label', 'position');?>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            : <?php echo strtoupper($position);?>
+                                                        </div>                               
+                                                    </div>-->
                                                     <div class="row">
                                                         <div class="col-md-5">
                                                             <?php echo lang('register_dob_label', 'dob');?>
@@ -308,23 +316,6 @@
 	                            foreach ($position->result_array() as $key => $value) {
 	                            $selected = ($position_id <> 0 && $position_id == $value['id']) ? 'selected = selected' : '';
 	                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-	                            }
-	                            ?>
-	                        </select>        
-	                </div>
-
-	                <div class="col-md-3">
-	                    <?php echo lang('departement', 'departement');?>
-	                </div>
-	                <div class="col-md-9">
-	                    <select name="departement_id" class="select2" id="departement_id" style="width:100%">
-	                        <?php
-	                            if($q_departement->num_rows() > 0){
-	                            foreach ($departement->result_array() as $key => $value) {
-	                            $selected = ($departement_id <> 0 && $departement_id == $value['id']) ? 'selected = selected' : '';
-	                            echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
-	                            }}else{
-	                                echo '<option value="0">'.'No Data'.'</option>';
 	                            }
 	                            ?>
 	                        </select>        

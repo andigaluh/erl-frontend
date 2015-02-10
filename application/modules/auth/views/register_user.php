@@ -41,19 +41,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <?php echo lang('register_bu_label', 'business_unit');?>
-                                <div class="input-with-icon right">                                       
-                                    <i class=""></i>
-                                    <select name="business_unit_id" class="select2" id="business_unit_id" style="width:100%">
-                                        <?php
-                                            foreach ($business_unit->result_array() as $key => $value) {
-                                                echo '<option value="'.$value['id'].'" >'.$value['title'].'</option>';
-                                            }
-                                        ?>
-                                    </select>                            
-                                </div>
-                            </div>
                         </div>
                         <div class="col-md-6">
                             <h4><?php echo lang('user_information_subheading')?></h4> 
