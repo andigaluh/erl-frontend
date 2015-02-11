@@ -211,7 +211,7 @@ $(document).ready(function(){
                         if(json.st == 0){
                             $('#MsgBad').html(json.errors).fadeIn();
                         }else{
-                            getTable();getModal();;
+                            getTable();
                             $("[data-dismiss=modal]").trigger({ type: "click" });
                             $('#MsgBad').hide();
                             $('#MsgGood').text('Data Saved').fadeIn().delay(3000).fadeOut("slow");
@@ -254,6 +254,21 @@ $(function(){
                     return false;
                 });
             });
+			
+$(function () {
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+        } else {
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+        }
+        e.stopPropagation();
+    });
+});
 
 $(function(){
  $('#search').submit(function(response){
@@ -307,6 +322,25 @@ $(function(){
             function getTable2() 
             {
                 $('#tabel').load(json.base_url+'position_group/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+	
+$('#search_position').on("submit",function(response){
+        $.post($('#search_position').attr('action'), $('#search_position').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'position/get_table/fn:'+json.title);
             }
 
             if(json.st == 0){
