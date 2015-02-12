@@ -39,17 +39,17 @@
                                             <select name="first_name" class="select2" id="first_name" style="width:100%">
                                                 <option value="0">--select user--</option>
                                                 <?php foreach ($user_all->result_array() as $key => $value) {
-                                                    echo '<option value="'.site_url('person/detail/'.$value['id']).'">'.$value['first_name'].' - '.$value['email'].'</option>';
+                                                    echo '<option value="'.site_url('person/detail/'.$value['id']).'">'.$value['first_name'].'&nbsp;'.$value['last_name'].' - '.$value['email'].'</option>';
                                                 }?>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <!-- <div class="col-md-2">
                                     <div class="row">
                                         <div class="col-md-12"><?php echo form_submit('submit','Search','class="btn btn-primary"')?></div>
                                     </div>
-                                </div>    
+                                </div>   -->  
                             </div>
                         <?php echo form_close()?>
                     </div>
