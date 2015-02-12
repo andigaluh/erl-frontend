@@ -25,7 +25,7 @@
                     <?php echo lang('parent_organization', 'parent_organization');?>
                 </div>
                 <div class="col-md-9">
-                    <select name="parent_organization_id" class="select2" id="parent" style="width:100%">
+                    <select name="parent_organization_id" class="select2" id="parent_organization_id" style="width:100%">
                         <?php
                             echo '<option value="0">Top Level</option>';
                             foreach ($parent->result_array() as $key => $value) {
@@ -93,7 +93,7 @@
                     <?php echo lang('parent_organization', 'parent_organization');?>
                 </div>
                 <div class="col-md-9">
-                    <select name="parent" class="select2" id="parent" style="width:100%">
+                    <select name="parent_organization_id" class="select2" id="parent" style="width:100%">
                         <?php
                             echo '<option value="0">Top Level</option>';
                             foreach ($parent->result_array() as $key => $value) {

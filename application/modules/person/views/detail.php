@@ -183,7 +183,7 @@
 			                		<h4>Employement</h4>
 			                		<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Seniority Date</label>
+					                      <label class="form-label"><?php echo lang('seniority_date')?></label>
 					                    </div>
 					                   	<div class="col-md-9">
 				                        	<input type="text" class="form-control" value="<?php echo $seniority_date?>" disabled="disabled">
@@ -191,7 +191,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Position</label>
+					                      <label class="form-label"><?php echo lang('position')?></label>
 					                    </div>
 					                   	<div class="col-md-9">
 				                      	<input type="text" class="form-control" value="<?php echo $position?>" disabled="disabled">
@@ -199,15 +199,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <?php echo lang('register_bu_label', 'business_unit');?>
-					                    </div>
-					                    <div class="col-md-9">
-				                        	<input type="text" class="form-control" value="<?php echo $business_unit?>" disabled="disabled">
-				                      	</div>
-						        	</div>
-						        	<div class="row form-row">
-				                		<div class="col-md-3">
-					                      <label class="form-label">Employee Status</label>
+					                      <label class="form-label"><?php echo lang('empl_status')?></label>
 					                    </div>
 					                    <div class="col-md-9">
 				                      		<input type="text" class="form-control" value="<?php echo $empl_status?>" disabled="disabled">
@@ -215,7 +207,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Status</label>
+					                      <label class="form-label"><?php echo lang('employee_status')?></label>
 					                    </div>
 					                    <div class="col-md-9">
 				                      		<input type="text" class="form-control" value="<?php echo $employee_status?>" disabled="disabled">
@@ -223,7 +215,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Cost Center</label>
+					                      <label class="form-label"><?php echo lang('cost_center')?></label>
 					                    </div>
 					                    <div class="col-md-9">
 				                        	<input type="text" class="form-control" value="<?php echo $cost_center?>" disabled="disabled">
@@ -231,7 +223,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Position Group</label>
+					                      <label class="form-label"><?php echo lang('position_group')?></label>
 					                    </div>
 					                    <div class="col-md-9">
 				                      		<input type="text" class="form-control" value="<?php echo $position_group?>" disabled="disabled">
@@ -239,7 +231,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Grade</label>
+					                      <label class="form-label"><?php echo lang('grade')?></label>
 					                    </div>
 					                    <div class="col-md-9">
 				                      		<input type="text" class="form-control" value="<?php echo $grade?>" disabled="disabled">
@@ -247,7 +239,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Resign Reason</label>
+					                      <label class="form-label"><?php echo lang('resign_reason')?></label>
 					                    </div>
 					                    <div class="col-md-9">
 				                      		<input type="text" class="form-control" value="<?php echo $resign_reason?>" disabled="disabled">
@@ -255,7 +247,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Active / Inactive</label>
+					                      <label class="form-label"><?php echo lang('active_inactive')?></label>
 					                    </div>
 					                    <div class="col-md-9">
 				                      		<input type="text" class="form-control" value="<?php echo $active_inactive?>" disabled="disabled">
@@ -270,7 +262,7 @@
 			                		<h4>CONTACT</h4>
 			                		<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Mobile Phone</label>
+					                      <?php echo lang('edit_user_mobile_phone_label', 'phone');?>
 					                    </div>
 					                    <div class="col-md-9">
 				                        	<input type="text" class="form-control" value="<?php echo $phone?>" disabled="disabled">
@@ -278,7 +270,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Corporate Email</label>
+					                      <?php echo lang('create_user_email_label', 'email');?>
 					                    </div>
 					                    <div class="col-md-9">
 				                        	<input class="form-control" type="text" value="<?php echo $email?>" disabled="disabled">
@@ -286,7 +278,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Previous Email</label>
+					                      <?php echo lang('edit_user_previous_email_label', 'previous_email');?>
 					                    </div>
 					                    <div class="col-md-9">
 				                        	<input type="text" class="form-control" value="<?php echo $previous_email?>" disabled="disabled">
@@ -294,7 +286,7 @@
 						        	</div>
 						        	<div class="row form-row">
 				                		<div class="col-md-3">
-					                      <label class="form-label">Blackberry PIN</label>
+					                      <?php echo lang('edit_user_bb_pin_label', 'bb_pin');?>
 					                    </div>
 					                    <div class="col-md-9">
 				                        	<input type="text" class="form-control" value="<?php echo $bb_pin?>" disabled="disabled">
@@ -315,10 +307,10 @@
 			                                    <table class="table no-more-tables table-hover">
 			                                        <thead>
 			                                            <tr>
-			                                                <th width="20%">Course ID</th>
-			                                                <th width="40%">Description</th>
-			                                                <th width="20%">Registration Date</th>
-			                                                <th width="20%">Status</th>
+			                                                <th width="20%"><?php echo lang('course_id');?></th>
+			                                                <th width="40%"><?php echo lang('description');?></th>
+			                                                <th width="20%"><?php echo lang('course_registration_date');?></th>
+			                                                <th width="20%"><?php echo lang('course_status');?></th>
 			                                            </tr>
 			                                        </thead>
 			                                        <tbody>
@@ -346,7 +338,7 @@
 												                  		<h4>ID : #<?php echo $row->id?></h4>
 												                  		<div class="row form-row">
 													                      <div class="col-md-2">
-													                        <label class="form-label text-right">course Id</label>
+													                        <?php echo lang('course_id', 'course_id');?>
 													                      </div>
 													                      <div class="col-md-10">
 													                        <input name="courseid" id="courseid" type="text"  class="form-control" placeholder="courseid" value="TRN_<?php echo $row->id?>" disabled="disabled">
@@ -354,7 +346,7 @@
 													                    </div>
 												                  		<div class="row form-row">
 													                      <div class="col-md-2">
-													                        <label class="form-label text-right">Description</label>
+													                        <?php echo lang('description', 'description');?>
 													                      </div>
 													                      <div class="col-md-10">
 													                        <input name="description" id="description" type="text"  class="form-control" placeholder="Description" value="<?php echo $row->description?>" disabled="disabled">
@@ -364,7 +356,7 @@
 													                    
 													                    <div class="row form-row">
 													                      <div class="col-md-2">
-													                        <label class="form-label text-right">Registration Date</label>
+													                        <?php echo lang('course_registration_date', 'course_registration_date');?>
 													                      </div>
 													                      <div class="col-md-10">
 													                        <input name="registration_date" id="registration_date" type="text"  class="form-control" placeholder="Registration Date" value="<?php echo $row->registration_date?>" disabled="disabled">
@@ -373,7 +365,7 @@
 
 													                    <div class="row form-row">
 													                      <div class="col-md-2">
-													                        <label class="form-label text-right">Status</label>
+													                        <?php echo lang('course_status', 'course_status');?>
 													                      </div>
 													                      <div class="col-md-10">
 													                        <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="<?php echo $row->status?>" disabled="disabled">
@@ -980,14 +972,6 @@
 													                      </div>
 													                      <div class="col-md-10">
 													                        <input name="posisi_penandatangan" id="posisi_penandatangan" type="text"  class="form-control" placeholder="Posisi Penandatangan" value="<?php echo $row->activation_date?>" disabled="disabled">
-													                      </div>
-													                    </div>
-													                    <div class="row form-row">
-													                      <div class="col-md-2">
-													                        <label class="form-label text-right">Bagian</label>
-													                      </div>
-													                      <div class="col-md-10">
-													                        <input name="posisi_penandatangan" id="posisi_penandatangan" type="text"  class="form-control" placeholder="Posisi Penandatangan" value="<?php echo $row->departement?>" disabled="disabled">
 													                      </div>
 													                    </div>
 													                    <div class="row form-row">

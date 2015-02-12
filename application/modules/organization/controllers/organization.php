@@ -34,8 +34,10 @@ class Organization extends MX_Controller {
         }
         else
         {
+			
             $organization = $this->organization_model->getOrganization();
-
+			$menu=$this->get_menu($organization->result(),0);
+			$this->data['menu'] = $menu;
             $this->data['organization'] = $organization;
 
             $f_organization_class = array("is_deleted" => 0);
@@ -51,6 +53,40 @@ class Organization extends MX_Controller {
             $this->_render_page('organization/index', $this->data);
         }
     }
+
+	public function get_menu($results,$parent_id)
+	{
+		$menu='</span><ul>';
+
+		for($i=0;$i<sizeof($results);$i++)
+		{
+			if($results[$i]->parent_id==$parent_id)
+			{
+				if($this->has_child($results,$results[$i]->id))
+				{
+					$sub_menu= $this->get_menu($results,$results[$i]->id);
+					$menu.='<li><span><i class="icon-minus-sign"></i>'.$results[$i]->title.'-'.$results[$i]->organization_class.$sub_menu.'</span></li>';
+				}
+				else
+				{
+					$menu.='<li><span><i class="icon-minus-sign"></i>'.$results[$i]->title.'-'.$results[$i]->organization_class.'</span></li>';
+				}
+			}
+		}
+		$menu.='</ul>';
+		return $menu;
+	}
+	public function has_child($results,$id)
+	{
+		for($i=0;$i<sizeof($results);$i++)
+		{
+			if($results[$i]->parent_id==$id)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	function get_table()
 	{
@@ -68,7 +104,8 @@ class Organization extends MX_Controller {
         else
         {
 			$organization = $this->organization_model->getOrganization();
-
+			$menu=$this->get_menu($organization->result(),0);
+			$this->data['menu'] = $menu;
             $this->data['organization'] = $organization;
 			
 			$this->_render_page('organization/table/index', $this->data);
@@ -199,8 +236,6 @@ class Organization extends MX_Controller {
                     $this->template->add_js('jquery.sidr.min.js');
                     $this->template->add_js('breakpoints.js');
                     $this->template->add_js('select2.min.js');
-
-                    $this->template->add_js('list_organization_class.js');
                     $this->template->add_js('core.js');
 
                     $this->template->add_js('main.js');

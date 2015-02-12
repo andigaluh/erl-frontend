@@ -318,7 +318,7 @@ $lang['edit_jabatan'] = 'Edit Position History';
 $lang['organization'] = 'Organization';
 $lang['employee_group'] = 'Employee Group';
 $lang['branch'] = 'branch';
-$lang['grade'] = 'grade';
+$lang['grade'] = 'Grade';
 $lang['personel_action'] = 'Personel Action';
 
 //Users Award Warning
