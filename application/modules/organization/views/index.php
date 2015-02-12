@@ -21,7 +21,7 @@
 						<div id="MsgGood" class="alert alert-success text-center" style="display:none;"></div>
 						<div id="tabel">
 						
-</div>
+						</div>
 	
 	
 		

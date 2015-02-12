@@ -57,24 +57,26 @@ class Organization extends MX_Controller {
 	public function get_menu($results,$parent_id)
 	{
 		$menu='</span><ul>';
-
 		for($i=0;$i<sizeof($results);$i++)
 		{
 			if($results[$i]->parent_id==$parent_id)
 			{
+				$btnedit = '</span>&nbsp;<button type="button" class="btn btn-info btn-small" title="'.lang('edit_button').'" data-toggle="modal" data-target="#editorganizationModal'.$results[$i]->id.'"><i class="icon-paste"></i></button>';
+				$btndelete = '&nbsp;<button class="btn btn-danger btn-small" type="button" title="'.lang('delete_button').'" data-toggle="modal" data-target="#deleteModal'.$results[$i]->id.'"><i class="icon-warning-sign"></i></button>';
 				if($this->has_child($results,$results[$i]->id))
 				{
 					$sub_menu= $this->get_menu($results,$results[$i]->id);
-					$menu.='<li><span><i class="icon-minus-sign"></i>'.$results[$i]->title.'-'.$results[$i]->organization_class.$sub_menu.'</span></li>';
+					$menu.='<li><span><i class="icon-minus-sign"></i>'.$results[$i]->title.'-'.$results[$i]->organization_class.$btnedit.$btndelete.$sub_menu.'</li>';
 				}
 				else
 				{
-					$menu.='<li><span><i class="icon-minus-sign"></i>'.$results[$i]->title.'-'.$results[$i]->organization_class.'</span></li>';
+					$menu.='<li><span><i class="icon-minus-sign"></i>'.$results[$i]->title.'-'.$results[$i]->organization_class.$btnedit.$btndelete.'</li>';
 				}
+				
 			}
 		}
 		$menu.='</ul>';
-		return $menu;
+		return $menu.'add';;
 	}
 	public function has_child($results,$id)
 	{
@@ -210,6 +212,29 @@ class Organization extends MX_Controller {
 					echo json_encode(array('st'=>1));
 				
 				}
+			}
+	}
+	
+	function delete($id)
+	{
+		if (!$this->ion_auth->logged_in())
+			{
+				redirect('auth/login', 'refresh');
+			}
+			elseif (!$this->ion_auth->is_admin())
+			{
+				return show_error('You must be an administrator to view this page.');
+			}
+			else
+			{
+				$data = array(
+							'is_deleted'		=> 1,
+							'deleted_on'        => date('Y-m-d H:i:s',strtotime('now')),
+							'deleted_by'        => $this->session->userdata('user_id'),
+						);
+				$this->organization_model->update($id, $data);
+					
+				echo json_encode(array('st'=>1));
 			}
 	}
 
