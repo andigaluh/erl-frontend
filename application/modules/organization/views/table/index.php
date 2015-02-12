@@ -1,11 +1,15 @@
 <div id="tabel">
 	<div class="tree">	
-		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addModal"><i class="icon-plus"></i>&nbsp;<?php echo lang('add_button');?></button>
-		
+	
 		<?php
+		if($organization->num_rows()>0){
 		echo $menu;
+		}else{
+			echo 'There is no active organization';
+		}
 		?>
-		</div>
+		
+	</div>
 	<script>
 	$(function () {
 		$('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');

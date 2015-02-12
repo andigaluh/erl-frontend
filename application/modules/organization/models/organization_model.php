@@ -13,10 +13,12 @@ class Organization_model extends CI_Model
         $this->db->from('organization');
         $this->db->join('organization_class', 'organization.organization_class_id = organization_class.id', 'left');
         $this->db->join('organization as parent', 'organization.parent_organization_id = parent.id', 'left');
+		$this->db->join('comp_session', 'organization.comp_session_id = comp_session.id', 'left');
 		$this->db->order_by('organization.organization_class_id', 'asc');
 		
 		$this->db->where('organization.is_deleted', 0);
 		$this->db->where('organization_class.is_deleted', 0);
+		$this->db->where('comp_session.is_active', 1);
 		
         $query = $this->db->get();
         return $query;
