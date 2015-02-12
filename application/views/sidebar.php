@@ -53,10 +53,12 @@
       </li>  
       <li class=""> <a href="javascript:;"> <i class="icon-group"></i> <span class="title">Manage Company</span> <span class="arrow "></span> </a>
         <ul class="sub-menu">
-          <li > <a href="<?php echo site_url('organization')?>">Organization</a> </li>
+          <li > <a href="<?php echo site_url('comp_session')?>">Company Session</a> </li>
           <li > <a href="<?php echo site_url('organization_class')?>">Organization Class</a> </li>
-          <li > <a href="<?php echo site_url('position')?>">Position</a> </li>
+          <li > <a href="<?php echo site_url('organization')?>">Organization</a> </li>
           <li > <a href="<?php echo site_url('position_group')?>">Position Group</a> </li>
+          <li > <a href="<?php echo site_url('position')?>">Position</a> </li>
+          
         </ul>
       </li>      
     </ul>

@@ -51,6 +51,7 @@ $lang['index_sk_title_th']		 = 'SK Title';
 $lang['index_sti_title_th']		 = 'STI Title';
 $lang['index_ikatan_dinas_title_th']		 = 'Ikatan Dinas Title';
 
+
 // Deactivate User
 $lang['deactivate_heading']                  = 'Deactivate User';
 $lang['deactivate_subheading']               = 'Are you sure you want to deactivate the user \'%s\'';
@@ -349,4 +350,14 @@ $lang['parent_position_group'] = 'Parent Position Group';
 //position class
 $lang['abbrevation'] = 'Abbrevation';
 $lang['position_parent'] = 'Position Parent';
+
+//company session
+$lang['year']		 = 'Year';
+$lang['is_absence']		 = 'Absence system';
+$lang['is_active']		 = 'Active status';
+$lang['comp_session_subheading']		 = 'Company Session';
+$lang['true_lable']		 = 'Yes';
+$lang['false_lable']	 = 'No';
+$lang['add_comp_session']	 = 'Add Company Session';
+$lang['payroll_type']	 = 'Payroll Type';
 
