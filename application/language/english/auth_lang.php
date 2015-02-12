@@ -339,6 +339,8 @@ $lang['edit_ikatan_dinas'] = 'Edit Ikatan Dinas';
 //organization
 $lang['parent_organization'] = 'Organization Parent';
 $lang['organization_class'] = 'Organization Class';
+$lang['org_subheading'] = 'Organization';
+$lang['structure_subheading'] = 'Structure';
 
 //organization_class
 $lang['edit_validation_ftitle_label'] = 'Title';
