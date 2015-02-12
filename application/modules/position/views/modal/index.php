@@ -1,5 +1,5 @@
 <!-- Add Course Modal -->
-<?php echo form_open('position/add/', array('id'=>'formadd'))?> 
+<?php echo form_open('position/add/', array('id'=>'formadd2'))?> 
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" id="modaldialog">
     <div class="modal-content">

@@ -222,6 +222,23 @@ $(document).ready(function(){
                 });
                 $('#course_status_id').select2();
             });
+			
+$(document).ready(function(){
+                $('#formadd2').submit(function(response){
+                    $.post($('#formadd2').attr('action'), $('#formadd2').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad').html(json.errors).fadeIn();
+                        }else{
+                            getTable();getModal();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad').hide();
+                            $('#MsgGood').text('Data Saved').fadeIn().delay(3000).fadeOut("slow");
+                            $('#modaldialog').find('#formadd')[0].reset();
+                        }
+                    }, 'json');
+                    return false;
+                });
+            });
 
 $(document).ready(function(){
                 $('#formupdate').submit(function(response){

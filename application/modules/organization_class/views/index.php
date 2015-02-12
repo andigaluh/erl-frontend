@@ -138,7 +138,7 @@
       </div>
       <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
       <div class="modal-body">
-        <?php echo form_open('organization_class/add/', array('id'=>'formadd'))?> 
+        <?php echo form_open('organization_class/add/', array('id'=>'formadd2'))?> 
              <div class="row form-row">
                 <div class="col-md-3">
                     <?php echo lang('title', 'title');?>
