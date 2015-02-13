@@ -728,6 +728,9 @@ class Auth extends MX_Controller {
             // Config for image upload
 
             $user_folder = $user->id.$user->first_name;
+			if(!is_dir('./'.'uploads')){
+            mkdir('./'.'uploads', 0777);
+            }
             if(!is_dir('./uploads/'.$user_folder)){
             mkdir('./uploads/'.$user_folder, 0777);
             }

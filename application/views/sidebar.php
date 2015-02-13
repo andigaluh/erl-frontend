@@ -3,7 +3,10 @@
     <!-- BEGIN MINI-PROFILE -->
     <div class="user-info-wrapper"> 
       <div class="profile-wrapper">
-        <img src="<?php echo assets_url('img/profiles/avatar.jpg'); ?>" data-src="<?php echo assets_url('img/profiles/avatar.jpg'); ?>" data-src-retina="<?php echo assets_url('img/profiles/avatar2x.jpg'); ?>" width="69" height="69" />
+        <img src="<?php 
+        echo base_url().'assets/img/no-image.png';
+        
+		?>" data-src="<?php echo assets_url('img/profiles/avatar.jpg'); ?>" data-src-retina="<?php echo assets_url('img/profiles/avatar2x.jpg'); ?>" width="69" height="69" />
       </div>
       <div class="user-info">
         <div class="greeting">Welcome</div>

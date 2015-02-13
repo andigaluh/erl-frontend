@@ -109,7 +109,11 @@ class Person extends MX_Controller {
         $this->data['grade'] = (!empty($user_emp->grade)) ? $user_emp->grade : '-';
         $this->data['resign_reason'] = (!empty($user_emp->resign_reason)) ? $user_emp->resign_reason : '-';
         $this->data['active_inactive'] = (!empty($user_emp->active_inactive)) ? $user_emp->active_inactive : '-';
-
+	
+	$this->data['s_photo'] = $this->form_validation->set_value('photo', $user->photo);
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+		
         //Company Sponsor Course Tab
          $this->data['user_course'] = $user_course;
 

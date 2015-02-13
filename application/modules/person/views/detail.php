@@ -173,7 +173,11 @@
 			                  		<div class="grid simple" style="margin-bottom : 0px !important;">
 				                   		<h4>Picture</h4>
 					            	</div>
-                                	<img alt="" src="<?php echo base_url()?>uploads/<?php echo $u_folder.'/225x225/'.$photo?>">
+                                	 <?php if($s_photo && file_exists('./uploads/'.$u_folder.'/'.$s_photo)) {?>
+                                                <img alt="" src="<?php echo base_url()?>uploads/<?php echo $u_folder.'/225x225/'.$s_photo?>">
+                                                <?php }else{ ?>
+                                                <img alt="" src="<?php echo base_url()?>assets/img/no-image-big.png" class="img-responsive">
+                                                <?php } ?>
 			                 	</div>
 			                </div>
 			           
