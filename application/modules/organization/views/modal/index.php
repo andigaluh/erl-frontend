@@ -1,13 +1,14 @@
 <!-- Add organization Modal -->
-<?php echo form_open('organization/add/', array('id'=>'formadd'))?> 
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<?php foreach($organization->result() as $row){?>
+<?php echo form_open('organization/add/', array('id'=>'formadd'.$row->id))?> 
+<div class="modal fade" id="addModal<?php echo $row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" id="modaldialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_pos_group', 'add_pos_group')?></h4>
+        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_organization', 'add_organization')?></h4>
       </div>
-      <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
+      <p class="error_msg" id="MsgBad<?php echo $row->id?>" style="background: #fff; display: none;"></p>
       <div class="modal-body">
             <div class="row form-row">
                 <div class="col-md-3">
@@ -18,16 +19,16 @@
                 </div>
             </div>
 
-            <div class="row form-row">
+             <div class="row form-row">
                 <div class="col-md-3">
                     <?php echo lang('parent_organization', 'parent_organization');?>
                 </div>
                 <div class="col-md-9">
-                    <select name="parent_organization_id" class="select2" id="parent_organization_id" style="width:100%">
+                    <select name="parent_organization_id" class="select2" id="parent" style="width:100%">
                         <?php
                             echo '<option value="0">Top Level</option>';
                             foreach ($parent->result_array() as $key => $value) {
-                                $selected = ($parent <> 0 && $parent == $value['id']) ? 'selected = selected' : '';
+                                $selected = ($row->parent_organization_id <> 0 && $row->parent_organization_id == $value['id']) ? 'selected = selected' : '';
                                 echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }
                         ?>
@@ -37,18 +38,18 @@
 			
 			<div class="row form-row">
                 <div class="col-md-3">
-                    <?php echo lang('organization_class', 'organization_class');?>
+                    <?php echo lang('parent_organization', 'parent_organization');?>
                 </div>
                 <div class="col-md-9">
                     <select name="organization_class_id" class="select2" id="organization_class_id" style="width:100%">
                         <?php
                             echo '<option value="0">Top Level</option>';
                             foreach ($organization_class->result_array() as $key => $value) {
-                                $selected = ($organization_class <> 0 && $organization_class == $value['id']) ? 'selected = selected' : '';
+                                $selected = ($row->organization_class_id <> 0 && $row->organization_class_id == $value['id']) ? 'selected = selected' : '';
                                 echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['title'].'</option>';
                             }
                         ?>
-                        </select>
+                    </select>
                 </div>
             </div>
 			
@@ -64,7 +65,7 @@
 <?php echo form_close()?>
 <!--end add modal-->
 
-<?php foreach($organization->result() as $row){?>
+
 <!--Edit Modal-->
 <?php echo form_open('organization/update/'.$row->id, array('id'=>'formupdate'.$row->id))?>
 <div class="modal fade" id="editorganizationModal<?php echo $row->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -153,6 +154,22 @@
         <!-- End Delete Modal-->
 		
 <script type="text/javascript">
+
+			$('#formadd<?php echo $row->id?>').submit(function(response){
+                    $.post($('#formadd<?php echo $row->id?>').attr('action'), $('#formadd<?php echo $row->id?>').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad').html(json.errors).fadeIn();
+                        }else{
+                            getTable();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad').hide();
+                            $('#MsgGood').text('Data Saved').fadeIn().delay(3000).fadeOut("slow");
+                            $('#modaldialog').find('#formadd')[0].reset();
+                        }
+                    }, 'json');
+                    return false;
+                });
+			
             $(document).ready(function(){
                 $('#formupdate<?php echo $row->id?>').on("submit",function(response){
                     $.post($('#formupdate<?php echo $row->id?>').attr('action'), $('#formupdate<?php echo $row->id?>').serialize(),function(json){
@@ -182,5 +199,4 @@
                 });
             });
         </script>
-<?php } ?>	
-<script src="<?php echo assets_url('js/main.js'); ?>"></script>
+<?php } ?>

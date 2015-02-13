@@ -61,7 +61,7 @@ class Organization extends MX_Controller {
 		{
 			if($results[$i]->parent_id==$parent_id)
 			{
-				$btnadd = '<button type="button" class="btn btn-primary btn-mini" data-toggle="modal" data-target="#addModal" style="margin-top:10px;"><i class="icon-plus"></i>&nbsp;'.lang('add_button').' '.$results[$i]->organization_class.'</button>';
+				$btnadd = '<button type="button" class="btn btn-primary btn-mini" data-toggle="modal" data-target="#addModal'.$results[$i]->id.'" style="margin-top:10px;"><i class="icon-plus"></i>&nbsp;'.lang('add_button').' '.$results[$i]->organization_class.'</button>';
 				$btnedit = '</span>&nbsp;<button type="button" class="btn btn-info btn-mini" title="'.lang('edit_button').'" data-toggle="modal" data-target="#editorganizationModal'.$results[$i]->id.'"><i class="icon-paste"></i></button>';
 				$btndelete = '&nbsp;<button class="btn btn-danger btn-mini" type="button" title="'.lang('delete_button').'" data-toggle="modal" data-target="#deleteModal'.$results[$i]->id.'"><i class="icon-warning-sign"></i></button>';
 				if($this->has_child($results,$results[$i]->id))

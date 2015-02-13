@@ -344,6 +344,8 @@ $lang['structure_subheading'] = 'Structure';
 
 //organization_class
 $lang['edit_validation_ftitle_label'] = 'Title';
+$lang['add_organization'] = 'Add Organization';
+$lang['edit_organization'] = 'Edit Organization';
 
 //position Group
 $lang['level_order'] = 'Level Order';
