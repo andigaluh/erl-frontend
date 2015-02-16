@@ -171,12 +171,12 @@ class Template {
         $css = implode('', $css);
 	
 		
-		$id = $this->_ci->session->userdata('user_id');
+		$id = ($this->_ci->session->userdata('user_id')>0)?$this->_ci->session->userdata('user_id'): 1;
 		$user = $this->_ci->person_model->getUsers($id)->row();
-		
 		$this->data['s_photo'] = $user->photo;
         $user_folder = $user->id.$user->first_name;
         $this->data['u_folder'] = $user_folder;
+		
 		
 		
         $header = $this->_ci->load->view('header', array(), TRUE);

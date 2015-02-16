@@ -6,7 +6,7 @@
         <img src="<?php
 		
 		if($s_photo && file_exists('./uploads/'.$u_folder.'/'.$s_photo)) {
-        echo base_url().'uploads/'.$u_folder.'/225x225/'.$s_photo;
+        echo base_url().'uploads/'.$u_folder.'/80x80/'.$s_photo;
         }else{
         echo base_url().'assets/img/no-image.png';
         }
