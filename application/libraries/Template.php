@@ -22,10 +22,14 @@ class Template {
 
     protected $js = array();
     protected $css = array();
+	
+	
 
     function __construct()
     {
         $this->_ci =& get_instance();
+		$this->_ci->load->database();
+		$this->_ci->load->model('person/person_model','person_model');
     }
 
     /**
@@ -165,10 +169,19 @@ class Template {
             $css[] = '<link rel="stylesheet" href="' . assets_url('css/' . $css_file) . '">';
         }
         $css = implode('', $css);
-
+	
+		
+		$id = $this->_ci->session->userdata('user_id');
+		$user = $this->_ci->person_model->getUsers($id)->row();
+		
+		$this->data['s_photo'] = $user->photo;
+        $user_folder = $user->id.$user->first_name;
+        $this->data['u_folder'] = $user_folder;
+		
+		
         $header = $this->_ci->load->view('header', array(), TRUE);
         $footer = $this->_ci->load->view('footer', array(), TRUE);
-        $sidebar = $this->_ci->load->view('sidebar', array(), TRUE);
+        $sidebar = $this->_ci->load->view('sidebar', $this->data, TRUE);
         $main_content = $this->_ci->load->view($view, $data, TRUE);
 
         $body = $this->_ci->load->view('layout/' . $this->layout, array(

@@ -32,7 +32,7 @@
             <script src="<?php echo assets_url('js/respond.min.js'); ?>"></script>
         <![endif]-->
     </head>
-    <body class="">
+    <body class="bg-login">
         <?php echo $body; ?>
         <!-- / -->
 
