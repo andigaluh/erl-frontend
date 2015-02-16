@@ -101,3 +101,9 @@ body {
     -o-background-size: cover;
     background-size: cover;
 }
+
+.login-head{
+	margin-top: 50px;
+	font-weight: 600;
+	color: #D4DBE1;
+};
