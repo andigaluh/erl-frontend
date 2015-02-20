@@ -222,6 +222,23 @@ $(document).ready(function(){
                 });
                 $('#course_status_id').select2();
             });
+			
+$(document).ready(function(){
+                $('#formadd2').submit(function(response){
+                    $.post($('#formadd2').attr('action'), $('#formadd2').serialize(),function(json){
+                        if(json.st == 0){
+                            $('#MsgBad').html(json.errors).fadeIn();
+                        }else{
+                            getTable();getModal();
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                            $('#MsgBad').hide();
+                            $('#MsgGood').text('Data Saved').fadeIn().delay(3000).fadeOut("slow");
+                            $('#modaldialog').find('#formadd')[0].reset();
+                        }
+                    }, 'json');
+                    return false;
+                });
+            });
 
 $(document).ready(function(){
                 $('#formupdate').submit(function(response){
@@ -229,7 +246,7 @@ $(document).ready(function(){
                         if(json.st == 0){
                             $('#MsgBad2').html(json.errors).fadeIn();
                         }else{
-                            getTable();
+                            getTable();getModal();;
                             $("[data-dismiss=modal]").trigger({ type: "click" });
                             $('#MsgBad2').hide();
                             $('#MsgGood').text('Data Updated').fadeIn().delay(3000).fadeOut("slow");
@@ -246,7 +263,7 @@ $(function(){
                         if(json.st == 0){
                             $('#MsgBad').text('Delete Failed').fadeIn();
                         }else{
-                            getTable();
+                            getTable();getModal();;
                             $("[data-dismiss=modal]").trigger({ type: "click" });
                             $('#MsgGood').text('Data Deleted').fadeIn().delay(4000).fadeOut("slow");
                         }
@@ -254,6 +271,7 @@ $(function(){
                     return false;
                 });
             });
+			
 
 $(function(){
  $('#search').submit(function(response){
@@ -317,6 +335,25 @@ $(function(){
         }, 'json');
         return false;
     });
+	
+$('#search_position').on("submit",function(response){
+        $.post($('#search_position').attr('action'), $('#search_position').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'position/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
 
  $('#parent_id').select2();
 
@@ -334,6 +371,25 @@ $(function(){
     });
     return false;
  });
+
+  $('#search_library').on("submit",function(response){
+        $.post($('#search_library').attr('action'), $('#search_library').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'library/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
 
 });
 
