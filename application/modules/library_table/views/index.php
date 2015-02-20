@@ -19,7 +19,7 @@
         </ul> -->
         <div class="page-title">
             <i class="icon-custom-left"></i>
-            <h3><span class="semi-bold"><?php echo lang('users_subheading');?></span></h3> 
+            <h3><span class="semi-bold"><?php echo lang('library_table_subheading');?></span></h3> 
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -27,19 +27,19 @@
                     <div class="grid-body no-border">
                         <div class="row">
                             <div class="col-md-6">
-                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('user_subheading');?></span></h4>
+                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('library_table_subheading');?></span></h4>
                             </div>
                         </div>
-                        <?php echo form_open(site_url('person/keywords'))?>
+                        <?php echo form_open(site_url('library_table/keywords'))?>
                             <div class="row">
                                 <div class="col-md-7">
                                     <div class="row">
-                                        <div class="col-md-3 search_label"><?php echo form_label(lang('search_name_email'),'first_name')?></div>
+                                        <div class="col-md-3 search_label"><?php echo form_label(lang('title'),'title')?></div>
                                         <div class="col-md-9">
-                                            <select name="first_name" class="select2" id="first_name" style="width:100%">
-                                                <option value="0">--select user--</option>
+                                            <select name="title" class="select2" id="title" style="width:100%">
+                                                <option value="0">--select title--</option>
                                                 <?php foreach ($user_all->result_array() as $key => $value) {
-                                                    echo '<option value="'.site_url('person/detail/'.$value['id']).'">'.$value['first_name'].'&nbsp;'.$value['last_name'].' - '.$value['email'].'</option>';
+                                                    echo '<option value="'.site_url($value['url']).'">'.$value['title'].'</option>';
                                                 }?>
                                             </select>
                                         </div>
