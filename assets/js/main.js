@@ -372,25 +372,6 @@ $('#search_position').on("submit",function(response){
     return false;
  });
 
-  $('#search_library').on("submit",function(response){
-        $.post($('#search_library').attr('action'), $('#search_library').serialize(),function(json){
-            var url = $.url();
-            var uri = url.segment(2);
-           
-            function getTable2() 
-            {
-                $('#tabel').load(json.base_url+'library/get_table/fn:'+json.title);
-            }
-
-            if(json.st == 0){
-                $('#MsgGood').text('Search Failed').fadeIn();
-            }else{
-                getTable2();
-            }
-        }, 'json');
-        return false;
-    });
-
 });
 
 /*custom web-HRIS 
