@@ -38,6 +38,8 @@ $config['tables']['organization']  = 'organization';
 $config['tables']['users_employement']  = 'users_employement';
 $config['tables']['comp_session']  = 'comp_session';
 $config['tables']['payroll_type']  = 'payroll_type';
+$config['tables']['marital']  = 'marital';
+$config['tables']['resign_reason']  = 'resign_reason';
 
 /*
  | Users table column and Group table column you want to join WITH.

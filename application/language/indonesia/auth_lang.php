@@ -153,3 +153,13 @@ $lang['login_user_heading']						= 'Masuk ke Dalam Web-HRIS';
 $lang['company_name']							= 'PT. Penerbit Erlangga';
 $lang['register_here']							= 'Daftar disini';
 $lang['register_opening_description']			= 'untuk akun web-HRIS PT. Penerbit Erlangga.';
+
+//marital
+$lang['mar_subheading'] = "Marital";
+$lang['add_mar'] = "Tambah Marital";
+$lang['edit_mar'] = 'Ubah Marital';
+
+//resign reason
+$lang['res_reason_subheading'] = "Resign Reason";
+$lang['add_res_reason'] = "Tambah Resign Reason";
+$lang['edit_res_reason'] = 'Ubah Resign Reason';
