@@ -365,3 +365,13 @@ $lang['false_lable']	 = 'No';
 $lang['add_comp_session']	 = 'Add Company Session';
 $lang['payroll_type']	 = 'Payroll Type';
 
+//marital
+$lang['mar_subheading'] = "Marital";
+$lang['add_mar'] = "Add Marital";
+$lang['edit_mar'] = 'Edit Marital';
+
+//resign reason
+$lang['res_reason_subheading'] = "Resign Reason";
+$lang['add_res_reason'] = "Add Resign Reason";
+$lang['edit_res_reason'] = 'Edit Resign Reason';
+

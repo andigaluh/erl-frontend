@@ -38,7 +38,12 @@ $config['tables']['organization']  = 'organization';
 $config['tables']['users_employement']  = 'users_employement';
 $config['tables']['comp_session']  = 'comp_session';
 $config['tables']['payroll_type']  = 'payroll_type';
+<<<<<<< HEAD
+$config['tables']['marital']  = 'marital';
+$config['tables']['resign_reason']  = 'resign_reason';
+=======
 $config['tables']['library']  = 'library';
+>>>>>>> master
 
 /*
  | Users table column and Group table column you want to join WITH.
