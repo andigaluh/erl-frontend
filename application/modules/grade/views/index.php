@@ -10,7 +10,7 @@
     <div class="content">
         <div class="page-title">
             <i class="icon-custom-left"></i>
-            <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('res_reason_subheading');?></span></h3> 
+            <h3><?php echo lang('list_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('gra_subheading');?></span></h3> 
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -19,10 +19,10 @@
                         <br/>
                         <div class="row">
                             <div class="col-md-6">
-                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('res_reason_subheading');?></span></h4>
+                                <h4><?php echo lang('search_of_subheading')?>&nbsp;<span class="semi-bold"><?php echo lang('gra_subheading');?></span></h4>
                             </div>
                         </div>
-                        <?php echo form_open(site_url('resign_reason/keywords'),array( 'id'=>'search_res_reason'))?>
+                        <?php echo form_open(site_url('grade/keywords'),array( 'id'=>'search_gra'))?>
 
                             <div class="row">
                                 <div class="col-md-5">
@@ -61,13 +61,13 @@
                     <label for="checkbox10"></label>
                 </div>
             </th>
-            <th width="10%"><?php echo anchor('resign_reason/index/'.$ftitle_param.'/title/'.(($sort_order == 'asc' && $sort_by == 'title') ? 'desc' : 'asc'), lang('index_ftitle_th'));?></th>
+            <th width="10%"><?php echo anchor('grade/index/'.$ftitle_param.'/title/'.(($sort_order == 'asc' && $sort_by == 'title') ? 'desc' : 'asc'), lang('index_ftitle_th'));?></th>
             <th width="10%"><?php echo lang('index_action_th');?></th>                                  
         </tr>
     </thead>
     <tbody>
         <?php if($_num_rows > 0) { ?>
-            <?php foreach ($resign_reason as $user):?>
+            <?php foreach ($grade as $user):?>
                 <tr>
                     <td valign="middle">
                          <div class="checkbox check-default">
@@ -106,7 +106,7 @@
                                         100 => '100',);
                                     $selectComponentJs = 'class="select2" onChange="this.form.submit()" id="limit"';
                                     echo "Per page: ".form_dropdown('limit', $selectComponentData, $limit, $selectComponentJs);
-                                    echo '&nbsp;'.lang('found_subheading').'&nbsp;'.$num_rows_all.'&nbsp;'.lang('res_reason_subheading');
+                                    echo '&nbsp;'.lang('found_subheading').'&nbsp;'.$num_rows_all.'&nbsp;'.lang('gra_subheading');
                                 ?>
                                 <?php echo form_close();?>
                             </div>
@@ -132,11 +132,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_res_reason', 'add_res_reason')?></h4>
+        <h4 class="modal-title" id="myModalLabel"><?php echo lang('add_gra', 'add_gra')?></h4>
       </div>
       <p class="error_msg" id="MsgBad" style="background: #fff; display: none;"></p>
       <div class="modal-body">
-        <?php echo form_open('resign_reason/add/', array('id'=>'formadd2'))?> 
+        <?php echo form_open('grade/add/', array('id'=>'formadd2'))?> 
              <div class="row form-row">
                 <div class="col-md-3">
                     <?php echo lang('title', 'title');?>
@@ -161,12 +161,12 @@
     window.onload = function(){getModal();};  
     function getTable() 
     {
-        $('#tabel').load('<?php echo site_url('resign_reason/get_table/'); ?>');
+        $('#tabel').load('<?php echo site_url('grade/get_table/'); ?>');
     }
 	
 	function getModal() 
     {
-        $('#modal').load('<?php echo site_url('resign_reason/get_modal/'); ?>');
+        $('#modal').load('<?php echo site_url('grade/get_modal/'); ?>');
     }
 
     

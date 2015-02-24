@@ -375,3 +375,18 @@ $lang['res_reason_subheading'] = "Resign Reason";
 $lang['add_res_reason'] = "Add Resign Reason";
 $lang['edit_res_reason'] = 'Edit Resign Reason';
 
+//experience level
+$lang['exp_lvl_subheading'] = "Experience Level";
+$lang['add_exp_lvl'] = "Add Experience Level";
+$lang['edit_exp_lvl'] = 'Edit Experience Level';
+
+//grade
+$lang['gra_subheading'] = "Grade";
+$lang['add_gra'] = "Add Grade";
+$lang['edit_gra'] = 'Edit Grade';
+
+//ikatan dinas type
+$lang['iktn_dns_type_subheading'] = "Ikatan Dinas Type";
+$lang['add_iktn_dns_type'] = "Add Ikatan Dinas Type";
+$lang['edit_iktn_dns_type'] = 'Edit Ikatan Dinas Type';
+

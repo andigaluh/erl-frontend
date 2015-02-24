@@ -41,6 +41,9 @@ $config['tables']['payroll_type']  = 'payroll_type';
 $config['tables']['marital']  = 'marital';
 $config['tables']['resign_reason']  = 'resign_reason';
 $config['tables']['library']  = 'library';
+$config['tables']['exp_level']  = 'exp_level';
+$config['tables']['grade']  = 'grade';
+$config['tables']['ikatan_dinas_type']  = 'ikatan_dinas_type';
 
 /*
  | Users table column and Group table column you want to join WITH.

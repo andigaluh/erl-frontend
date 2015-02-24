@@ -163,3 +163,18 @@ $lang['edit_mar'] = 'Ubah Marital';
 $lang['res_reason_subheading'] = "Resign Reason";
 $lang['add_res_reason'] = "Tambah Resign Reason";
 $lang['edit_res_reason'] = 'Ubah Resign Reason';
+
+//experience level
+$lang['exp_lvl_subheading'] = "Experience Level";
+$lang['add_exp_lvl'] = "Tambah Experience Level";
+$lang['edit_exp_lvl'] = 'Ubah Experience Level';
+
+//grade
+$lang['gra_subheading'] = "Grade";
+$lang['add_gra'] = "Tambah Grade";
+$lang['edit_gra'] = 'Ubah Grade';
+
+//ikatan dinas type
+$lang['iktn_dns_type_subheading'] = "Ikatan Dinas Type";
+$lang['add_iktn_dns_type'] = "Tambah Ikatan Dinas Type";
+$lang['edit_iktn_dns_type'] = 'Ubah Ikatan Dinas Type';
