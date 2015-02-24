@@ -45,6 +45,8 @@ $config['tables']['exp_level']  = 'exp_level';
 $config['tables']['grade']  = 'grade';
 $config['tables']['ikatan_dinas_type']  = 'ikatan_dinas_type';
 $config['tables']['course_status']  = 'course_status';
+$config['tables']['certification_type']  = 'certification_type';
+$config['tables']['award_warning_type']  = 'award_warning_type';
 
 /*
  | Users table column and Group table column you want to join WITH.
