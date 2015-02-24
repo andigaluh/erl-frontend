@@ -474,6 +474,10 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
 CREATE TABLE IF NOT EXISTS `marital` (
   `id` tinyint(2) NOT NULL AUTO_INCREMENT,
   `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `deleted_on` datetime NOT NULL,
   `deleted_by` int(11) NOT NULL,
@@ -485,10 +489,10 @@ CREATE TABLE IF NOT EXISTS `marital` (
 --
 
 INSERT INTO `marital` (`id`, `title`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
-(1, 'Single', 0, '0000-00-00 00:00:00', 0),
-(2, 'Married', 0, '0000-00-00 00:00:00', 0),
-(3, 'Divorced', 0, '0000-00-00 00:00:00', 0),
-(4, 'Widowhood', 0, '0000-00-00 00:00:00', 0);
+(1, 'Single', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(2, 'Married', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(3, 'Divorced', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(4, 'Widowhood', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
