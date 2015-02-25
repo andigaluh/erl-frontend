@@ -555,6 +555,66 @@ $('#search_edu_group').on("submit",function(response){
         return false;
     });
 
+$('#search_exp_fld').on("submit",function(response){
+        $.post($('#search_exp_fld').attr('action'), $('#search_exp_fld').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'exp_field/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_empl_stat').on("submit",function(response){
+        $.post($('#search_empl_stat').attr('action'), $('#search_empl_stat').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'empl_status/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_employee_stat').on("submit",function(response){
+        $.post($('#search_employee_stat').attr('action'), $('#search_employee_stat').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'employee_status/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
  $('#parent_id').select2();
 
  $('#position_id_detail').on("change",function(response){

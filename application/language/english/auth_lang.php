@@ -415,3 +415,16 @@ $lang['edu_center_subheading'] = "Education Center";
 $lang['add_edu_center'] = "Add Education Center";
 $lang['edit_edu_center'] = 'Edit Education Center';
 
+//experience field
+$lang['exp_fld_subheading'] = "Experience Field";
+$lang['add_exp_fld'] = "Add Experience Field";
+$lang['edit_exp_fld'] = 'Edit Experience Field';
+
+//employee status
+$lang['employee_stat_subheading'] = "Employee Status";
+$lang['add_employee_stat'] = "Add Employee Status";
+$lang['edit_employee_stat'] = 'Edit Employee Status';
+
+
+
+
