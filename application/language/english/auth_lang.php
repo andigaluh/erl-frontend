@@ -420,6 +420,11 @@ $lang['exp_fld_subheading'] = "Experience Field";
 $lang['add_exp_fld'] = "Add Experience Field";
 $lang['edit_exp_fld'] = 'Edit Experience Field';
 
+//empl status
+$lang['empl_stat_subheading'] = "Empl Status";
+$lang['add_empl_stat'] = "Add Empl Status";
+$lang['edit_empl_stat'] = 'Edit Empl Status';
+
 //employee status
 $lang['employee_stat_subheading'] = "Employee Status";
 $lang['add_employee_stat'] = "Add Employee Status";
