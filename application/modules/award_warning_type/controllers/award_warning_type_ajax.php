@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Marital_ajax extends Ajax_Controller {
+class Award_warning_type_ajax extends Ajax_Controller {
 
     /**
      * Launch dialog that contains a specific Ion auth page content
@@ -18,7 +18,7 @@ class Marital_ajax extends Ajax_Controller {
         )))
         {
             $this->response->dialog(array(
-                'body' => Modules::run('marital/' . $page)
+                'body' => Modules::run('award_warning_type/' . $page)
             ));
         }
         $this->response->send();
@@ -31,7 +31,7 @@ class Marital_ajax extends Ajax_Controller {
         )))
         {
             $this->response->dialog(array(
-                'body' => Modules::run('marital/' . $page)
+                'body' => Modules::run('award_warning_type/' . $page)
             ));
         }
         $this->response->send();

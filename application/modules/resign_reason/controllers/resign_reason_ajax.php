@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Organization_class_ajax extends Ajax_Controller {
+class Resign_reason_ajax extends Ajax_Controller {
 
     /**
      * Launch dialog that contains a specific Ion auth page content

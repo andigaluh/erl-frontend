@@ -163,3 +163,34 @@ $lang['edit_mar'] = 'Ubah Marital';
 $lang['res_reason_subheading'] = "Resign Reason";
 $lang['add_res_reason'] = "Tambah Resign Reason";
 $lang['edit_res_reason'] = 'Ubah Resign Reason';
+
+//experience level
+$lang['exp_lvl_subheading'] = "Experience Level";
+$lang['add_exp_lvl'] = "Tambah Experience Level";
+$lang['edit_exp_lvl'] = 'Ubah Experience Level';
+
+//grade
+$lang['gra_subheading'] = "Grade";
+$lang['add_gra'] = "Tambah Grade";
+$lang['edit_gra'] = 'Ubah Grade';
+
+//ikatan dinas type
+$lang['iktn_dns_type_subheading'] = "Ikatan Dinas Type";
+$lang['add_iktn_dns_type'] = "Tambah Ikatan Dinas Type";
+$lang['edit_iktn_dns_type'] = 'Ubah Ikatan Dinas Type';
+
+//course status
+$lang['crs_Status_subheading'] = "Course Status";
+$lang['add_crs_status'] = "Tambah Course Status";
+$lang['edit_crs_status'] = 'Ubah Course Status';
+
+//certification type
+$lang['crt_type_subheading'] = "Certification Type";
+$lang['add_crt_type'] = "Tambah Certification Type";
+$lang['edit_crt_type'] = 'Ubah Certification Type';
+
+//award warning type
+$lang['awrd_warn_type_subheading'] = "Award Warning Type";
+$lang['add_awrd_warn_type'] = "Tambah Award Warning Type";
+$lang['edit_awrd_warn_type'] = 'Ubah Award Warning Type';
+

@@ -145,14 +145,6 @@
                     <input type="text" class="form-control" id="title" name="title">         
                 </div>
             </div>
-            <div class="row form-row">
-                <div class="col-md-3">
-                    <?php echo lang('order_no', 'order_no');?>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" id="order_no" name="order_no">         
-                </div>
-            </div>
                                     
       </div>
       <div class="modal-footer">
