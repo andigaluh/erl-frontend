@@ -405,4 +405,13 @@ $lang['awrd_warn_type_subheading'] = "Award Warning Type";
 $lang['add_awrd_warn_type'] = "Add Award Warning Type";
 $lang['edit_awrd_warn_type'] = 'Edit Award Warning Type';
 
+//education group
+$lang['edu_group_subheading'] = "Education Group";
+$lang['add_edu_group'] = "Add Education Group";
+$lang['edit_edu_group'] = 'Edit Education Group';
+
+//education center
+$lang['edu_center_subheading'] = "Education Center";
+$lang['add_edu_center'] = "Add Education Center";
+$lang['edit_edu_center'] = 'Edit Education Center';
 

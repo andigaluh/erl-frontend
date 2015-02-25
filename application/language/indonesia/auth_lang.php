@@ -194,3 +194,13 @@ $lang['awrd_warn_type_subheading'] = "Award Warning Type";
 $lang['add_awrd_warn_type'] = "Tambah Award Warning Type";
 $lang['edit_awrd_warn_type'] = 'Ubah Award Warning Type';
 
+//education group
+$lang['edu_group_subheading'] = "Education Group";
+$lang['add_edu_group'] = "Tambah Education Group";
+$lang['edit_edu_group'] = 'Ubah Education Group';
+
+//education center
+$lang['edu_center_subheading'] = "Education Center";
+$lang['add_edu_center'] = "Tambah Education Center";
+$lang['edit_edu_center'] = 'Ubah Education Center';
+
