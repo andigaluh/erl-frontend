@@ -8,13 +8,13 @@
                     <label for="checkbox10"></label>
                 </div>
             </th>
-            <th width="10%"><?php echo anchor('grade/index/'.$ftitle_param.'/title/'.(($sort_order == 'asc' && $sort_by == 'title') ? 'desc' : 'asc'), lang('index_ftitle_th'));?></th>
+            <th width="10%"><?php echo anchor('education_group/index/'.$ftitle_param.'/title/'.(($sort_order == 'asc' && $sort_by == 'title') ? 'desc' : 'asc'), lang('index_ftitle_th'));?></th>
             <th width="10%"><?php echo lang('index_action_th');?></th>                                  
         </tr>
     </thead>
     <tbody>
         <?php if($_num_rows > 0) { ?>
-            <?php foreach ($grade as $user):?>
+            <?php foreach ($education_group as $user):?>
                 <tr>
                     <td valign="middle">
                          <div class="checkbox check-default">

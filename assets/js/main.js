@@ -355,6 +355,206 @@ $('#search_position').on("submit",function(response){
         return false;
     });
 
+$('#search_awrd_warn_type').on("submit",function(response){
+        $.post($('#search_awrd_warn_type').attr('action'), $('#search_awrd_warn_type').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'award_warning_type/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_crt_type').on("submit",function(response){
+        $.post($('#search_crt_type').attr('action'), $('#search_crt_type').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'certification_type/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_crs_status').on("submit",function(response){
+        $.post($('#search_crs_status').attr('action'), $('#search_crs_status').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'course_status/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_iktn_dns_type').on("submit",function(response){
+        $.post($('#search_iktn_dns_type').attr('action'), $('#search_iktn_dns_type').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'ikatan_dinas_type/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_gra').on("submit",function(response){
+        $.post($('#search_gra').attr('action'), $('#search_gra').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'grade/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_exp_lvl').on("submit",function(response){
+        $.post($('#search_exp_lvl').attr('action'), $('#search_exp_lvl').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'exp_level/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_res_reason').on("submit",function(response){
+        $.post($('#search_res_reason').attr('action'), $('#search_res_reason').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'resign_reason/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_mar').on("submit",function(response){
+        $.post($('#search_mar').attr('action'), $('#search_mar').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'marital/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_edu_center').on("submit",function(response){
+        $.post($('#search_edu_center').attr('action'), $('#search_edu_center').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'education_center/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_edu_group').on("submit",function(response){
+        $.post($('#search_edu_group').attr('action'), $('#search_edu_group').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'education_group/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
  $('#parent_id').select2();
 
  $('#position_id_detail').on("change",function(response){
