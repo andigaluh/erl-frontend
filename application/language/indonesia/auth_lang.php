@@ -204,3 +204,19 @@ $lang['edu_center_subheading'] = "Education Center";
 $lang['add_edu_center'] = "Tambah Education Center";
 $lang['edit_edu_center'] = 'Ubah Education Center';
 
+//experience field
+$lang['exp_fld_subheading'] = "Experience Field";
+$lang['add_exp_fld'] = "Tambah Experience Field";
+$lang['edit_exp_fld'] = 'Ubah Experience Field';
+
+//empl status
+$lang['empl_stat_subheading'] = "Empl Status";
+$lang['add_empl_stat'] = "Tambah Empl Status";
+$lang['edit_empl_stat'] = 'Ubah Empl Status';
+
+//employee status
+$lang['employee_stat_subheading'] = "Employee Status";
+$lang['add_employee_stat'] = "Tambah Employee Status";
+$lang['edit_employee_stat'] = 'Ubah Employee Status';
+
+

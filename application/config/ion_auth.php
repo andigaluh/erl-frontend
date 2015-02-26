@@ -49,6 +49,9 @@ $config['tables']['certification_type']  = 'certification_type';
 $config['tables']['award_warning_type']  = 'award_warning_type';
 $config['tables']['education_group']  = 'education_group';
 $config['tables']['education_center']  = 'education_center';
+$config['tables']['exp_field']  = 'exp_field';
+$config['tables']['empl_status']  = 'empl_status';
+$config['tables']['employee_status']  = 'employee_status';
 
 /*
  | Users table column and Group table column you want to join WITH.

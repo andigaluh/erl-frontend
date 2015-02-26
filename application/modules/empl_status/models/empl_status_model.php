@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Exp_level_model extends CI_Model
+class Empl_status_model extends CI_Model
 {
      /**
      * Holds an array of tables used
@@ -275,14 +275,14 @@ class Exp_level_model extends CI_Model
     }
 
     /**
-     * exp_level
+     * empl_status
      *
-     * @return object exp_level
-     * @author Deniexp_lvlu
+     * @return object empl_status
+     * @author Deni
      **/
-    public function exp_level()
+    public function empl_status()
     {
-        $this->trigger_events('exp_level');
+        $this->trigger_events('empl_status');
 
         if (isset($this->_ion_select) && !empty($this->_ion_select))
         {
@@ -297,9 +297,9 @@ class Exp_level_model extends CI_Model
         {
             //default selects
             $this->db->select(array(
-                $this->tables['exp_level'].'.*',
-                $this->tables['exp_level'].'.id as id',
-                $this->tables['exp_level'].'.id as exp_level_id'
+                $this->tables['empl_status'].'.*',
+                $this->tables['empl_status'].'.id as id',
+                $this->tables['empl_status'].'.id as empl_status_id'
             ));
         }
 
@@ -349,19 +349,19 @@ class Exp_level_model extends CI_Model
             $this->_ion_order_by = NULL;
         }
 
-        $this->response = $this->db->get($this->tables['exp_level']);
+        $this->response = $this->db->get($this->tables['empl_status']);
 
         return $this;
     }
 
     public function delete($id)
     {
-        $this->trigger_events('pre_delete_exp_lvl');
+        $this->trigger_events('pre_delete_empl_stat');
 
         $this->db->trans_begin();
 
-        // delete organization from exp_level table
-        $this->db->delete($this->tables['exp_level'], array('id' => $id));
+        // delete organization from empl_status table
+        $this->db->delete($this->tables['empl_status'], array('id' => $id));
 
         // if user does not exist in database then it returns FALSE else removes the user from groups
         if ($this->db->affected_rows() == 0)
@@ -372,14 +372,14 @@ class Exp_level_model extends CI_Model
         if ($this->db->trans_status() === FALSE)
         {
             $this->db->trans_rollback();
-            $this->trigger_events(array('post_delete_exp_lvl', 'post_delete_exp_lvl_unsuccessful'));
+            $this->trigger_events(array('post_delete_empl_stat', 'post_delete_empl_stat_unsuccessful'));
             $this->set_error('delete_unsuccessful');
             return FALSE;
         }
 
         $this->db->trans_commit();
 
-        $this->trigger_events(array('post_delete_exp_lvl', 'post_delete_exp_lvl_successful'));
+        $this->trigger_events(array('post_delete_empl_stat', 'post_delete_empl_stat_successful'));
         $this->set_message('delete_successful');
         return TRUE;
     }
@@ -394,57 +394,57 @@ class Exp_level_model extends CI_Model
         }
 
         // bail if the group name already exists
-        $existing_exp_lvl = $this->db->get_where($this->tables['exp_level'], array('title' => $title))->num_rows();
-        if($existing_exp_lvl !== 0)
+        $existing_empl_stat = $this->db->get_where($this->tables['empl_status'], array('title' => $title))->num_rows();
+        if($existing_empl_stat !== 0)
         {
-            $this->set_error('exp_lvl_already_exists');
+            $this->set_error('empl_stat_already_exists');
             return FALSE;
         }
 
         $data = array('title'=>$title);
 
-        //filter out any data passed that doesnt have a matching column in the exp_level table
+        //filter out any data passed that doesnt have a matching column in the empl_status table
         //and merge the set group data and the additional data
-        if (!empty($additional_data)) $data = array_merge($this->_filter_data($this->tables['exp_level'], $additional_data), $data);
+        if (!empty($additional_data)) $data = array_merge($this->_filter_data($this->tables['empl_status'], $additional_data), $data);
 
         $this->trigger_events('extra_group_set');
 
-        // insert the new exp_level
-        $this->db->insert($this->tables['exp_level'], $data);
+        // insert the new empl_status
+        $this->db->insert($this->tables['empl_status'], $data);
         $id = $this->db->insert_id();
 
         // report success
-        $this->set_message('exp_lvl_creation_successful');
+        $this->set_message('empl_stat_creation_successful');
         // return the brand new id
         return $id;
     }
 
     public function update($id, array $data)
     {
-        $this->trigger_events('pre_update_exp_lvl');
+        $this->trigger_events('pre_update_empl_stat');
 
-        $exp_lvl = $this->exp_lvl($id)->row();
+        $empl_stat = $this->empl_stat($id)->row();
 
         $this->db->trans_begin();
 
         // Filter the data passed
-        $data = $this->_filter_data($this->tables['exp_level'], $data);
+        $data = $this->_filter_data($this->tables['empl_status'], $data);
 
         $this->trigger_events('extra_where');
-        $this->db->update($this->tables['exp_level'], $data, array('id' => $exp_lvl->id));
+        $this->db->update($this->tables['empl_status'], $data, array('id' => $empl_stat->id));
 
         if ($this->db->trans_status() === FALSE)
         {
             $this->db->trans_rollback();
 
-            $this->trigger_events(array('post_update_exp_lvl', 'post_update_exp_lvl_unsuccessful'));
+            $this->trigger_events(array('post_update_empl_stat', 'post_update_empl_stat_unsuccessful'));
             $this->set_error('update_unsuccessful');
             return FALSE;
         }
 
         $this->db->trans_commit();
 
-        $this->trigger_events(array('post_update_exp_lvl', 'post_update_exp_lvl_unsuccessful'));
+        $this->trigger_events(array('post_update_empl_stat', 'post_update_empl_stat_unsuccessful'));
         $this->set_message('update_successful');
         return TRUE;
     }
@@ -641,14 +641,14 @@ class Exp_level_model extends CI_Model
         return $filtered_data;
     }
 
-    public function exp_lvl($id = NULL)
+    public function empl_stat($id = NULL)
     {
-        $this->trigger_events('exp_lvl');
+        $this->trigger_events('empl_stat');
 
         $this->limit(1);
-        $this->where($this->tables['exp_level'].'.id', $id);
+        $this->where($this->tables['empl_status'].'.id', $id);
 
-        $this->exp_level();
+        $this->empl_status();
 
         return $this;
     }
