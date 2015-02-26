@@ -430,6 +430,9 @@ $lang['employee_stat_subheading'] = "Employee Status";
 $lang['add_employee_stat'] = "Add Employee Status";
 $lang['edit_employee_stat'] = 'Edit Employee Status';
 
+//library table
+$lang['library_table_subheading'] = 'Library Table';
+
 
 
 

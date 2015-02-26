@@ -219,4 +219,7 @@ $lang['employee_stat_subheading'] = "Employee Status";
 $lang['add_employee_stat'] = "Tambah Employee Status";
 $lang['edit_employee_stat'] = 'Ubah Employee Status';
 
+//library table
+$lang['library_table_subheading'] = 'Library Table';
+
 
