@@ -615,6 +615,68 @@ $('#search_employee_stat').on("submit",function(response){
         return false;
     });
 
+$('#search_exp_yr').on("submit",function(response){
+        $.post($('#search_exp_yr').attr('action'), $('#search_exp_yr').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'exp_year/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_edu_degree').on("submit",function(response){
+        $.post($('#search_edu_degree').attr('action'), $('#search_edu_degree').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'education_degree/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+$('#search_act_inactive').on("submit",function(response){
+        $.post($('#search_act_inactive').attr('action'), $('#search_act_inactive').serialize(),function(json){
+            var url = $.url();
+            var uri = url.segment(2);
+           
+            
+            function getTable2() 
+            {
+                $('#tabel').load(json.base_url+'active_inactive/get_table/fn:'+json.title);
+            }
+
+            if(json.st == 0){
+                $('#MsgGood').text('Search Failed').fadeIn();
+            }else{
+                getTable2();
+            }
+        }, 'json');
+        return false;
+    });
+
+
+
  $('#parent_id').select2();
 
  $('#position_id_detail').on("change",function(response){

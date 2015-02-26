@@ -52,6 +52,9 @@ $config['tables']['education_center']  = 'education_center';
 $config['tables']['exp_field']  = 'exp_field';
 $config['tables']['empl_status']  = 'empl_status';
 $config['tables']['employee_status']  = 'employee_status';
+$config['tables']['exp_year']  = 'exp_year';
+$config['tables']['education_degree']  = 'education_degree';
+$config['tables']['active_inactive']  = 'active_inactive';
 
 /*
  | Users table column and Group table column you want to join WITH.

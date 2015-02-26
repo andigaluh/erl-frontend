@@ -433,6 +433,22 @@ $lang['edit_employee_stat'] = 'Edit Employee Status';
 //library table
 $lang['library_table_subheading'] = 'Library Table';
 
+//experience year
+$lang['exp_yr_subheading'] = "Experience Year";
+$lang['add_exp_yr'] = "Add Experience Year";
+$lang['edit_exp_yr'] = 'Edit Experience Year';
+
+//education degree
+$lang['edu_degree_subheading'] = "Education Degree";
+$lang['add_edu_degree'] = "Add Education Degree";
+$lang['edit_edu_degree'] = 'Edit Education Degree';
+
+//active inactive
+$lang['act_inactive_subheading'] = "Active Inactive";
+$lang['add_act_inactive'] = "Add Active Inactive";
+$lang['edit_act_inactive'] = 'Edit Active Inactive';
+
+
 
 
 
