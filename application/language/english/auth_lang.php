@@ -420,10 +420,34 @@ $lang['exp_fld_subheading'] = "Experience Field";
 $lang['add_exp_fld'] = "Add Experience Field";
 $lang['edit_exp_fld'] = 'Edit Experience Field';
 
+//empl status
+$lang['empl_stat_subheading'] = "Empl Status";
+$lang['add_empl_stat'] = "Add Empl Status";
+$lang['edit_empl_stat'] = 'Edit Empl Status';
+
 //employee status
 $lang['employee_stat_subheading'] = "Employee Status";
 $lang['add_employee_stat'] = "Add Employee Status";
 $lang['edit_employee_stat'] = 'Edit Employee Status';
+
+//library table
+$lang['library_table_subheading'] = 'Library Table';
+
+//experience year
+$lang['exp_yr_subheading'] = "Experience Year";
+$lang['add_exp_yr'] = "Add Experience Year";
+$lang['edit_exp_yr'] = 'Edit Experience Year';
+
+//education degree
+$lang['edu_degree_subheading'] = "Education Degree";
+$lang['add_edu_degree'] = "Add Education Degree";
+$lang['edit_edu_degree'] = 'Edit Education Degree';
+
+//active inactive
+$lang['act_inactive_subheading'] = "Active Inactive";
+$lang['add_act_inactive'] = "Add Active Inactive";
+$lang['edit_act_inactive'] = 'Edit Active Inactive';
+
 
 
 
