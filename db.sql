@@ -1339,6 +1339,86 @@ INSERT INTO `library` (`id`, `title`, `url`, `created_on`, `created_by`, `edited
 (23, 'position group', 'position_group', '2015-02-20 05:46:28', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (24, 'resign reason', 'resign_reason', '2015-02-20 05:46:39', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alasan_cuti`
+--
+
+CREATE TABLE IF NOT EXISTS `alasan_cuti` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_cuti`
+--
+
+CREATE TABLE IF NOT EXISTS `users_cuti` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `id_comp_session` int(11) NOT NULL,
+  `date_mulai_cuti` date NOT NULL,
+  `date_selesai_cuti` date NOT NULL,
+  `jumlah_hari` tinyint(4) NOT NULL,
+  `alasan_cuti_id` int(11) NOT NULL,
+  `user_pengganti` int(11) NOT NULL COMMENT 'user_id kary pengganti',
+  `alamat_cuti` text NOT NULL,
+  `is_app_lv1` tinyint(1) NOT NULL DEFAULT '0',
+  `user_app_lv1` int(11) NOT NULL COMMENT 'user_id supervisor',
+  `date_app_lv1` date NOT NULL,
+  `note_app_lv1` text NOT NULL,
+  `is_app_lv2` tinyint(1) NOT NULL DEFAULT '0',
+  `user_app_lv2` int(11) NOT NULL COMMENT 'user_id approval level2',
+  `date_app_lv2` date NOT NULL,
+  `note_app_lv2` text NOT NULL,
+  `is_app_lv3` tinyint(1) NOT NULL DEFAULT '0',
+  `user_app_lv3` int(11) NOT NULL,
+  `date_app_lv3` date NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_users_sti` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_cuti_plafon`
+--
+
+CREATE TABLE IF NOT EXISTS `users_cuti_plafon` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `id_comp_session` int(11) NOT NULL,
+  `hak_cuti` int(4) NOT NULL,
+  `hak_cuti_sebelumnya` int(4) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_users_sti` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
