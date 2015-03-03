@@ -29,7 +29,7 @@
       </li>
       <li class=""> <a href="javascript:;"> <i class="icon-plus-sign"></i> <span class="title">Form pengajuan</span> <span class="arrow "></span> </a>
         <ul class="sub-menu">
-          <li > <a href="form_cuti.html">Cuti</a> </li>
+          <li > <a href="<?php echo site_url('form_cuti')?>">Cuti</a> </li>
           <li > <a href="form_spd_dalam.html">Perjalanan dinas - dalam kota</a> </li>          
           <li > <a href="form_spd_luar.html">Perjalanan dinas - luar kota</a> </li>            
           <li > <a href="form_absent.html">Keterangan tidak absen</a> </li>          
