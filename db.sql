@@ -488,7 +488,7 @@ CREATE TABLE IF NOT EXISTS `marital` (
 -- Dumping data for table `marital`
 --
 
-INSERT INTO `marital` (`id`, `title`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+INSERT INTO `marital` (`id`, `title`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
 (1, 'Single', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (2, 'Married', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (3, 'Divorced', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
