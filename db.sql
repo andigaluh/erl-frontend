@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2015 at 09:16 AM
+-- Generation Time: Mar 03, 2015 at 07:46 AM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.16
 
@@ -49,6 +49,25 @@ INSERT INTO `active_inactive` (`id`, `title`, `created_on`, `created_by`, `edite
 (1, 'Active', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (2, 'Inactive', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (3, 'Active by Term', '2015-01-14 00:00:00', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alasan_cuti`
+--
+
+CREATE TABLE IF NOT EXISTS `alasan_cuti` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -450,6 +469,56 @@ CREATE TABLE IF NOT EXISTS `ikatan_dinas_type` (
   `deleted_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `library`
+--
+
+CREATE TABLE IF NOT EXISTS `library` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `url` varchar(254) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+
+--
+-- Dumping data for table `library`
+--
+
+INSERT INTO `library` (`id`, `title`, `url`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
+(1, 'active inactive', 'active_inactive', '2015-02-20 05:23:01', 1, '2015-02-20 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
+(2, 'organization class', 'organization_class', '2015-02-20 05:41:12', 1, '2015-02-20 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
+(3, 'award warning type', 'award_warning_type', '2015-02-20 05:42:27', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(4, 'certification type', 'certification_type', '2015-02-20 05:42:41', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(5, 'course status', 'course_status', '2015-02-20 05:42:53', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(6, 'dollar rate', 'dollar_rate', '2015-02-20 05:43:05', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(7, 'education center', 'education_center', '2015-02-20 05:43:16', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(8, 'education degree', 'education_degree', '2015-02-20 05:43:28', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(9, 'education group', 'education_group', '2015-02-20 05:43:38', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(10, 'employee status', 'employee_status', '2015-02-20 05:43:48', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(11, 'empl status', 'empl_status', '2015-02-20 05:44:06', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(12, 'exp field', 'exp_field', '2015-02-20 05:44:16', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(13, 'experience level', 'exp_level', '2015-02-20 05:44:31', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(14, 'experience year', 'exp_year', '2015-02-20 05:44:55', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(15, 'grade', 'grade', '2015-02-20 05:45:03', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(16, 'groups', 'groups', '2015-02-20 05:45:11', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(17, 'ikatan dinas type', 'ikatan_dinas_type', '2015-02-20 05:45:24', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(18, 'library', 'library', '2015-02-20 05:45:32', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(19, 'marital', 'marital', '2015-02-20 05:45:39', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(20, 'payroll by position', 'payroll_by_position', '2015-02-20 05:45:58', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(21, 'payroll setup', 'payroll_setup', '2015-02-20 05:46:07', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(22, 'payroll type', 'payroll_type', '2015-02-20 05:46:17', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(23, 'position group', 'position_group', '2015-02-20 05:46:28', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(24, 'resign reason', 'resign_reason', '2015-02-20 05:46:39', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -977,6 +1046,67 @@ INSERT INTO `users_course` (`id`, `user_id`, `title`, `registration_date`, `cour
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `users_cuti`
+--
+
+CREATE TABLE IF NOT EXISTS `users_cuti` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `id_comp_session` int(11) NOT NULL,
+  `date_mulai_cuti` date NOT NULL,
+  `date_selesai_cuti` date NOT NULL,
+  `jumlah_hari` tinyint(4) NOT NULL,
+  `alasan_cuti_id` int(11) NOT NULL,
+  `user_pengganti` int(11) NOT NULL COMMENT 'user_id kary pengganti',
+  `alamat_cuti` text NOT NULL,
+  `is_app_lv1` tinyint(1) NOT NULL DEFAULT '0',
+  `user_app_lv1` int(11) NOT NULL COMMENT 'user_id supervisor',
+  `date_app_lv1` date NOT NULL,
+  `note_app_lv1` text NOT NULL,
+  `is_app_lv2` tinyint(1) NOT NULL DEFAULT '0',
+  `user_app_lv2` int(11) NOT NULL COMMENT 'user_id approval level2',
+  `date_app_lv2` date NOT NULL,
+  `note_app_lv2` text NOT NULL,
+  `is_app_lv3` tinyint(1) NOT NULL DEFAULT '0',
+  `user_app_lv3` int(11) NOT NULL,
+  `date_app_lv3` date NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_users_sti` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_cuti_plafon`
+--
+
+CREATE TABLE IF NOT EXISTS `users_cuti_plafon` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `id_comp_session` int(11) NOT NULL,
+  `hak_cuti` int(4) NOT NULL,
+  `hak_cuti_sebelumnya` int(4) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_users_sti` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users_education`
 --
 
@@ -1051,11 +1181,11 @@ INSERT INTO `users_employement` (`id`, `user_id`, `seniority_date`, `position_id
 (7, 11, '0000-00-00 00:00:00', 0, 0, 0, 0, '', 0, 0, 0, 0, '0', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (8, 12, '0000-00-00 00:00:00', 0, 0, 0, 0, '', 0, 0, 0, 0, '0', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (9, 13, '0000-00-00 00:00:00', 0, 0, 0, 0, '', 0, 0, 0, 0, '0', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(10, 14, '0000-00-00 00:00:00', 0, 0, 0, 0, '', 0, 0, 0, 0, '0', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(10, 14, '1970-01-01 00:00:00', 6, 7, 1, 1, '-', 3, 1, 1, 1, '0', '0000-00-00 00:00:00', 0, '2015-03-03 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
 (11, 15, '0000-00-00 00:00:00', 0, 0, 0, 0, '', 0, 0, 0, 0, '0', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (12, 16, '0000-00-00 00:00:00', 0, 0, 0, 0, '', 0, 0, 0, 0, '0', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
 (13, 17, '0000-00-00 00:00:00', 0, 0, 0, 0, '', 0, 0, 0, 0, '0', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(14, 18, '0000-00-00 00:00:00', 0, 0, 0, 0, '', 0, 0, 0, 0, '0', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
+(14, 18, '1970-01-01 00:00:00', 7, 7, 1, 1, '-', 5, 1, 1, 1, '0', '0000-00-00 00:00:00', 0, '2015-03-03 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
 (15, 19, '0000-00-00 00:00:00', 0, 0, 0, 0, '', 0, 0, 0, 0, '0', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
@@ -1244,6 +1374,103 @@ INSERT INTO `users_sk` (`id`, `user_id`, `sk_date`, `sk_no`, `position_id`, `dep
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `users_spd_dalam`
+--
+
+CREATE TABLE IF NOT EXISTS `users_spd_dalam` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'user_id yang ditugaskan ',
+  `destination` varchar(254) NOT NULL,
+  `date_spd` date NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `is_submit` tinyint(1) NOT NULL DEFAULT '0',
+  `date_submit` date NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL COMMENT 'user_id yang memberi tugas',
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_spd_dalam_report`
+--
+
+CREATE TABLE IF NOT EXISTS `users_spd_dalam_report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_spd_dalam_id` int(11) NOT NULL,
+  `attachment` varchar(254) NOT NULL,
+  `description` text NOT NULL,
+  `result` text NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_spd_luar`
+--
+
+CREATE TABLE IF NOT EXISTS `users_spd_luar` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(254) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'user_id yang ditugaskan ',
+  `destination` varchar(254) NOT NULL,
+  `date_spd` date NOT NULL,
+  `from_city_id` int(11) NOT NULL,
+  `to_city_id` int(11) NOT NULL,
+  `transportation_id` int(11) NOT NULL,
+  `is_submit` tinyint(1) NOT NULL DEFAULT '0',
+  `date_submit` date NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL COMMENT 'user_id yang memberi tugas',
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_spd_luar_report`
+--
+
+CREATE TABLE IF NOT EXISTS `users_spd_luar_report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_spd_luar_id` int(11) NOT NULL,
+  `attachment` varchar(254) NOT NULL,
+  `description` text NOT NULL,
+  `result` text NOT NULL,
+  `created_on` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `edited_on` datetime NOT NULL,
+  `edited_by` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_on` datetime NOT NULL,
+  `deleted_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users_sti`
 --
 
@@ -1289,136 +1516,6 @@ INSERT INTO `users_sti` (`id`, `user_id`, `identity_no`, `ijazah_name`, `ijazah_
 ALTER TABLE `users_groups`
   ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
-
---
--- Table structure for table `library`
---
-
-CREATE TABLE IF NOT EXISTS `library` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(254) NOT NULL,
-  `url` varchar(254) NOT NULL,
-  `created_on` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `edited_on` datetime NOT NULL,
-  `edited_by` int(11) NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `deleted_on` datetime NOT NULL,
-  `deleted_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
-
---
--- Dumping data for table `library`
---
-
-INSERT INTO `library` (`id`, `title`, `url`, `created_on`, `created_by`, `edited_on`, `edited_by`, `is_deleted`, `deleted_on`, `deleted_by`) VALUES
-(1, 'active inactive', 'active_inactive', '2015-02-20 05:23:01', 1, '2015-02-20 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
-(2, 'organization class', 'organization_class', '2015-02-20 05:41:12', 1, '2015-02-20 00:00:00', 1, 0, '0000-00-00 00:00:00', 0),
-(3, 'award warning type', 'award_warning_type', '2015-02-20 05:42:27', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(4, 'certification type', 'certification_type', '2015-02-20 05:42:41', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(5, 'course status', 'course_status', '2015-02-20 05:42:53', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(6, 'dollar rate', 'dollar_rate', '2015-02-20 05:43:05', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(7, 'education center', 'education_center', '2015-02-20 05:43:16', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(8, 'education degree', 'education_degree', '2015-02-20 05:43:28', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(9, 'education group', 'education_group', '2015-02-20 05:43:38', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(10, 'employee status', 'employee_status', '2015-02-20 05:43:48', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(11, 'empl status', 'empl_status', '2015-02-20 05:44:06', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(12, 'exp field', 'exp_field', '2015-02-20 05:44:16', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(13, 'experience level', 'exp_level', '2015-02-20 05:44:31', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(14, 'experience year', 'exp_year', '2015-02-20 05:44:55', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(15, 'grade', 'grade', '2015-02-20 05:45:03', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(16, 'groups', 'groups', '2015-02-20 05:45:11', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(17, 'ikatan dinas type', 'ikatan_dinas_type', '2015-02-20 05:45:24', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(18, 'library', 'library', '2015-02-20 05:45:32', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(19, 'marital', 'marital', '2015-02-20 05:45:39', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(20, 'payroll by position', 'payroll_by_position', '2015-02-20 05:45:58', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(21, 'payroll setup', 'payroll_setup', '2015-02-20 05:46:07', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(22, 'payroll type', 'payroll_type', '2015-02-20 05:46:17', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(23, 'position group', 'position_group', '2015-02-20 05:46:28', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0),
-(24, 'resign reason', 'resign_reason', '2015-02-20 05:46:39', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `alasan_cuti`
---
-
-CREATE TABLE IF NOT EXISTS `alasan_cuti` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(254) NOT NULL,
-  `created_on` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `edited_on` datetime NOT NULL,
-  `edited_by` int(11) NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `deleted_on` datetime NOT NULL,
-  `deleted_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users_cuti`
---
-
-CREATE TABLE IF NOT EXISTS `users_cuti` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `id_comp_session` int(11) NOT NULL,
-  `date_mulai_cuti` date NOT NULL,
-  `date_selesai_cuti` date NOT NULL,
-  `jumlah_hari` tinyint(4) NOT NULL,
-  `alasan_cuti_id` int(11) NOT NULL,
-  `user_pengganti` int(11) NOT NULL COMMENT 'user_id kary pengganti',
-  `alamat_cuti` text NOT NULL,
-  `is_app_lv1` tinyint(1) NOT NULL DEFAULT '0',
-  `user_app_lv1` int(11) NOT NULL COMMENT 'user_id supervisor',
-  `date_app_lv1` date NOT NULL,
-  `note_app_lv1` text NOT NULL,
-  `is_app_lv2` tinyint(1) NOT NULL DEFAULT '0',
-  `user_app_lv2` int(11) NOT NULL COMMENT 'user_id approval level2',
-  `date_app_lv2` date NOT NULL,
-  `note_app_lv2` text NOT NULL,
-  `is_app_lv3` tinyint(1) NOT NULL DEFAULT '0',
-  `user_app_lv3` int(11) NOT NULL,
-  `date_app_lv3` date NOT NULL,
-  `created_on` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `edited_on` datetime NOT NULL,
-  `edited_by` int(11) NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `deleted_on` datetime NOT NULL,
-  `deleted_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_users_sti` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users_cuti_plafon`
---
-
-CREATE TABLE IF NOT EXISTS `users_cuti_plafon` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `id_comp_session` int(11) NOT NULL,
-  `hak_cuti` int(4) NOT NULL,
-  `hak_cuti_sebelumnya` int(4) NOT NULL,
-  `created_on` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `edited_on` datetime NOT NULL,
-  `edited_by` int(11) NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `deleted_on` datetime NOT NULL,
-  `deleted_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_users_sti` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
