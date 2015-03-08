@@ -448,6 +448,27 @@ $lang['act_inactive_subheading'] = "Active Inactive";
 $lang['add_act_inactive'] = "Add Active Inactive";
 $lang['edit_act_inactive'] = 'Edit Active Inactive';
 
+//form_cuti
+$lang['form'] = "Form";
+$lang['list_of_submission'] = "Daftar Pengajuan";
+$lang['form_cuti_subheading'] = "Cuti";
+$lang['date'] = "Tanggal";
+$lang['reason'] = "Alasan";
+$lang['count_cuti'] = "Jumlah cuti";
+$lang['start_cuti'] = "Mulai Cuti";
+$lang['end_cuti'] = "Selesai Cuti";
+$lang['count_day'] = "Jumlah Hari";
+$lang['replacement'] = "Pengganti";
+$lang['addr_cuti'] = "Alamat selama cuti";
+$lang['emp_info'] = "Informasi Karyawan";
+$lang['start_working'] = "Mulai Bekerja";
+$lang['dept_div'] = "Dept/Bagian";
+$lang['position'] = "Jabatan";
+$lang['cuti_remain'] = "Sisa Cuti (hari)";
+$lang['cuti_input_subheading'] = "Cuti yang akan diambil";
+$lang['start_cuti_date'] = "Tgl. mulai cuti";
+$lang['name'] = "Nama";
+
 
 
 

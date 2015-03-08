@@ -2,11 +2,49 @@ $(document).ready(function() {
 	$(".select2").select2();
 
     //Date Pickers
-      $('.input-append.date').datepicker({
-                autoclose: true,
-                todayHighlight: true
-       });
 
+      $('.input-append.date')
+        .datepicker({todayHighlight: true})
+        .on('changeDate', function(ev){
+            days();
+            $(this).datepicker('hide').blur();
+    });
+
+
+    function days() {
+                var a = $("#datepicker_start").datepicker('getFormattedDate'),
+                    b = $("#datepicker_end").datepicker('getFormattedDate'),
+                    c = 24*60*60*1000,
+                    diffDays = Math.floor(( Date.parse(b) - Date.parse(a) ) / c);
+                $("#jml_hari").val(diffDays);
+                $("#jml_cuti").val(diffDays);
+    }
+
+    function formatDate(_d){
+         var d = new Date(_d);
+        var curr_date = d.getDate();
+        if(curr_date < 10)
+            curr_date = "0" + curr_date;
+        
+        var curr_month = d.getMonth() + 1; //Months are zero based
+        if(curr_month < 10)
+            curr_month = "0" + curr_month;
+        
+        var curr_year = d.getFullYear();   
+        return curr_month + '/' + curr_date + '/' + curr_year;
+    }
+
+    $('#jml_hari').change(function(){        
+        if($(this).val() != ''){
+            var days = $(this).val();
+            var start= new Date($("#datepicker_start").val());
+            var newStart = start.setDate(start.getDate() + parseInt(days));    
+            $("#datepicker_end").val(formatDate(newStart));
+        }else{
+            $("#datepicker_end").val($("#datepicker_start").val());
+        }
+        
+    });
 
     $("tr.itemcuti").each(function() {
         var iditemcuti = $(this).attr('id');

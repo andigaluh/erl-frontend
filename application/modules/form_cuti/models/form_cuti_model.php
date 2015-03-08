@@ -282,7 +282,7 @@ class Form_cuti_model extends CI_Model
      **/
     public function form_cuti()
     {
-        $this->trigger_events('exp_level');
+        $this->trigger_events('form_cuti');
 
         if (isset($this->_ion_select) && !empty($this->_ion_select))
         {
@@ -356,6 +356,604 @@ class Form_cuti_model extends CI_Model
         return $this;
     }
 
+    public function form_cuti_input()
+    {
+        $this->trigger_events('form_cuti_input');
+
+        if (isset($this->_ion_select) && !empty($this->_ion_select))
+        {
+            foreach ($this->_ion_select as $select)
+            {
+                $this->db->select($select);
+            }
+
+            $this->_ion_select = array();
+        }
+        else
+        {
+            //default selects
+            $this->db->select(array(
+                $this->tables['users'].'.*',
+                $this->tables['users'].'.id as id',
+                $this->tables['users'].'.id as user_id',
+
+                $this->tables['users'].'.first_name as first_name',
+                $this->tables['users'].'.last_name as last_name',
+                $this->tables['users_employement'].'.position_id as position_id',
+                $this->tables['users_employement'].'.organization_id as organization_id',
+                $this->tables['users_employement'].'.seniority_date as seniority_date',
+                $this->tables['organization'].'.title as organization_title',
+                $this->tables['position'].'.title as position_title',
+                $this->tables['users_cuti_plafon'].'.hak_cuti as hak_cuti',
+                $this->tables['users_cuti_plafon'].'.id_comp_session as id_comp_session',
+                $this->tables['comp_session'].'.year as session_year'
+                
+            ));
+
+            $this->db->join('users_employement', 'users.id = users_employement.user_id', 'left');
+            $this->db->join('organization', 'users_employement.organization_id = organization.id', 'left');
+            $this->db->join('position', 'users_employement.position_id = position.id', 'left');
+            $this->db->join('users_cuti_plafon', 'users.id = users_cuti_plafon.user_id', 'left');
+            $this->db->join('comp_session', 'users_cuti_plafon.id_comp_session = comp_session.id', 'left');
+
+            //$this->db->where('users.is_deleted', 0);
+        }
+
+        $this->trigger_events('extra_where');
+
+        //run each where that was passed
+
+        if (isset($this->_ion_where) && !empty($this->_ion_where))
+        {
+            foreach ($this->_ion_where as $where)
+            {
+                $this->db->where($where);
+            }
+
+            $this->_ion_where = array();
+        }
+
+        if (isset($this->_ion_like) && !empty($this->_ion_like))
+        {
+            foreach ($this->_ion_like as $like)
+            {
+                $this->db->or_like($like);
+            }
+
+            $this->_ion_like = array();
+        }
+
+        if (isset($this->_ion_limit) && isset($this->_ion_offset))
+        {
+            $this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+            $this->_ion_limit  = NULL;
+            $this->_ion_offset = NULL;
+        }
+        else if (isset($this->_ion_limit))
+        {
+            $this->db->limit($this->_ion_limit);
+
+            $this->_ion_limit  = NULL;
+        }
+
+        //set the order
+        if (isset($this->_ion_order_by) && isset($this->_ion_order))
+        {
+            $this->db->order_by($this->_ion_order_by, $this->_ion_order);
+
+            $this->_ion_order    = NULL;
+            $this->_ion_order_by = NULL;
+        }
+
+        $this->response = $this->db->get($this->tables['users']);
+
+        return $this;
+    }
+
+    public function form_cuti_approval()
+    {
+        $this->trigger_events('form_cuti_approval');
+
+        if (isset($this->_ion_select) && !empty($this->_ion_select))
+        {
+            foreach ($this->_ion_select as $select)
+            {
+                $this->db->select($select);
+            }
+
+            $this->_ion_select = array();
+        }
+        else
+        {
+            //default selects
+            $this->db->select(array(
+                $this->tables['users'].'.*',
+                $this->tables['users'].'.id as id',
+                $this->tables['users'].'.id as user_id',
+
+                $this->tables['users'].'.first_name as first_name',
+                $this->tables['users'].'.last_name as last_name',
+                $this->tables['users_employement'].'.position_id as position_id',
+                $this->tables['users_employement'].'.organization_id as organization_id',
+                $this->tables['users_employement'].'.seniority_date as seniority_date',
+                $this->tables['organization'].'.title as organization_title',
+                $this->tables['position'].'.title as position_title',
+                $this->tables['users_cuti_plafon'].'.hak_cuti as hak_cuti',
+                $this->tables['users_cuti_plafon'].'.id_comp_session as id_comp_session',
+                $this->tables['comp_session'].'.year as session_year',
+                $this->tables['users_cuti'].'.created_on as tgl_pengajuan'
+                
+            ));
+
+            $this->db->join('users_employement', 'users.id = users_employement.user_id', 'left');
+            $this->db->join('organization', 'users_employement.organization_id = organization.id', 'left');
+            $this->db->join('position', 'users_employement.position_id = position.id', 'left');
+            $this->db->join('users_cuti_plafon', 'users.id = users_cuti_plafon.user_id', 'left');
+            $this->db->join('comp_session', 'users_cuti_plafon.id_comp_session = comp_session.id', 'left');
+            $this->db->join('users_cuti', 'users.id = users_cuti.user_id', 'left');
+
+            //$this->db->where('users.is_deleted', 0);
+        }
+
+        $this->trigger_events('extra_where');
+
+        //run each where that was passed
+
+        if (isset($this->_ion_where) && !empty($this->_ion_where))
+        {
+            foreach ($this->_ion_where as $where)
+            {
+                $this->db->where($where);
+            }
+
+            $this->_ion_where = array();
+        }
+
+        if (isset($this->_ion_like) && !empty($this->_ion_like))
+        {
+            foreach ($this->_ion_like as $like)
+            {
+                $this->db->or_like($like);
+            }
+
+            $this->_ion_like = array();
+        }
+
+        if (isset($this->_ion_limit) && isset($this->_ion_offset))
+        {
+            $this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+            $this->_ion_limit  = NULL;
+            $this->_ion_offset = NULL;
+        }
+        else if (isset($this->_ion_limit))
+        {
+            $this->db->limit($this->_ion_limit);
+
+            $this->_ion_limit  = NULL;
+        }
+
+        //set the order
+        if (isset($this->_ion_order_by) && isset($this->_ion_order))
+        {
+            $this->db->order_by($this->_ion_order_by, $this->_ion_order);
+
+            $this->_ion_order    = NULL;
+            $this->_ion_order_by = NULL;
+        }
+
+        $this->response = $this->db->get($this->tables['users']);
+
+        return $this;
+    }
+
+    public function render_session()
+    {
+         $this->trigger_events('form_cuti_input');
+
+        if (isset($this->_ion_select) && !empty($this->_ion_select))
+        {
+            foreach ($this->_ion_select as $select)
+            {
+                $this->db->select($select);
+            }
+
+            $this->_ion_select = array();
+        }
+        else
+        {
+            //default selects
+            $this->db->select(array(
+                $this->tables['comp_session'].'.*',
+                $this->tables['comp_session'].'.id as id',
+                $this->tables['comp_session'].'.id as user_id',
+
+                $this->tables['comp_session'].'.title as title',
+                $this->tables['comp_session'].'.year as year'
+            ));
+
+
+            $this->db->where('comp_session.is_deleted', 0);
+        }
+
+        $this->trigger_events('extra_where');
+
+        //run each where that was passed
+
+        if (isset($this->_ion_where) && !empty($this->_ion_where))
+        {
+            foreach ($this->_ion_where as $where)
+            {
+                $this->db->where($where);
+            }
+
+            $this->_ion_where = array();
+        }
+
+        if (isset($this->_ion_like) && !empty($this->_ion_like))
+        {
+            foreach ($this->_ion_like as $like)
+            {
+                $this->db->or_like($like);
+            }
+
+            $this->_ion_like = array();
+        }
+
+        if (isset($this->_ion_limit) && isset($this->_ion_offset))
+        {
+            $this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+            $this->_ion_limit  = NULL;
+            $this->_ion_offset = NULL;
+        }
+        else if (isset($this->_ion_limit))
+        {
+            $this->db->limit($this->_ion_limit);
+
+            $this->_ion_limit  = NULL;
+        }
+
+        //set the order
+        if (isset($this->_ion_order_by) && isset($this->_ion_order))
+        {
+            $this->db->order_by($this->_ion_order_by, $this->_ion_order);
+
+            $this->_ion_order    = NULL;
+            $this->_ion_order_by = NULL;
+        }
+
+        $this->response = $this->db->get($this->tables['comp_session']);
+
+        return $this;
+    }
+
+    public function render_alasan()
+    {
+         $this->trigger_events('form_cuti_input');
+
+        if (isset($this->_ion_select) && !empty($this->_ion_select))
+        {
+            foreach ($this->_ion_select as $select)
+            {
+                $this->db->select($select);
+            }
+
+            $this->_ion_select = array();
+        }
+        else
+        {
+            //default selects
+            $this->db->select(array(
+                $this->tables['alasan_cuti'].'.*',
+                $this->tables['alasan_cuti'].'.id as id',
+                $this->tables['alasan_cuti'].'.id as user_id',
+
+                $this->tables['alasan_cuti'].'.title as title',
+            ));
+
+
+            $this->db->where('alasan_cuti.is_deleted', 0);
+        }
+
+        $this->trigger_events('extra_where');
+
+        //run each where that was passed
+
+        if (isset($this->_ion_where) && !empty($this->_ion_where))
+        {
+            foreach ($this->_ion_where as $where)
+            {
+                $this->db->where($where);
+            }
+
+            $this->_ion_where = array();
+        }
+
+        if (isset($this->_ion_like) && !empty($this->_ion_like))
+        {
+            foreach ($this->_ion_like as $like)
+            {
+                $this->db->or_like($like);
+            }
+
+            $this->_ion_like = array();
+        }
+
+        if (isset($this->_ion_limit) && isset($this->_ion_offset))
+        {
+            $this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+            $this->_ion_limit  = NULL;
+            $this->_ion_offset = NULL;
+        }
+        else if (isset($this->_ion_limit))
+        {
+            $this->db->limit($this->_ion_limit);
+
+            $this->_ion_limit  = NULL;
+        }
+
+        //set the order
+        if (isset($this->_ion_order_by) && isset($this->_ion_order))
+        {
+            $this->db->order_by($this->_ion_order_by, $this->_ion_order);
+
+            $this->_ion_order    = NULL;
+            $this->_ion_order_by = NULL;
+        }
+
+        $this->response = $this->db->get($this->tables['alasan_cuti']);
+
+        return $this;
+    }
+
+    public function render_pengganti()
+    {
+         $this->trigger_events('form_cuti_input');
+
+        if (isset($this->_ion_select) && !empty($this->_ion_select))
+        {
+            foreach ($this->_ion_select as $select)
+            {
+                $this->db->select($select);
+            }
+
+            $this->_ion_select = array();
+        }
+        else
+        {
+            //default selects
+            $this->db->select(array(
+                $this->tables['users'].'.*',
+                $this->tables['users'].'.id as id',
+                $this->tables['users'].'.id as user_id',
+
+                $this->tables['users'].'.first_name as first_name',
+                $this->tables['users'].'.last_name as last_name',
+                $this->tables['users_employement'].'.position_id as position_id',
+                $this->tables['users_employement'].'.organization_id as organization_id',
+                $this->tables['users_employement'].'.seniority_date as seniority_date',
+                $this->tables['organization'].'.title as organization_title',
+            ));
+
+            $this->db->join('users_employement', 'users.id = users_employement.user_id', 'left');
+            $this->db->join('organization', 'users_employement.organization_id = organization.id', 'left');
+            $this->db->join('position', 'users_employement.position_id = position.id', 'left');
+
+
+            //$this->db->where('users.is_deleted', 0);
+        }
+
+        $this->trigger_events('extra_where');
+
+        //run each where that was passed
+
+        if (isset($this->_ion_where) && !empty($this->_ion_where))
+        {
+            foreach ($this->_ion_where as $where)
+            {
+                $this->db->where($where);
+            }
+
+            $this->_ion_where = array();
+        }
+
+        if (isset($this->_ion_like) && !empty($this->_ion_like))
+        {
+            foreach ($this->_ion_like as $like)
+            {
+                $this->db->or_like($like);
+            }
+
+            $this->_ion_like = array();
+        }
+
+        if (isset($this->_ion_limit) && isset($this->_ion_offset))
+        {
+            $this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+            $this->_ion_limit  = NULL;
+            $this->_ion_offset = NULL;
+        }
+        else if (isset($this->_ion_limit))
+        {
+            $this->db->limit($this->_ion_limit);
+
+            $this->_ion_limit  = NULL;
+        }
+
+        //set the order
+        if (isset($this->_ion_order_by) && isset($this->_ion_order))
+        {
+            $this->db->order_by($this->_ion_order_by, $this->_ion_order);
+
+            $this->_ion_order    = NULL;
+            $this->_ion_order_by = NULL;
+        }
+
+        $this->response = $this->db->get($this->tables['users']);
+
+
+        return $this;
+    }
+
+    public function get_org_id()
+    {
+        $this->trigger_events('form_cuti_input');
+
+        if (isset($this->_ion_select) && !empty($this->_ion_select))
+        {
+            foreach ($this->_ion_select as $select)
+            {
+                $this->db->select($select);
+            }
+
+            $this->_ion_select = array();
+        }
+        else
+        {
+            //default selects
+            $this->db->select(array(
+                $this->tables['users'].'.*',
+                $this->tables['users'].'.id as id',
+                $this->tables['users'].'.id as user_id',
+
+                $this->tables['users_employement'].'.organization_id as organization_id',
+            ));
+
+            $this->db->join('users_employement', 'users.id = users_employement.user_id', 'left');
+        }
+
+        $this->trigger_events('extra_where');
+
+        //run each where that was passed
+
+        if (isset($this->_ion_where) && !empty($this->_ion_where))
+        {
+            foreach ($this->_ion_where as $where)
+            {
+                $this->db->where($where);
+            }
+
+            $this->_ion_where = array();
+        }
+
+        if (isset($this->_ion_like) && !empty($this->_ion_like))
+        {
+            foreach ($this->_ion_like as $like)
+            {
+                $this->db->or_like($like);
+            }
+
+            $this->_ion_like = array();
+        }
+
+        if (isset($this->_ion_limit) && isset($this->_ion_offset))
+        {
+            $this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+            $this->_ion_limit  = NULL;
+            $this->_ion_offset = NULL;
+        }
+        else if (isset($this->_ion_limit))
+        {
+            $this->db->limit($this->_ion_limit);
+
+            $this->_ion_limit  = NULL;
+        }
+
+        //set the order
+        if (isset($this->_ion_order_by) && isset($this->_ion_order))
+        {
+            $this->db->order_by($this->_ion_order_by, $this->_ion_order);
+
+            $this->_ion_order    = NULL;
+            $this->_ion_order_by = NULL;
+        }
+
+        $this->response = $this->db->get($this->tables['users']);
+
+        return $this;
+    }
+
+    public function get_comp_session_id()
+    {
+        $this->trigger_events('form_cuti_input');
+
+        if (isset($this->_ion_select) && !empty($this->_ion_select))
+        {
+            foreach ($this->_ion_select as $select)
+            {
+                $this->db->select($select);
+            }
+
+            $this->_ion_select = array();
+        }
+        else
+        {
+            //default selects
+            $this->db->select(array(
+                $this->tables['comp_session'].'.*',
+                $this->tables['comp_session'].'.id as id',
+                $this->tables['comp_session'].'.id as user_id',
+            ));
+            
+        }
+
+        $this->trigger_events('extra_where');
+
+        //run each where that was passed
+
+        if (isset($this->_ion_where) && !empty($this->_ion_where))
+        {
+            foreach ($this->_ion_where as $where)
+            {
+                $this->db->where($where);
+            }
+
+            $this->_ion_where = array();
+        }
+
+        if (isset($this->_ion_like) && !empty($this->_ion_like))
+        {
+            foreach ($this->_ion_like as $like)
+            {
+                $this->db->or_like($like);
+            }
+
+            $this->_ion_like = array();
+        }
+
+        if (isset($this->_ion_limit) && isset($this->_ion_offset))
+        {
+            $this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+            $this->_ion_limit  = NULL;
+            $this->_ion_offset = NULL;
+        }
+        else if (isset($this->_ion_limit))
+        {
+            $this->db->limit($this->_ion_limit);
+
+            $this->_ion_limit  = NULL;
+        }
+
+        //set the order
+        if (isset($this->_ion_order_by) && isset($this->_ion_order))
+        {
+            $this->db->order_by($this->_ion_order_by, $this->_ion_order);
+
+            $this->_ion_order    = NULL;
+            $this->_ion_order_by = NULL;
+        }
+
+        $this->response = $this->db->get($this->tables['users']);
+
+        return $this;
+    }
+
     public function delete($id)
     {
         $this->trigger_events('pre_delete_frm_cuti');
@@ -386,24 +984,10 @@ class Form_cuti_model extends CI_Model
         return TRUE;
     }
 
-    public function create_($title = FALSE, $additional_data = array())
+    public function create_($user_id = FALSE, $additional_data = array())
     {
-        // bail if the group name was not passed
-        if(!$title)
-        {
-            $this->set_error('title_required');
-            return FALSE;
-        }
 
-        // bail if the group name already exists
-        $existing_frm_cuti = $this->db->get_where($this->tables['users_cuti'], array('title' => $title))->num_rows();
-        if($existing_frm_cuti !== 0)
-        {
-            $this->set_error('frm_cuti_already_exists');
-            return FALSE;
-        }
-
-        $data = array('title'=>$title);
+        $data = array('user_id'=>$user_id);
 
         //filter out any data passed that doesnt have a matching column in the form cuti table
         //and merge the set group data and the additional data
@@ -411,7 +995,7 @@ class Form_cuti_model extends CI_Model
 
         $this->trigger_events('extra_group_set');
 
-        // insert the new exp_level
+        // insert the new form_cuti
         $this->db->insert($this->tables['users_cuti'], $data);
         $id = $this->db->insert_id();
 
