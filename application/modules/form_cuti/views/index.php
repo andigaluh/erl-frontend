@@ -15,18 +15,18 @@
           <div class="col-md-12">
               <div class="grid simple ">
                 <div class="grid-title no-border">
-                  <h4>Daftar Pengajuan <span class="semi-bold">Cuti</span></h4>
+                  <h4><?php echo lang('list_of_submission'); ?> <span class="semi-bold"><?php echo lang('form_cuti_subheading'); ?></span></h4>
                   <div class="tools"> 
-                    <a href="form_cuti_input.html" class="config"></a>
+                    <a href="<?php echo site_url('form_cuti/input'); ?>" class="config"></a>
                   </div>
                 </div>
                   <div class="grid-body no-border">
                           <table class="table table-striped table-flip-scroll cf">
                               <thead>
                                 <tr>
-                                  <th width="15%">Tanggal</th>
-                                  <th width="20%">Alasan</th>
-                                  <th width="10%">Jumlah cuti</th>
+                                  <th width="15%"><?php echo lang('date') ?></th>
+                                  <th width="20%"><?php echo lang('reason') ?></th>
+                                  <th width="10%"><?php echo lang('count_cuti') ?></th>
                                   <th width="15%">appr. spv</th>
                                   <th width="15%">appr. ka. bag</th>
                                   <th width="15%">appr. HRD</th>
@@ -92,15 +92,15 @@
                                             <h4>ID : #<?php echo $id_cuti; ?></h4>
                                             <div class="row form-row">
                                               <div class="col-md-2">
-                                                <label class="form-label text-right">Sisa cuti</label>
+                                                <label class="form-label text-right"><?php echo lang('count_cuti') ?></label>
                                               </div>
                                               <div class="col-md-10">
-                                                <input name="courseid" id="courseid" type="text"  class="form-control" placeholder="courseid" value="<?php echo $sisa_cuti; ?>" disabled="disabled">
+                                                <input name="courseid" id="courseid" type="text"  class="form-control" placeholder="courseid" value="<?php echo $user->jumlah_hari; ?>" disabled="disabled">
                                               </div>
                                             </div>
                                             <div class="row form-row">
                                               <div class="col-md-2">
-                                                <label class="form-label text-right">Tahun</label>
+                                                <label class="form-label text-right"><?php echo lang('year') ?></label>
                                               </div>
                                               <div class="col-md-10">
                                                 <input name="description" id="description" type="text"  class="form-control" placeholder="Description" value="<?php echo $user->comp_session; ?>" disabled="disabled">
@@ -108,7 +108,7 @@
                                             </div>
                                             <div class="row form-row">
                                               <div class="col-md-2">
-                                                <label class="form-label text-right">Mulai cuti</label>
+                                                <label class="form-label text-right"><?php echo lang('start_cuti') ?></label>
                                               </div>
                                               <div class="col-md-10">
                                                 <input name="registration_date" id="registration_date" type="text"  class="form-control" placeholder="Registration Date" value="<?php echo date('d-m-Y',strtotime($user->date_mulai_cuti)); ?>" disabled="disabled">
@@ -116,7 +116,7 @@
                                             </div>
                                             <div class="row form-row">
                                               <div class="col-md-2">
-                                                <label class="form-label text-right">Selesai cuti</label>
+                                                <label class="form-label text-right"><?php echo lang('end_cuti') ?></label>
                                               </div>
                                               <div class="col-md-10">
                                                 <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="<?php echo date('d-m-Y',strtotime($user->date_selesai_cuti)); ?>" disabled="disabled">
@@ -124,7 +124,7 @@
                                             </div>
                                             <div class="row form-row">
                                               <div class="col-md-2">
-                                                <label class="form-label text-right">Jumlah hari</label>
+                                                <label class="form-label text-right"><?php echo lang('count_day') ?></label>
                                               </div>
                                               <div class="col-md-10">
                                                 <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="<?php echo $user->jumlah_hari; ?> hari" disabled="disabled">
@@ -132,7 +132,7 @@
                                             </div>
                                             <div class="row form-row">
                                               <div class="col-md-2">
-                                                <label class="form-label text-right">Alasan</label>
+                                                <label class="form-label text-right"><?php echo lang('reason') ?></label>
                                               </div>
                                               <div class="col-md-10">
                                                 <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="<?php echo $user->alasan_cuti; ?>" disabled="disabled">
@@ -140,7 +140,7 @@
                                             </div>
                                             <div class="row form-row">
                                               <div class="col-md-2">
-                                                <label class="form-label text-right">Pengganti</label>
+                                                <label class="form-label text-right"><?php echo lang('replacement') ?></label>
                                               </div>
                                               <div class="col-md-10">
                                                 <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="<?php echo $user_pengganti; ?>" disabled="disabled">
@@ -148,7 +148,7 @@
                                             </div>
                                             <div class="row form-row">
                                               <div class="col-md-2">
-                                                <label class="form-label text-right">Alamat selama cuti</label>
+                                                <label class="form-label text-right"><?php echo lang('addr_cuti') ?></label>
                                               </div>
                                               <div class="col-md-10">
                                                 <input name="status" id="status" type="text"  class="form-control" placeholder="Status" value="<?php echo $user->alamat_cuti; ?>" disabled="disabled">
