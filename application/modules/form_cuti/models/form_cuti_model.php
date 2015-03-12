@@ -451,9 +451,9 @@ class Form_cuti_model extends CI_Model
         return $this;
     }
 
-    public function form_cuti_approval()
+    public function form_cuti_supervisor()
     {
-        $this->trigger_events('form_cuti_approval');
+        $this->trigger_events('form_cuti_supervisor');
 
         if (isset($this->_ion_select) && !empty($this->_ion_select))
         {
@@ -468,9 +468,9 @@ class Form_cuti_model extends CI_Model
         {
             //default selects
             $this->db->select(array(
-                $this->tables['users'].'.*',
-                $this->tables['users'].'.id as id',
-                $this->tables['users'].'.id as user_id',
+                $this->tables['users_cuti'].'.*',
+                $this->tables['users_cuti'].'.id as id',
+                $this->tables['users_cuti'].'.id as user_id',
 
                 $this->tables['users'].'.first_name as first_name',
                 $this->tables['users'].'.last_name as last_name',
@@ -485,13 +485,13 @@ class Form_cuti_model extends CI_Model
                 $this->tables['users_cuti'].'.created_on as tgl_pengajuan'
                 
             ));
-
+            
+            $this->db->join('users', 'users_cuti.user_id = users.id', 'left');
             $this->db->join('users_employement', 'users.id = users_employement.user_id', 'left');
             $this->db->join('organization', 'users_employement.organization_id = organization.id', 'left');
             $this->db->join('position', 'users_employement.position_id = position.id', 'left');
             $this->db->join('users_cuti_plafon', 'users.id = users_cuti_plafon.user_id', 'left');
-            $this->db->join('comp_session', 'users_cuti_plafon.id_comp_session = comp_session.id', 'left');
-            $this->db->join('users_cuti', 'users.id = users_cuti.user_id', 'left');
+            $this->db->join('comp_session', 'users_cuti.id_comp_session = comp_session.id', 'left');
 
             //$this->db->where('users.is_deleted', 0);
         }
@@ -543,7 +543,7 @@ class Form_cuti_model extends CI_Model
             $this->_ion_order_by = NULL;
         }
 
-        $this->response = $this->db->get($this->tables['users']);
+        $this->response = $this->db->get($this->tables['users_cuti']);
 
         return $this;
     }
@@ -823,6 +823,7 @@ class Form_cuti_model extends CI_Model
                 $this->tables['users_employement'].'.organization_id as organization_id',
             ));
 
+            $this->db->join('users_cuti', 'users.id = users_cuti.user_id', 'left');
             $this->db->join('users_employement', 'users.id = users_employement.user_id', 'left');
         }
 
@@ -900,6 +901,81 @@ class Form_cuti_model extends CI_Model
                 $this->tables['comp_session'].'.id as user_id',
             ));
             
+        }
+
+        $this->trigger_events('extra_where');
+
+        //run each where that was passed
+
+        if (isset($this->_ion_where) && !empty($this->_ion_where))
+        {
+            foreach ($this->_ion_where as $where)
+            {
+                $this->db->where($where);
+            }
+
+            $this->_ion_where = array();
+        }
+
+        if (isset($this->_ion_like) && !empty($this->_ion_like))
+        {
+            foreach ($this->_ion_like as $like)
+            {
+                $this->db->or_like($like);
+            }
+
+            $this->_ion_like = array();
+        }
+
+        if (isset($this->_ion_limit) && isset($this->_ion_offset))
+        {
+            $this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+            $this->_ion_limit  = NULL;
+            $this->_ion_offset = NULL;
+        }
+        else if (isset($this->_ion_limit))
+        {
+            $this->db->limit($this->_ion_limit);
+
+            $this->_ion_limit  = NULL;
+        }
+
+        //set the order
+        if (isset($this->_ion_order_by) && isset($this->_ion_order))
+        {
+            $this->db->order_by($this->_ion_order_by, $this->_ion_order);
+
+            $this->_ion_order    = NULL;
+            $this->_ion_order_by = NULL;
+        }
+
+        $this->response = $this->db->get($this->tables['users']);
+
+        return $this;
+    }
+
+    public function get_user()
+    {
+        $this->trigger_events('form_cuti_input');
+
+        if (isset($this->_ion_select) && !empty($this->_ion_select))
+        {
+            foreach ($this->_ion_select as $select)
+            {
+                $this->db->select($select);
+            }
+
+            $this->_ion_select = array();
+        }
+        else
+        {
+            //default selects
+            $this->db->select(array(
+                $this->tables['users'].'.*',
+                $this->tables['users'].'.id as id',
+                $this->tables['users'].'.id as user_id',
+            ));
         }
 
         $this->trigger_events('extra_where');

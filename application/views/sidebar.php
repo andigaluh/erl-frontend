@@ -30,7 +30,10 @@
       <li class=""> <a href="javascript:;"> <i class="icon-plus-sign"></i> <span class="title">Form pengajuan</span> <span class="arrow "></span> </a>
         <ul class="sub-menu">
           <li > <a href="<?php echo site_url('form_cuti')?>">Cuti</a> </li>
-          <li > <a href="form_spd_dalam.html">Perjalanan dinas - dalam kota</a> </li>          
+          <li > <a href="<?php echo site_url('form_cuti/approval_spv')?>">Approval Supervisor</a> </li>
+          <li > <a href="<?php echo site_url('form_cuti/approval_kbg')?>">Approval Kabagian</a> </li>
+          <li > <a href="<?php echo site_url('form_cuti/approval_hr')?>">Approval HR</a> </li>
+          <li > <a href="<?php echo site_url('form_spd_dalam') ?>">Perjalanan dinas - dalam kota</a> </li>          
           <li > <a href="form_spd_luar.html">Perjalanan dinas - luar kota</a> </li>            
           <li > <a href="form_absent.html">Keterangan tidak absen</a> </li>          
           <li > <a href="form_training.html">Training</a> </li>          

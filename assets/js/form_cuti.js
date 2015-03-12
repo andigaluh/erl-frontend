@@ -53,7 +53,6 @@ $(document).ready(function() {
             $('#cutidetail-' + iditemcuti).toggle();
         });
     });
-
       
 
 	//Traditional form validation sample
@@ -101,7 +100,59 @@ $(document).ready(function() {
                 submitHandler: function (form) {
                 
                 }
-            });	
+            });
+
+    //approval script
+    $('#btn_app_lv1').click(function(){
+        $('#formAppLv1').submit(function(ev){
+            $.ajax({
+                type: 'POST',
+                url: 'do_approve_spv',
+                data: $('#formAppLv1').serialize(),
+                success: function() {
+                    setTimeout(function(){
+                        location.reload()},
+                        3000
+                    )
+                }
+            });
+            ev.preventDefault(); 
+        });  
+    });
+
+    $('#btn_app_lv2').click(function(){
+        $('#formAppLv2').submit(function(ev){
+            $.ajax({
+                type: 'POST',
+                url: 'do_approve_kbg',
+                data: $('#formAppLv2').serialize(),
+                success: function() {
+                    setTimeout(function(){
+                        location.reload()},
+                        3000
+                    )
+                }
+            });
+            ev.preventDefault(); 
+        });  
+    });
+
+    $('#btn_app_lv3').click(function(){
+        $('#formAppLv3').submit(function(ev){
+            $.ajax({
+                type: 'POST',
+                url: 'do_approve_hr',
+                data: $('#formAppLv3').serialize(),
+                success: function() {
+                    setTimeout(function(){
+                        location.reload()},
+                        3000
+                    )
+                }
+            });
+            ev.preventDefault(); 
+        });  
+    }); 	
 	
 	//Iconic form validation sample	
 	   $('#form_iconic_validation').validate({
