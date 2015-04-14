@@ -65,7 +65,7 @@
                         <label class="form-label text-right">Nama</label>
                       </div>
                       <div class="col-md-9">
-                        <select id="emp_name" class="select2" style="width:100%" disabled="disabled">
+                        <select id="emp_name" class="select2" style="width:100%" disabled="disabled" name="emp_name">
                           <?php if ($el_num_rows > 0) {
                             foreach ($employee_list as $el) : 
                               if ($el->id == $tr->id) {

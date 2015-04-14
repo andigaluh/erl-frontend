@@ -7,38 +7,6 @@ $(document).ready(function() {
      				
 	$(".select2").select2();
 
-    //denimaru
-    function get_employee_org(empId)
-    {
-        $.ajax({
-                type: 'POST',
-                url: 'get_emp_org',
-                data: {id : empId},
-                success: function(data) {
-                    $('#org_tr').val(data);
-                }
-            });
-    }
-
-    function get_employee_pos(empId)
-    {
-        $.ajax({
-                type: 'POST',
-                url: 'get_emp_pos',
-                data: {id : empId},
-                success: function(data) {
-                    $('#pos_tr').val(data);
-                }
-            });
-    }
-
-    $("#emp_name").change(function() {
-        var empId = $(this).val();
-        get_employee_org(empId);
-        get_employee_pos(empId);
-    })
-    .change();
-
     //Date Pickers
       $('.input-append.date').datepicker({
                 autoclose: true,

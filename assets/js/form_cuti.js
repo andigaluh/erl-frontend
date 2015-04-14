@@ -12,12 +12,12 @@ $(document).ready(function() {
 
 
     function days() {
-                var a = $("#datepicker_start").datepicker('getFormattedDate'),
-                    b = $("#datepicker_end").datepicker('getFormattedDate'),
-                    c = 24*60*60*1000,
-                    diffDays = Math.floor(( Date.parse(b) - Date.parse(a) ) / c);
-                $("#jml_hari").val(diffDays);
-                $("#jml_cuti").val(diffDays);
+        var a = $("#datepicker_start").datepicker('getFormattedDate'),
+            b = $("#datepicker_end").datepicker('getFormattedDate'),
+            c = 24*60*60*1000,
+            diffDays = Math.floor(( Date.parse(b) - Date.parse(a) ) / c);
+        $("#jml_hari").val(diffDays);
+        $("#jml_cuti").val(diffDays);
     }
 
     function formatDate(_d){
