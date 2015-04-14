@@ -59,6 +59,10 @@ $config['tables']['users_cuti']  = 'users_cuti';
 $config['tables']['alasan_cuti']  = 'alasan_cuti';
 $config['tables']['users_cuti_plafon']  = 'users_cuti_plafon';
 $config['tables']['users_spd_dalam']  = 'users_spd_dalam';
+$config['tables']['users_spd_luar']  = 'users_spd_luar';
+$config['tables']['transportation']  = 'transportation';
+$config['tables']['city']  = 'city';
+
 
 /*
  | Users table column and Group table column you want to join WITH.

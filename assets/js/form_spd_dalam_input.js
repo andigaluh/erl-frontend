@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("div#myId").dropzone({ url: "/file/post" });
+    //$("div#myId").dropzone({ url: "/file/post" });
     
     $('.timepicker-24').timepicker({
                 minuteStep: 1,
@@ -9,13 +9,43 @@ $(document).ready(function() {
      				
 	$(".select2").select2();
 
+    //denimaru
+    function get_employee_org(empId)
+    {
+        $.ajax({
+                type: 'POST',
+                url: 'get_emp_org',
+                data: {id : empId},
+                success: function(data) {
+                    $('#org_tr').val(data);
+                }
+            });
+    }
+
+    function get_employee_pos(empId)
+    {
+        $.ajax({
+                type: 'POST',
+                url: 'get_emp_pos',
+                data: {id : empId},
+                success: function(data) {
+                    $('#pos_tr').val(data);
+                }
+            });
+    }
+
+    $("#employee_sel").change(function() {
+        var empId = $(this).val();
+        get_employee_org(empId);
+        get_employee_pos(empId);
+    })
+    .change();
+
     //Date Pickers
       $('.input-append.date').datepicker({
                 autoclose: true,
                 todayHighlight: true
        });
-
-      
 
 	//Traditional form validation sample
 	$('#form_traditional_validation').validate({
@@ -249,6 +279,8 @@ $(document).ready(function() {
 				$('<span class="error"></span>').insertAfter(element).append(label)
 			}
 		});
+
+    
 
 	$('#rootwizard').bootstrapWizard({
 	  		'tabClass': 'form-wizard',

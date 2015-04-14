@@ -34,7 +34,7 @@
           <li > <a href="<?php echo site_url('form_cuti/approval_kbg')?>">Approval Kabagian</a> </li>
           <li > <a href="<?php echo site_url('form_cuti/approval_hr')?>">Approval HR</a> </li>
           <li > <a href="<?php echo site_url('form_spd_dalam') ?>">Perjalanan dinas - dalam kota</a> </li>          
-          <li > <a href="form_spd_luar.html">Perjalanan dinas - luar kota</a> </li>            
+          <li > <a href="<?php echo site_url('form_spd_luar') ?>">Perjalanan dinas - luar kota</a> </li>            
           <li > <a href="form_absent.html">Keterangan tidak absen</a> </li>          
           <li > <a href="form_training.html">Training</a> </li>          
           <li > <a href="form_medical.html">Medical</a> </li>          
